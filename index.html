@@ -710,8 +710,7 @@ const db = getFirestore(firebaseApp);
 
 async function syncServerSession(user){
   const idToken = await user.getIdToken(true);
-  const appCheck = getAppCheck(firebaseApp);
-  const appCheckResult = await getToken(appCheck, false);
+  const appCheckResult = await getToken(appCheck, true);
   if(!appCheckResult?.token) throw new Error("App Check token olinmadi");
   const response = await fetch("/api/auth/session", {
     method: "POST",
