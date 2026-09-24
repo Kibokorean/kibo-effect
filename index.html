@@ -603,7 +603,6 @@ import { initializeApp }
 import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
-  getAppCheck,
   getToken
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app-check.js";
 
@@ -666,25 +665,37 @@ const firebaseApp = initializeApp(firebaseConfig);
  * The site key is a public browser value. Never put a reCAPTCHA secret key,
  * Firebase Admin credential, service-account JSON, or other server secret here.
  */
-const RECAPTCHA_ENTERPRISE_SITE_KEY = "PASTE_YOUR_RECAPTCHA_ENTERPRISE_SITE_KEY_HERE";
+const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcBB80tAAAAADX7WCPLKajV1HHwVDnyaDKLyI6o";
+
+let appCheck = null;
 
 if (
-  RECAPTCHA_ENTERPRISE_SITE_KEY &&
-  !RECAPTCHA_ENTERPRISE_SITE_KEY.includes("PASTE_YOUR_")
+    RECAPTCHA_ENTERPRISE_SITE_KEY &&
+    !RECAPTCHA_ENTERPRISE_SITE_KEY.includes("PASTE_YOUR_")
 ) {
-  initializeAppCheck(firebaseApp, {
-    provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
-    isTokenAutoRefreshEnabled: true
-  });
+    console.log("Initializing Firebase App Check...");
+
+    appCheck = initializeAppCheck(firebaseApp, {
+        provider: new ReCaptchaEnterpriseProvider(
+            RECAPTCHA_ENTERPRISE_SITE_KEY
+        ),
+        isTokenAutoRefreshEnabled: true
+    });
+} else {
+    console.warn(
+        "Firebase App Check is not initialized. Please provide a valid reCAPTCHA Enterprise site key."
+    );
 }
 
 // Same-origin protected-test iframes may request only a short-lived App Check token.
-// This does not expose any Firebase Admin secret.
 window.__kiboGetAppCheckToken = async () => {
-  const tokenResult = await getToken(getAppCheck(firebaseApp), true);
-  return tokenResult.token;
-};
+    if (!appCheck) {
+        throw new Error("Firebase App Check is not initialized");
+    }
 
+    const tokenResult = await getToken(appCheck, true);
+    return tokenResult.token;
+};
 // Use durable browser persistence with IndexedDB first and localStorage
 // as a fallback. Explicitly provide the popup resolver for mobile browsers.
 const auth = initializeAuth(firebaseApp, {
