@@ -41,3 +41,7 @@ is needed later, use Firebase App Check's debug provider for development.
 
 Firebase documentation:
 https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider
+
+
+## Protected test delivery
+This build also adds server-side session protection for test pages. See `SECURE_TESTS_SETUP.md`.

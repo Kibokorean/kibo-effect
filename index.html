@@ -602,7 +602,9 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
   initializeAppCheck,
-  ReCaptchaEnterpriseProvider
+  ReCaptchaEnterpriseProvider,
+  getAppCheck,
+  getToken
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app-check.js";
 
 import {
@@ -664,7 +666,7 @@ const firebaseApp = initializeApp(firebaseConfig);
  * The site key is a public browser value. Never put a reCAPTCHA secret key,
  * Firebase Admin credential, service-account JSON, or other server secret here.
  */
-const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcBB80tAAAAADX7WCPLKajV1HHwVDnyaDKLyI6o";
+const RECAPTCHA_ENTERPRISE_SITE_KEY = "PASTE_YOUR_RECAPTCHA_ENTERPRISE_SITE_KEY_HERE";
 
 if (
   RECAPTCHA_ENTERPRISE_SITE_KEY &&
@@ -687,6 +689,22 @@ const auth = initializeAuth(firebaseApp, {
 });
 
 const db = getFirestore(firebaseApp);
+
+async function syncServerSession(user){
+  const idToken = await user.getIdToken(true);
+  const appCheck = getAppCheck(firebaseApp);
+  const appCheckResult = await getToken(appCheck, false);
+  if(!appCheckResult?.token) throw new Error("App Check token olinmadi");
+  const response = await fetch("/api/auth/session", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${idToken}`,
+      "X-Firebase-AppCheck": appCheckResult.token
+    },
+    credentials: "include"
+  });
+  if(!response.ok) throw new Error("Server session tasdiqlanmadi");
+}
 
 const provider = new GoogleAuthProvider();
 // Do not force account selection. Returning users keep their Firebase session
@@ -797,37 +815,37 @@ function userAreaContains(target){
 
 const sources = {
 
-  "읽기 1–2":"test-01.html",
+  "읽기 1–2":"/api/test/test-01",
 
-  "읽기 3–4":"test-02.html",
+  "읽기 3–4":"/api/test/test-02",
 
-  "읽기 5":"test-03.html",
+  "읽기 5":"/api/test/test-03",
 
-  "읽기 6":"test-04.html",
+  "읽기 6":"/api/test/test-04",
 
-  "읽기 7":"test-05.html",
+  "읽기 7":"/api/test/test-05",
 
-  "읽기 8":"test-06.html",
+  "읽기 8":"/api/test/test-06",
 
-  "읽기 9":"test-07.html",
+  "읽기 9":"/api/test/test-07",
 
-  "읽기 10":"test-08.html",
+  "읽기 10":"/api/test/test-08",
 
-  "읽기 11–12":"test-09.html",
+  "읽기 11–12":"/api/test/test-09",
 
-  "읽기 13–15":"test-10.html",
+  "읽기 13–15":"/api/test/test-10",
 
-  "읽기 16–18":"test-11.html",
+  "읽기 16–18":"/api/test/test-11",
 
-  "읽기 19–20":"test-12.html",
+  "읽기 19–20":"/api/test/test-12",
 
-  "읽기 21–22":"test-13.html",
+  "읽기 21–22":"/api/test/test-13",
 
-  "읽기 23–24":"test-14.html",
+  "읽기 23–24":"/api/test/test-14",
 
-  "읽기 25–27":"test-15.html",
+  "읽기 25–27":"/api/test/test-15",
 
-  "읽기 28–31":"test-16.html"
+  "읽기 28–31":"/api/test/test-16"
 
 };
 
@@ -915,6 +933,7 @@ logoutBtn.addEventListener(
     try{
 
       await signOut(auth);
+      try{ await fetch("/api/auth/logout", {method:"POST", credentials:"include"}); }catch(e){}
 
     }catch(err){
 
@@ -946,6 +965,7 @@ onAuthStateChanged(
     }
 
     try{
+      await syncServerSession(user);
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       const now = serverTimestamp();
@@ -983,6 +1003,7 @@ onAuthStateChanged(
       app.style.display = "none";
       app.setAttribute("aria-hidden", "true");
       try{ await signOut(auth); }catch(e){}
+      try{ await fetch("/api/auth/logout", {method:"POST", credentials:"include"}); }catch(e){}
     }
   }
 );

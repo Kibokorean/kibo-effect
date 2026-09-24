@@ -14,3 +14,11 @@ For production, enable Firebase App Check for the Firebase products used by the 
 
 ## Important limitation
 Static HTML/JS shipped to a browser cannot keep client-side lesson content, Firebase web config, or other frontend data secret. Anything that must remain secret must be moved to a trusted server/Cloud Function and never returned to unauthorized clients.
+
+## Protected test delivery
+The test pages are no longer shipped as public `test-XX.html` files. They are served through Vercel Serverless Functions after Firebase Authentication and App Check have been verified server-side. The server session is an HttpOnly/Secure cookie and expires after 1 hour.
+
+Server-side Firebase Admin credentials must exist only as Vercel Environment Variables. Never commit a service-account JSON file or `FIREBASE_PRIVATE_KEY` to GitHub.
+
+### Stronger answer-key protection
+The current protected delivery prevents unauthenticated direct URL access, but the browser still receives the answer key for client-side grading. A future server-side grading endpoint is required if the answer key must never be exposed to an authenticated browser.
