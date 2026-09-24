@@ -22,3 +22,10 @@ Server-side Firebase Admin credentials must exist only as Vercel Environment Var
 
 ### Stronger answer-key protection
 The current protected delivery prevents unauthenticated direct URL access, but the browser still receives the answer key for client-side grading. A future server-side grading endpoint is required if the answer key must never be exposed to an authenticated browser.
+
+
+### Server-side grading (V14)
+- Correct-answer indices are removed from the HTML delivered to browsers.
+- `/api/test/grade` verifies the Firebase session and Firebase App Check token.
+- Each protected test load creates a one-time Firestore attempt; a transaction marks it used, preventing repeated answer-oracle requests.
+- Answer keys are server-only and are not returned by the grading API.

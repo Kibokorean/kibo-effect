@@ -28,3 +28,9 @@ Create a dedicated Firebase/GCP service account for the server-side KIBO endpoin
 ## Important limitation
 
 This protects the test pages from unauthenticated direct URL access. Once an authenticated user is allowed to view a test, the browser necessarily receives the test HTML and client-side answer key, so a determined authorized user can still inspect it. For stronger protection of answer keys, the next step is server-side grading where answers never reach the browser before submission.
+
+
+## V14 server-side grading
+The browser receives questions and options without correct-answer indices. On submission it sends only selected option indices to `/api/test/grade`; Firebase Admin checks them against server-only answer keys. Each test load gets a one-time Firestore attempt token.
+
+Optional: configure a Firestore TTL policy on `expiresAt` for the `testAttempts` collection to automatically remove expired attempt documents.
