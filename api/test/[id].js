@@ -54,7 +54,11 @@ module.exports = async function handler(req,res){
     const now=Date.now();
     await getFirestore(adminApp).collection("testAttempts").doc(attemptId).set({uid:decoded.uid,testId:id,used:false,createdAt:Timestamp.fromMillis(now),expiresAt:Timestamp.fromMillis(now+30*60*1000)});
 
-    const html=Buffer.from(TESTS[id],"base64").toString("utf8");
+   const rawHtml = Buffer.from(TESTS[id], "base64").toString("utf8");
+   const html = rawHtml.replace(
+  /(["'(])(?:\.\/)?header-logo\.png(["')])/g,
+  '$1/header-logo.png$2'
+);
     res.status(200);
     res.setHeader("Set-Cookie",`__kibo_attempt=${encodeURIComponent(attemptId)}; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax`);
     res.setHeader("Content-Type","text/html; charset=utf-8");
