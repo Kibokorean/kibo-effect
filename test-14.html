@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIBO EFFECT - TOPIK II 읽기 23-24</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#070b17; --bg2:#101a33; --bg3:#172548;
+  --card:rgba(18,28,52,.88); --card2:rgba(27,39,71,.95);
+  --text:#f7f9ff; --muted:#a9b3c8;
+  --border:rgba(255,255,255,.10);
+  --yellow:#f6c453; --yellow2:#ffde83;
+  --green:#35d07f; --red:#ff6476; --blue:#24355d;
+  --shadow:0 14px 38px rgba(0,0,0,.30);
+  --page-bg:
+    radial-gradient(circle at 10% 0%,rgba(246,196,83,.10),transparent 24%),
+    radial-gradient(circle at 90% 100%,rgba(93,135,255,.14),transparent 25%),
+    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+}
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; color:var(--text);
+  font-family:"Inter","Noto Sans KR",Arial,sans-serif;
+  background:var(--page-bg);
+}
+button{font-family:inherit}
+body.day{
+  --bg1:#f3f4f6; --bg2:#f3f4f6; --bg3:#f3f4f6;
+  --card:#fff; --card2:#fff; --text:#111; --muted:#5f6368;
+  --border:#d9d9d9; --blue:#e9ecef; --shadow:0 2px 8px rgba(0,0,0,.05);
+  --page-bg:#f3f4f6;
+}
+.page-shell{min-height:100vh}
+header{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; gap:20px;
+  padding:15px 32px; min-height:88px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,11,23,.88); backdrop-filter:blur(14px);
+}
+body.day header{background:#fff;box-shadow:none}
+.header-left{display:flex;align-items:center;gap:14px;min-width:0}
+.header-logo{
+  width:58px;height:58px;object-fit:cover;border-radius:50%;
+  border:2px solid var(--yellow);background:#000;
+  box-shadow:0 0 15px rgba(246,196,83,.45);flex:none;
+}
+.brand h1{margin:0;font-size:27px;font-weight:800;letter-spacing:-.4px}
+.header-tools{
+  margin-left:auto;display:flex;align-items:center;justify-content:flex-end;
+  gap:12px;flex-wrap:nowrap;min-width:0;
+}
+.topik-badge{
+  color:var(--yellow);font-weight:800;font-size:15px;
+  padding:9px 16px;border:1px solid rgba(246,196,83,.25);
+  border-radius:30px;background:rgba(246,196,83,.09);
+  white-space:nowrap;
+}
+body.day .topik-badge{color:#333;background:#f5f5f5;border-color:#d7d7d7}
+.zoom-controls,.mode-button{
+  width:185px;height:56px;padding:5px;border-radius:18px;
+  display:flex;align-items:center;gap:8px;
+  flex:none;
+}
+.zoom-controls{
+  background:#111620;border:1px solid #303746;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+body.day .zoom-controls{background:#f5f5f5;border-color:#d7d7d7;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.zoom-btn{
+  width:44px;height:44px;border-radius:12px;
+  background:#202530;border:1px solid #3b4352;color:#fff;
+  font-size:24px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+body.day .zoom-btn{background:#fff;color:#222;border-color:#d5d5d5}
+.zoom-value{flex:1;text-align:center;font-size:18px;font-weight:700;color:#d8deea}
+body.day .zoom-value{color:#333}
+.mode-button{
+  width:160px;border:1px solid #303746;background:#111620;color:#fff;
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+body.day .mode-button{background:#f5f5f5;color:#333;border-color:#d7d7d7;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.mode-icon{
+  width:44px;height:44px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:#202530;border:1px solid #3b4352;font-size:21px;
+}
+body.day .mode-icon{background:#fff;color:#333;border-color:#d5d5d5}
+.mode-label{font-size:14px;font-weight:700;white-space:nowrap}
+
+.container{
+  max-width:1450px;margin:auto;padding:28px;
+  display:grid;grid-template-columns:340px 1fr;gap:25px;
+}
+.container.zoom-large{grid-template-columns:1fr!important}
+.container.zoom-large .sidebar{
+  position:relative;top:0;width:100%;grid-column:1;order:-1;
+}
+.container.zoom-large .questions{width:100%;grid-column:1;order:2}
+.sidebar{
+  position:sticky;top:100px;align-self:start;padding:24px;
+  border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);
+}
+.sidebar h2{margin:0 0 14px;color:var(--yellow);font-size:24px;font-weight:800}
+body.day .sidebar h2{color:#111}
+.sidebar p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.progress-box{
+  margin-top:20px;padding:16px;border-radius:16px;
+  border:1px solid rgba(246,196,83,.20);background:rgba(246,196,83,.06);
+}
+.progress-title{display:flex;justify-content:space-between;margin-bottom:10px;font-size:14px;font-weight:700}
+.progress-bar{height:11px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.10)}
+body.day .progress-bar{background:#e7e7e7}
+.progress-fill{width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f6c453,#ffde83);transition:.25s}
+.progress-info{margin-top:10px;color:var(--yellow2);font-size:13px;font-weight:700}
+body.day .progress-info{color:#8a6700}
+.info-box{
+  margin-top:18px;padding:14px;border:1px solid var(--border);
+  border-radius:14px;color:var(--muted);background:rgba(255,255,255,.03);
+  line-height:1.65;font-size:13px;
+}
+.questions{display:flex;flex-direction:column;gap:18px;min-width:0}
+.question-card{
+  padding:22px;border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);transition:.2s;
+}
+.question-card:hover{transform:translateY(-2px);border-color:rgba(246,196,83,.4)}
+.question-card.is-correct{border-color:rgba(53,208,127,.8)}
+.question-card.is-wrong,.question-card.is-unanswered{border-color:rgba(255,100,118,.8)}
+.question-card.locked .option{cursor:pointer}
+.q-top{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.q-num{
+  width:35px;height:35px;display:flex;align-items:center;justify-content:center;
+  border-radius:10px;color:#1a1608;font-weight:800;
+  background:linear-gradient(135deg,#f6c453,#ffde83);flex:none;
+}
+.q-page{color:var(--muted);font-size:14px}
+.q-status{
+  display:none;margin-left:auto;padding:7px 10px;border-radius:99px;
+  font-size:12px;font-weight:800;white-space:nowrap;
+}
+.q-status.show{display:block}
+.q-status.correct{color:#b7ffd6;background:rgba(53,208,127,.14);border:1px solid rgba(53,208,127,.35)}
+.q-status.wrong{color:#fff;background:#e5485d;border:1px solid #ff7181}
+body.day .q-status.correct{color:#116b3b;background:#eafaf1;border-color:#73d7a2}
+body.day .q-status.wrong{color:#a61d32;background:#fff0f2;border-color:#f0a0aa}
+.q-text{
+  margin-bottom:18px;padding:22px;border:1px solid #e4dccb;
+  border-radius:16px;color:#222;
+  background:#fff;
+  font-size:21px;font-weight:700;line-height:1.7;text-align:center;word-break:keep-all;
+}
+.q-subtext{display:block;margin-top:7px;color:#666;font-size:19px;font-weight:500}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.option{
+  padding:14px 16px;border:1px solid var(--border);border-radius:13px;
+  color:var(--text);background:rgba(255,255,255,.035);font-size:16px;
+  cursor:pointer;transition:.2s;
+}
+.option:hover{color:#fff;border-color:rgba(246,196,83,.5);background:rgba(246,196,83,.08)}
+body.day .option{background:#fff;color:#222;border-color:#d9d9d9}
+body.day .option:hover{color:#111;background:#f8f8f8;border-color:#bdbdbd}
+.option.selected{color:#181307;font-weight:800;border-color:transparent;background:linear-gradient(135deg,#f6c453,#ffde83)}
+body.day .option.selected{color:#111;background:#e9ecef;border-color:#bfc4ca}
+.option.answer-correct{color:#04160c!important;font-weight:800;border-color:transparent!important;background:linear-gradient(135deg,#35d07f,#91f5bc)!important}
+.option.answer-wrong{color:#fff!important;font-weight:800;border-color:rgba(255,100,118,.7)!important;background:linear-gradient(135deg,#d94256,#ff7181)!important}
+.finish-area,.result-panel{padding:28px;text-align:center;border-radius:22px;box-shadow:var(--shadow)}
+.finish-area{border:1px solid rgba(246,196,83,.22);background:rgba(246,196,83,.06)}
+.finish-area h2{margin:0 0 8px;color:var(--yellow)}
+body.day .finish-area h2{color:#111}
+.finish-area p{color:var(--muted)}
+.btn{
+  padding:13px 20px;border:none;border-radius:11px;color:#1b1608;
+  font:700 16px inherit;cursor:pointer;background:linear-gradient(135deg,#f6c453,#ffde83);transition:.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-green{color:#06160c;background:linear-gradient(135deg,#31d57f,#83f3b6)}
+.btn-blue{color:#fff;background:#24355d;border:1px solid var(--border)}
+body.day .btn-blue{background:#f0f0f0;color:#111;border-color:#d2d2d2}
+.result-panel{
+  border:1px solid rgba(53,208,127,.4);
+  background:radial-gradient(circle at top right,rgba(53,208,127,.12),transparent 28%),linear-gradient(180deg,rgba(25,47,51,.96),rgba(17,33,49,.96));
+}
+body.day .result-panel{background:#fff;border-color:#9bd9b7}
+.result-panel[hidden],.modal[hidden]{display:none}
+.result-title{margin:0 0 18px;color:#b7ffd6;font-size:26px}
+body.day .result-title{color:#176b42}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.score-card{text-align:left;padding:16px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.04)}
+body.day .score-card{background:#fff}
+.score-card span{display:block;margin-bottom:7px;color:var(--muted);font-size:13px}
+.score-card strong{font-size:24px}
+.green{color:#35d07f}.red{color:#ff6476}.yellow{color:#f6c453}
+body.day .green{color:#16834d}body.day .red{color:#c52f44}body.day .yellow{color:#9a7200}
+.result-lists{display:grid;grid-template-columns:1fr 1fr;gap:15px;text-align:left}
+.list-card{padding:17px;border:1px solid var(--border);border-radius:16px;background:rgba(0,0,0,.14)}
+body.day .list-card{background:#fafafa}
+.list-card h3{margin:0 0 12px;font-size:15px}
+.good h3{color:var(--green)}.bad h3{color:var(--red)}
+.list-card ul{max-height:270px;overflow:auto;padding-left:20px;margin:0;color:var(--text);font-size:13px;line-height:1.7}
+.result-actions,.modal-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.modal{
+  position:fixed;inset:0;z-index:999;display:flex;justify-content:center;align-items:center;
+  padding:20px;background:rgba(3,6,14,.88);backdrop-filter:blur(8px);
+}
+.modal-content{
+  width:min(750px,100%);max-height:94vh;overflow:auto;padding:20px;
+  border:1px solid var(--border);border-radius:22px;background:#111a31;
+}
+body.day .modal-content{background:#fff;border-color:#d9d9d9}
+.modal-content h2{margin:0 0 8px;color:var(--yellow)}
+body.day .modal-content h2{color:#111}
+.modal-content p{color:var(--muted);font-size:13px;line-height:1.6}
+#resultImage{display:block;width:100%;border-radius:14px;border:1px solid var(--border)}
+body.day #resultImage{background:#fff}
+@media(max-width:1100px){
+  header{gap:12px;padding:14px 20px}
+  .header-tools{gap:8px}
+  .brand h1{font-size:23px}
+}
+@media(max-width:1050px){
+  .container{grid-template-columns:1fr}
+  .sidebar{position:relative;top:0}
+}
+@media(max-width:780px){
+  header{align-items:center;overflow-x:auto}
+  .header-left{flex:none}
+  .header-tools{margin-left:auto;flex:none}
+  .container{padding:18px}
+  .q-text{font-size:20px;padding:17px}
+  .q-subtext{font-size:16px}
+}
+@media(max-width:600px){
+  .options{grid-template-columns:1fr}
+  .score-grid,.result-lists{grid-template-columns:1fr}
+  .header-logo{width:48px;height:48px}
+  .brand h1{font-size:20px}
+}
+
+/* DAY MODE: savolning ichki matn qutisi oq */
+body.day .q-text {
+  background: #ffffff !important;
+  color: #222222 !important;
+  border-color: #d9d9d9 !important;
+  box-shadow: none !important;
+}
+body.day .q-subtext {
+  color: #666666 !important;
+}
+
+
+.option.review-locked{pointer-events:none !important;cursor:default !important;}
+
+/* NIGHT MODE FIX: the question/passage box must NOT be white */
+body:not(.day) .q-text{
+  background:linear-gradient(180deg,#18233c,#141f36) !important;
+  color:#f5f7ff !important;
+  border:1px solid #30405f !important;
+  box-shadow:none !important;
+}
+body:not(.day) .q-text .q-subtext,
+body:not(.day) .q-subtext{
+  color:#dfe5f2 !important;
+}
+body:not(.day) .q-text strong,
+body:not(.day) .q-text span{
+  color:inherit !important;
+}
+
+
+    .passage{margin-bottom:18px;padding:22px;border-radius:16px;border:1px solid rgba(246,196,83,.15);background:linear-gradient(135deg,rgba(246,196,83,.07),rgba(255,255,255,.02)),rgba(0,0,0,.12);color:#e8edf8;font-size:19px;line-height:2;word-break:keep-all;text-align:justify;}
+    .blank-word{color:var(--yellow);font-weight:800;background:rgba(246,196,83,.12);padding:2px 8px;border-radius:6px;}
+
+/* DAY MODE FIX — restore readable passage text */
+body.day .q-text,
+body.day .q-text *{
+  color:#222 !important;
+}
+body.day .q-text{
+  background:#fff !important;
+  border-color:#e4dccb !important;
+}
+body.day .q-subtext{
+  color:#555 !important;
+}
+body.day .blank-word{
+  color:#9a7100 !important;
+  background:#fff6d7 !important;
+}
+
+
+/* ===== FINAL DAY MODE READABILITY FIX ===== */
+body.day .q-text,
+body.day .q-text *,
+body.day .passage,
+body.day .passage *,
+body.day .question-text,
+body.day .question-text *,
+body.day .question-card .q-text {
+    color: #222222 !important;
+}
+
+body.day .q-text,
+body.day .passage,
+body.day .question-text {
+    background: #ffffff !important;
+    border-color: #e4dccb !important;
+}
+
+body.day .q-subtext,
+body.day .q-page,
+body.day .muted,
+body.day .description {
+    color: #666666 !important;
+}
+
+body.day .blank-word,
+body.day .blank,
+body.day .blank-word * {
+    color: #9a7100 !important;
+    background: #fff6d7 !important;
+}
+
+body.day .option,
+body.day .option * {
+    color: #333333 !important;
+}
+
+body.day .option.selected,
+body.day .option.selected * {
+    color: #222222 !important;
+}
+
+body.day .question-card {
+    color: #222222 !important;
+}
+
+
+/* ===== PRESERVE ORIGINAL UNDERLINES ===== */
+.passage u,
+.passage .underline,
+.passage span[style*="text-decoration: underline"],
+.passage span[style*="text-decoration:underline"] {
+  text-decoration: underline !important;
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
+}
+
+body.day .passage u,
+body.day .passage .underline,
+body.day .passage span[style*="text-decoration: underline"],
+body.day .passage span[style*="text-decoration:underline"] {
+  text-decoration: underline !important;
+  text-decoration-line: underline !important;
+}
+
+
+/* EXACT ORIGINAL INLINE FORMATTING */
+.question-card .q-text u,
+.question-card .q-text s,
+.question-card .q-text strong,
+.question-card .q-text em,
+.question-card .q-text b,
+.question-card .q-text i {
+  font: inherit;
+}
+.question-card .q-text u {
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-decoration-thickness: auto !important;
+  text-underline-offset: auto !important;
+}
+body.day .question-card .q-text u {
+  text-decoration-line: underline !important;
+}
+body:not(.day) .question-card .q-text u {
+  text-decoration-line: underline !important;
+}
+
+
+/* Also support ordinary underline tags if present in future source files. */
+.question-card .q-text u {
+  text-decoration-line: underline !important;
+  text-decoration-color: #f2c94c !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+  text-decoration-style: solid !important;
+}
+
+/* Day Mode keeps the same yellow underline. */
+body.day .question-card .q-text .underline,
+body.day .question-card .q-text .underlined,
+body.day .question-card .q-text [data-underline="true"],
+body.day .question-card .q-text .yellow-underline,
+body.day .question-card .q-text .highlight-underline,
+body.day .question-card .q-text u {
+  text-decoration-color: #d8a900 !important;
+}
+
+
+/* ===== ORIGINAL 23-24 QUESTION TYPES + UNDERLINE ===== */
+.question-card .q-text u,
+.question-card .q-text [style*="text-decoration: underline"],
+.question-card .q-text [style*="text-decoration:underline"],
+.question-card .q-text .underline,
+.question-card .q-text .underlined,
+.question-card .q-text .yellow-underline {
+  text-decoration-line: underline !important;
+  text-decoration-color: #f2c94c !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+}
+body.day .question-card .q-text u,
+body.day .question-card .q-text [style*="text-decoration: underline"],
+body.day .question-card .q-text [style*="text-decoration:underline"],
+body.day .question-card .q-text .underline,
+body.day .question-card .q-text .underlined,
+body.day .question-card .q-text .yellow-underline {
+  text-decoration-color: #d8a900 !important;
+}
+
+/* Keep the original question-type/source labels visible in both modes. */
+body.day .q-page,
+body.day .q-label,
+body.day .question-type {
+  color:#666 !important;
+}
+
+
+/* ===== EXACT SOURCE UNDERLINE ===== */
+.question-card .q-text .source-underline {
+  text-decoration-line: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: rgba(246,196,83,.95) !important;
+  font-weight: 700 !important;
+}
+body.day .question-card .q-text .source-underline {
+  text-decoration-color: #d8a900 !important;
+}
+
+
+/* =========================================================
+   KIBO MASTER — FINAL DAY MODE
+   Do not alter question content or layout.
+   ========================================================= */
+
+body.day {
+  background: #f3f4f6 !important;
+  color: #222 !important;
+}
+
+body.day header,
+body.day main,
+body.day .question-card,
+body.day .question-card * {
+  box-sizing: border-box;
+}
+
+body.day .question-card {
+  background: #ffffff !important;
+  color: #222 !important;
+  border-color: #d9d9d9 !important;
+}
+
+body.day .q-page,
+body.day .q-label {
+  color: #666 !important;
+}
+
+body.day .q-num {
+  color: #171717 !important;
+}
+
+body.day .q-text,
+body.day .q-text p,
+body.day .q-text div,
+body.day .q-text span,
+body.day .q-text td,
+body.day .q-text th,
+body.day .q-text li {
+  color: #333 !important;
+}
+
+body.day .q-text {
+  background: #ffffff !important;
+  border-color: #e4dccb !important;
+}
+
+body.day .option,
+body.day .option span,
+body.day .option div {
+  color: #333 !important;
+  background: #ffffff !important;
+  border-color: #d9d9d9 !important;
+}
+
+body.day .option:hover {
+  color: #222 !important;
+  background: #fff8e5 !important;
+}
+
+body.day .option.selected,
+body.day .option.selected span,
+body.day .option.selected div {
+  color: #222 !important;
+}
+
+body.day .passage,
+body.day .passage p,
+body.day .passage div,
+body.day .passage span,
+body.day .passage td,
+body.day .passage th,
+body.day .passage li {
+  color: #333 !important;
+}
+
+body.day .passage {
+  background: #ffffff !important;
+}
+
+body.day .passage table,
+body.day .passage th,
+body.day .passage td {
+  border-color: #d9d9d9 !important;
+}
+
+body.day .passage th {
+  background: #f5f5f5 !important;
+}
+
+body.day .q-text .source-underline,
+body.day .q-text u,
+body.day .q-text [style*="text-decoration"] {
+  text-decoration-line: underline !important;
+  text-decoration-color: #d8a900 !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+}
+
+/* Do not let Day Mode hide the MASTER result/status badges. */
+body.day .result,
+body.day .result *,
+body.day .status,
+body.day .status * {
+  color: inherit;
+}
+
+/* SVG/chart text remains readable in Day Mode. */
+body.day .passage svg text,
+body.day .q-text svg text {
+  fill: #333 !important;
+}
+
+/* Keep the yellow number badges and semantic feedback colors. */
+body.day .q-num {
+  background: #ffd76a !important;
+}
+
+
+/* ===== FIX: ORIGINAL YELLOW UNDERLINES IN PASSAGE ===== */
+.question-card .passage .source-underline {
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: rgba(246,196,83,.95) !important;
+  font-weight: 700 !important;
+}
+
+body.day .question-card .passage .source-underline {
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: #d8a900 !important;
+  font-weight: 700 !important;
+}
+
+
+/* ===== FINAL 23-24 CONTENT PRESERVATION ===== */
+.question-card .passage .source-underline {
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: #f2c94c !important;
+  font-weight: 700 !important;
+}
+body.day .question-card .passage .source-underline {
+  text-decoration-color: #d8a900 !important;
+}
+
+/* Source question type remains visible in Day Mode. */
+body.day .q-page {
+  color: #666 !important;
+}
+
+/* Day Mode readable passage without flattening source formatting. */
+body.day .passage {
+  color: #222 !important;
+  background: #fff !important;
+}
+body.day .passage p,
+body.day .passage div,
+body.day .passage span,
+body.day .passage strong,
+body.day .passage b,
+body.day .passage em,
+body.day .passage i,
+body.day .passage li,
+body.day .passage td,
+body.day .passage th {
+  color: inherit !important;
+}
+
+/* Keep the underline visible even when inherited color is forced above. */
+body.day .passage .source-underline {
+  text-decoration-color: #d8a900 !important;
+}
+
+
+/* ===== FINAL DAY MODE REVIEW FEEDBACK ===== */
+/* Day Mode's .option.selected rule was overriding the review colors.
+   These selectors intentionally have higher specificity. */
+body.day .option.answer-correct,
+body.day .option.answer-correct:hover,
+body.day .option.answer-correct:focus {
+  color: #04160c !important;
+  font-weight: 800 !important;
+  border-color: #35b970 !important;
+  background: linear-gradient(135deg,#35d07f,#91f5bc) !important;
+  box-shadow: none !important;
+}
+
+body.day .option.answer-wrong,
+body.day .option.answer-wrong:hover,
+body.day .option.answer-wrong:focus {
+  color: #fff !important;
+  font-weight: 800 !important;
+  border-color: #e5485d !important;
+  background: linear-gradient(135deg,#d94256,#ff7181) !important;
+  box-shadow: none !important;
+}
+
+/* When the test has been checked, keep the correct/wrong state visible
+   even though the selected option is locked. */
+body.day .option.review-locked.answer-correct {
+  color: #04160c !important;
+  background: linear-gradient(135deg,#35d07f,#91f5bc) !important;
+  border-color: #35b970 !important;
+}
+
+body.day .option.review-locked.answer-wrong {
+  color: #fff !important;
+  background: linear-gradient(135deg,#d94256,#ff7181) !important;
+  border-color: #e5485d !important;
+}
+
+</style>
+<script>const __kiboStorage=(()=>{try{const s=window.localStorage;s.getItem('__kibo_probe__');return s}catch(e){const d={};return{getItem:k=>Object.prototype.hasOwnProperty.call(d,k)?d[k]:null,setItem:(k,v)=>d[k]=String(v),removeItem:k=>delete d[k],clear:()=>Object.keys(d).forEach(k=>delete d[k])}}})()</script><style>.kibo-home{height:56px;padding:0 15px;border:1px solid #303746;border-radius:18px;background:#111620;color:#f6c453;font:800 14px/1 Inter,Arial,sans-serif;cursor:pointer;white-space:nowrap}.kibo-home:hover{background:#202530}.day .kibo-home{background:#f5f5f5;border-color:#d7d7d7;color:#333}@media(max-width:700px){.kibo-home{height:42px;padding:0 10px;border-radius:12px;font-size:12px}}</style></head>
+<body>
+<div class="page-shell">
+
+<header>
+  <div class="header-left">
+    <img class="header-logo" src="header-logo.png" alt="KIBO Korean Logo" loading="eager" decoding="async">
+    <div class="brand"><h1>KIBO EFFECT</h1></div>
+  </div>
+  <div class="header-tools">
+    <button type="button" class="kibo-home" onclick="parent.postMessage({type:'kibo-home'},'*')">← Bosh sahifa</button><div class="topik-badge">TOPIK II 읽기 23-24</div>
+    <div class="zoom-controls" aria-label="Matn o‘lchami">
+      <button type="button" class="zoom-btn" id="zoomOut" aria-label="Kichraytirish" title="Kichraytirish">−</button>
+      <span class="zoom-value" id="zoomValue">100%</span>
+      <button type="button" class="zoom-btn" id="zoomIn" aria-label="Yaqinlashtirish" title="Yaqinlashtirish">+</button>
+    </div>
+    <button type="button" id="themeToggle" class="mode-button" aria-label="Day mode'ga o'tish" title="Day/Night mode">
+      <span class="mode-icon" id="themeIcon">🌙</span>
+      <span class="mode-label" id="themeLabel">Night mode</span>
+    </button>
+  </div>
+</header>
+
+<div class="container" id="mainContainer">
+  <aside class="sidebar">
+    <h2>Reading Challenge</h2>
+    <p>Berilgan reklama yoki e’lon nimaga oid ekanini toping. Har bir savol uchun eng mos keluvchi javobni tanlang.</p>
+
+    <div class="progress-box">
+      <div class="progress-title">
+        <span>Test bajarilishi</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-info" id="progressInfo">Belgilangan: 0 / 20</div>
+    </div>
+  </aside>
+
+  <main class="questions">
+    <div id="questionsContainer"></div>
+
+    <section class="finish-area">
+      <h2>Test tugadimi?</h2>
+      <p>Javoblarni tekshirish uchun tugmani bosing.</p>
+      <button type="button" class="btn" id="checkBtn">✓ Natijani tekshirish</button>
+    </section>
+
+    <section class="result-panel" id="resultPanel" hidden>
+      <h2 class="result-title">Test natijasi</h2>
+
+      <div class="score-grid">
+        <div class="score-card">
+          <span>To‘g‘ri javoblar</span>
+          <strong class="green" id="correctScore">0 / 20</strong>
+        </div>
+        <div class="score-card">
+          <span>Xato / bo‘sh javoblar</span>
+          <strong class="red" id="wrongScore">0 / 20</strong>
+        </div>
+        <div class="score-card">
+          <span>Natija foizi</span>
+          <strong class="yellow" id="resultPercent">0%</strong>
+        </div>
+      </div>
+
+      <div class="result-lists" id="resultLists"></div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-green" id="saveResultBtn">🖼 Natijani rasmga saqlash</button>
+        <button type="button" class="btn btn-blue" id="scrollTopBtn">↑ Tepaga qaytish</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="imageModal" hidden>
+  <div class="modal-content">
+    <h2>Natija rasmi tayyor</h2>
+    <p>PNG rasmni ko‘rib chiqing. Telefoningizda ulashish orqali Galereya/Photos yoki boshqa ilovaga yuborishingiz mumkin.</p>
+    <img id="resultImage" alt="KIBO EFFECT test natijasi">
+    <div class="modal-actions">
+      <button type="button" class="btn btn-green" id="shareBtn">↗ Ulashish</button>
+      <button type="button" class="btn btn-blue" id="downloadBtn">⬇ Yuklab olish</button>
+      <button type="button" class="btn btn-blue" id="closeModalBtn">✕ Yopish</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+
+const letters = ["①","②","③","④"];
+const questionData = [
+  {
+    "qnum": "1",
+    "source": "TOPIK II 읽기 23 · p.1",
+    "passage": "나는 매일 지하철로 등교한다. 지하철을 타고 가다 보면 여러 사람들의 다양한 모습을 보게 된다. 그런데 일주일에 서너 번 눈살을 찌푸리게 만드는 광경을 본다. 젊은 사람들이 자신의 자리인 양 '노약자석'에 앉아 신문이나 잡지를 읽고 있고, 노약자들은 그 앞에서 비를 맞은 나무처럼 힘겹게 서 있는 모습이다. 그런 광경을 볼 때마다 나는 <span class=\"source-underline\">얼굴이 화끈거린다.</span> 오늘도 지하철에 앉아 휴대폰으로 세상을 보는 당신, 당신이 무심코 앉은 자리가 혹시 노약자를 위한 자리는 아닌지 확인해 보라. 노약자석은 우리 이웃을 위한 최소한의 배려이다. 신문이나 잡지로 세상을 보기 전에 주변을 먼저 보는 마음을 가지는 것은 어떨까?",
+    "options": [
+      "어색하다",
+      "창피하다",
+      "감격스럽다",
+      "자랑스럽다"
+    ],
+    "answer": 1
+  },
+  {
+    "qnum": "2",
+    "source": "TOPIK II 읽기 24 · p.1",
+    "passage": "나는 매일 지하철로 등교한다. 지하철을 타고 가다 보면 여러 사람들의 다양한 모습을 보게 된다. 그런데 일주일에 서너 번 눈살을 찌푸리게 만드는 광경을 본다. 젊은 사람들이 자신의 자리인 양 '노약자석'에 앉아 신문이나 잡지를 읽고 있고, 노약자들은 그 앞에서 비를 맞은 나무처럼 힘겹게 서 있는 모습이다. 그런 광경을 볼 때마다 나는 <span class=\"source-underline\">얼굴이 화끈거린다.</span> 오늘도 지하철에 앉아 휴대폰으로 세상을 보는 당신, 당신이 무심코 앉은 자리가 혹시 노약자를 위한 자리는 아닌지 확인해 보라. 노약자석은 우리 이웃을 위한 최소한의 배려이다. 신문이나 잡지로 세상을 보기 전에 주변을 먼저 보는 마음을 가지는 것은 어떨까?",
+    "options": [
+      "나는 지하철에서 휴대폰을 주로 본다.",
+      "노약자들은 주변을 먼저 보는 마음을 가지고 있다.",
+      "지하철에서 무심코 앉은 자리가 노약자석일 수도 있다.",
+      "젊은 사람들이 노약자석에 앉아 있는 것을 매일 볼 수 있다."
+    ],
+    "answer": 2
+  },
+  {
+    "qnum": "3",
+    "source": "TOPIK II 읽기 23 · p.2",
+    "passage": "나의 막내아들은 작년에 초등학교 1학년이 되었어야 할 나이다. 하지만 아직 학교 근처에도 못 가고 있다. 이 아이가 매우 드문 병에 걸린 것은 벌써 2년 전의 일이다. 그때 수술을 받고 지금까지 치료를 받아 왔다. 그런데 며칠 전부터 아이의 상태가 심상치 않았다. 아이는 계속 고열에 시달렸다. 우리 부부는 아이의 병이 다시 재발한다면 오늘날 의학으로는 치료 방법이 없다는 것을 알고 있었다. 아이의 손목을 잡고 병원 문을 들어서는 <span class=\"source-underline\">우리 부부는 무거운 돌이 가슴을 누르는 듯해 숨을 쉬기도 어려웠다.</span> 하지만 예상하지 못했던 검사 결과가 나왔다. 아이는 감기에 걸렸을 뿐, 예전의 병은 거짓말처럼 나은 것이다. 우리 부부는 너무 놀라서 한참 동안 움직일 수 없었다.",
+    "options": [
+      "불안하다",
+      "억울하다",
+      "허탈하다",
+      "한가하다"
+    ],
+    "answer": 0
+  },
+  {
+    "qnum": "4",
+    "source": "TOPIK II 읽기 24 · p.2",
+    "passage": "나의 막내아들은 작년에 초등학교 1학년이 되었어야 할 나이다. 하지만 아직 학교 근처에도 못 가고 있다. 이 아이가 매우 드문 병에 걸린 것은 벌써 2년 전의 일이다. 그때 수술을 받고 지금까지 치료를 받아 왔다. 그런데 며칠 전부터 아이의 상태가 심상치 않았다. 아이는 계속 고열에 시달렸다. 우리 부부는 아이의 병이 다시 재발한다면 오늘날 의학으로는 치료 방법이 없다는 것을 알고 있었다. 아이의 손목을 잡고 병원 문을 들어서는 <span class=\"source-underline\">우리 부부는 무거운 돌이 가슴을 누르는 듯해 숨을 쉬기도 어려웠다.</span> 하지만 예상하지 못했던 검사 결과가 나왔다. 아이는 감기에 걸렸을 뿐, 예전의 병은 거짓말처럼 나은 것이다. 우리 부부는 너무 놀라서 한참 동안 움직일 수 없었다.",
+    "options": [
+      "아이의 병이 다시 재발했다.",
+      "병이 나았다는 말은 거짓말이었다.",
+      "기대하지 않았던 검사 결과가 나왔다.",
+      "아이는 1년 전에 초등학교에 입학했다."
+    ],
+    "answer": 2
+  },
+  {
+    "qnum": "5",
+    "source": "TOPIK II 읽기 23 · p.3",
+    "passage": "텔레비전에서 그림자극을 보니 어린 시절 아빠와 함께 그림자놀이를 하던 기억이 떠올랐다. 손 모양을 바꿔 가며 귀여운 토끼도 만들고, 오리도 만들었던 생각이 난다. <span class=\"source-underline\">또 그림자놀이와 함께 아빠가 들려주시던 옛날이야기도 새록새록 떠올랐다.</span> 침대에 누워서 아빠가 들려주시는 이야기를 듣다 보면 나는 어느새 달콤한 꿈의 세계로 빠져들곤 했다. 하지만 지금은 이런 놀이에 흥미가 전혀 없다. 훨씬 더 재미있는 컴퓨터 게임이 있기 때문이다. 생각해 보면 내가 컴퓨터 게임을 하면서부터 아빠와 점점 멀어지게 된 것 같다. 오늘은 아빠와 함께 그림자놀이를 해 보고 싶다. 그러면 아빠와 다시 가까워질 수 있고, 옛 추억도 되살릴 수 있을 것만 같다.",
+    "options": [
+      "그립다",
+      "낯설다",
+      "담담하다",
+      "억울하다"
+    ],
+    "answer": 0
+  },
+  {
+    "qnum": "6",
+    "source": "TOPIK II 읽기 24 · p.3",
+    "passage": "텔레비전에서 그림자극을 보니 어린 시절 아빠와 함께 그림자놀이를 하던 기억이 떠올랐다. 손 모양을 바꿔 가며 귀여운 토끼도 만들고, 오리도 만들었던 생각이 난다. <span class=\"source-underline\">또 그림자놀이와 함께 아빠가 들려주시던 옛날이야기도 새록새록 떠올랐다.</span> 침대에 누워서 아빠가 들려주시는 이야기를 듣다 보면 나는 어느새 달콤한 꿈의 세계로 빠져들곤 했다. 하지만 지금은 이런 놀이에 흥미가 전혀 없다. 훨씬 더 재미있는 컴퓨터 게임이 있기 때문이다. 생각해 보면 내가 컴퓨터 게임을 하면서부터 아빠와 점점 멀어지게 된 것 같다. 오늘은 아빠와 함께 그림자놀이를 해 보고 싶다. 그러면 아빠와 다시 가까워질 수 있고, 옛 추억도 되살릴 수 있을 것만 같다.",
+    "options": [
+      "어렸을 때 그림자놀이를 하다가 잠이 들곤 했다.",
+      "지금은 그림자놀이보다 컴퓨터 게임에 빠져 있다.",
+      "지금도 토끼와 오리를 만드는 그림자놀이를 한다.",
+      "컴퓨터 게임을 통해 아빠와 내가 가까워질 수 있다."
+    ],
+    "answer": 1
+  },
+  {
+    "qnum": "7",
+    "source": "TOPIK II 읽기 23 · p.4",
+    "passage": "내가 초등학교 3학년 때다. 어느 여름날 할아버지는 나를 옥상으로 데리고 가시더니 망원경을 주시며 “자, 신라 갈빗집 간판을 한번 찾아 봐라. 찾으면 내일 돼지갈비 사 주마.”라고 말씀하셨다. 나는 렌즈를 이리저리 돌려 초점을 맞추며 열심히 갈빗집 간판을 찾았다. 그런데 한참을 찾았으나 간판은 보이지 않았다. 할아버지가 “멀리만 보려니까 안 보이지.” 하시며 가까운 곳을 찾아 보라고 하셨다. 옥상에서 불과 이십 미터 떨어진 거리에 갈빗집 간판이 크게 걸려 있었다. <span class=\"source-underline\">순간 멍한 기분이 들었다.</span> 이십 년이 지난 지금도 나는 그 망원경을 가지고 있다. 나의 욕심으로 인해 내 자신이 부족하다고 느껴질 때면 나는 그날을 떠올리면서 내 가까이 있는 것, 내가 가지고 있는 것의 가치를 생각해 보곤 한다.",
+    "options": [
+      "어이없다",
+      "속상하다",
+      "화가 나다",
+      "마음이 놓이다"
+    ],
+    "answer": 0
+  },
+  {
+    "qnum": "8",
+    "source": "TOPIK II 읽기 24 · p.4",
+    "passage": "내가 초등학교 3학년 때다. 어느 여름날 할아버지는 나를 옥상으로 데리고 가시더니 망원경을 주시며 “자, 신라 갈빗집 간판을 한번 찾아 봐라. 찾으면 내일 돼지갈비 사 주마.”라고 말씀하셨다. 나는 렌즈를 이리저리 돌려 초점을 맞추며 열심히 갈빗집 간판을 찾았다. 그런데 한참을 찾았으나 간판은 보이지 않았다. 할아버지가 “멀리만 보려니까 안 보이지.” 하시며 가까운 곳을 찾아 보라고 하셨다. 옥상에서 불과 이십 미터 떨어진 거리에 갈빗집 간판이 크게 걸려 있었다. <span class=\"source-underline\">순간 멍한 기분이 들었다.</span> 이십 년이 지난 지금도 나는 그 망원경을 가지고 있다. 나의 욕심으로 인해 내 자신이 부족하다고 느껴질 때면 나는 그날을 떠올리면서 내 가까이 있는 것, 내가 가지고 있는 것의 가치를 생각해 보곤 한다.",
+    "options": [
+      "나는 갈빗집 간판을 쉽게 찾을 수 있었다.",
+      "나는 할아버지가 주신 망원경을 간직하고 있다.",
+      "갈빗집 간판은 옥상에서 멀리 떨어진 곳에 있었다.",
+      "할아버지는 멀리 보는 것이 중요하다는 가르침을 주셨다."
+    ],
+    "answer": 1
+  },
+  {
+    "qnum": "9",
+    "source": "TOPIK II 읽기 23 · p.5",
+    "passage": "지난겨울, 비용이 부담되어 아이의 독감 예방 접종을 건너뛰었다. 그 결과 독감에 걸려 학교에도 못 간 딸에게 무척 미안했다. 올해는 꼭 접종해 주리라 마음먹고 딸과 함께 병원에 다녀왔다. 집에 돌아와 딸에게 “오늘은 푹 쉬어야 해. 목욕도 하면 안 돼.”하고 말했다. 그 말을 듣고 어머니가 말씀하셨다. “너도 예전 같지 않아서 감기에 자주 걸리던데…….” “엄마, 작년엔 아이도 못 맞혔어요. 저는 어린애도 아닌데요. 뭘.” 퉁명스러운 나의 대답에 어머니는 “애, 내 말한다고 그러지 마라. 너도 나에겐 하나뿐인 자식이란다.”하고 말씀하셨다. <span class=\"source-underline\">순간 가슴이 쿵 내려앉았다.</span> 아이의 엄마이자 한 사람의 어른이라고만 생각했던 내가 어머니에게는 늘 걱정되는 자식이었던 것이다.",
+    "options": [
+      "안쓰럽다",
+      "서운하다",
+      "깜짝 놀라다",
+      "불만족스럽다"
+    ],
+    "answer": 2
+  },
+  {
+    "qnum": "10",
+    "source": "TOPIK II 읽기 24 · p.5",
+    "passage": "지난겨울, 비용이 부담되어 아이의 독감 예방 접종을 건너뛰었다. 그 결과 독감에 걸려 학교에도 못 간 딸에게 무척 미안했다. 올해는 꼭 접종해 주리라 마음먹고 딸과 함께 병원에 다녀왔다. 집에 돌아와 딸에게 “오늘은 푹 쉬어야 해. 목욕도 하면 안 돼.”하고 말했다. 그 말을 듣고 어머니가 말씀하셨다. “너도 예전 같지 않아서 감기에 자주 걸리던데…….” “엄마, 작년엔 아이도 못 맞혔어요. 저는 어린애도 아닌데요. 뭘.” 퉁명스러운 나의 대답에 어머니는 “애, 내 말한다고 그러지 마라. 너도 나에겐 하나뿐인 자식이란다.”하고 말씀하셨다. <span class=\"source-underline\">순간 가슴이 쿵 내려앉았다.</span> 아이의 엄마이자 한 사람의 어른이라고만 생각했던 내가 어머니에게는 늘 걱정되는 자식이었던 것이다.",
+    "options": [
+      "나는 예전에 감기에 자주 걸렸다.",
+      "올해 딸아이가 독감에 걸려 학교에 못 갔다.",
+      "어머니를 제외하고 가족들 모두 예방 접종을 했다.",
+      "작년 겨울에 비용 때문에 아이의 예방 접종을 못 했다."
+    ],
+    "answer": 3
+  },
+  {
+    "qnum": "11",
+    "source": "TOPIK II 읽기 23 · p.6",
+    "passage": "고향 선배의 권유로 '목욕 관리사' 일을 시작했다. 처음에는 당장 먹고 살 걱정에 몇 년만 하고 그만둘 생각이었다. 그런데 막상 하고 보니 꽤 매력적인 직업이었다. 무엇보다 땀 흘려 일한다는 점이 적성에 잘 맞았다. 그런데 하루는 아들이 학교에서 가정 환경 조사서를 받아 왔다. 아이 얼굴이 떠올라서 <span class=\"source-underline\">부모 직업란에 '목욕 관리사'라고 쓰지 못하고 나는 잠시 망설였다.</span> 그날 이후 10년 동안 모은 돈으로 식당을 열었다. 하지만 경험 없이 차린 식당이 잘 될 리가 없었다. 결국 큰 빚을 지고 1년 만에 식당 문을 닫았다. 가장 잘할 수 있는 일을 찾던 나는 목욕탕으로 다시 돌아갔다. 나는 사람들의 몸을 닦는 예술가로 다시 돌아온 것이다.",
+    "options": [
+      "뿌듯하다",
+      "곤란하다",
+      "안타깝다",
+      "허무하다"
+    ],
+    "answer": 0
+  },
+  {
+    "qnum": "12",
+    "source": "TOPIK II 읽기 24 · p.6",
+    "passage": "고향 선배의 권유로 '목욕 관리사' 일을 시작했다. 처음에는 당장 먹고 살 걱정에 몇 년만 하고 그만둘 생각이었다. 그런데 막상 하고 보니 꽤 매력적인 직업이었다. 무엇보다 땀 흘려 일한다는 점이 적성에 잘 맞았다. 그런데 하루는 아들이 학교에서 가정 환경 조사서를 받아 왔다. 아이 얼굴이 떠올라서 <span class=\"source-underline\">부모 직업란에 '목욕 관리사'라고 쓰지 못하고 나는 잠시 망설였다.</span> 그날 이후 10년 동안 모은 돈으로 식당을 열었다. 하지만 경험 없이 차린 식당이 잘 될 리가 없었다. 결국 큰 빚을 지고 1년 만에 식당 문을 닫았다. 가장 잘할 수 있는 일을 찾던 나는 목욕탕으로 다시 돌아갔다. 나는 사람들의 몸을 닦는 예술가로 다시 돌아온 것이다.",
+    "options": [
+      "아들이 식당 일을 추천했다.",
+      "목욕 관리사로 일하면서 많은 빚을 졌다.",
+      "나에게 가장 잘 맞는 직업은 '목욕 관리사'다.",
+      "몇 년만 하고 그만둘 생각으로 식당을 개업했다."
+    ],
+    "answer": 2
+  },
+  {
+    "qnum": "13",
+    "source": "TOPIK II 읽기 23 · p.7",
+    "passage": "방학이 되자 학교 도서실에서 독서 캠프를 열었다. “여러분, 소원을 들어주는 마법 캠프 이야기 들어 봤나요?” 잘 아는 동화 이야기에 아이들은 어느새 수업에 흠뻑 빠져들었다. 간절한 꿈을 매일 스무 번씩 말하고 노력하면 꼭 이루어진다고 하자 아이들은 저마다 소원을 이야기했다. 부자가 되고 싶다는 아이도 있었고, 가수가 되겠다는 아이도 있었다. 그러나 재우는 아무 말이 없었다. 수업이 끝나고 집으로 돌아가는 길에 재우를 보았다. 재우는 혼자 고개를 푹 숙인 채 터덜터덜 걷고 있었다. 가까이 가자 재우의 중얼거리는 소리가 들렸다. “엄마, 아빠랑 같이 산다. 엄마, 아빠랑 같이 산다.” 재우의 목소리가 얼마나 간절하던지 나는 <span class=\"source-underline\">코끝이 찡했다.</span>",
+    "options": [
+      "재밌하다",
+      "섭섭하다",
+      "답답하다",
+      "안쓰럽다"
+    ],
+    "answer": 3
+  },
+  {
+    "qnum": "14",
+    "source": "TOPIK II 읽기 24 · p.7",
+    "passage": "방학이 되자 학교 도서실에서 독서 캠프를 열었다. “여러분, 소원을 들어주는 마법 캠프 이야기 들어 봤나요?” 잘 아는 동화 이야기에 아이들은 어느새 수업에 흠뻑 빠져들었다. 간절한 꿈을 매일 스무 번씩 말하고 노력하면 꼭 이루어진다고 하자 아이들은 저마다 소원을 이야기했다. 부자가 되고 싶다는 아이도 있었고, 가수가 되겠다는 아이도 있었다. 그러나 재우는 아무 말이 없었다. 수업이 끝나고 집으로 돌아가는 길에 재우를 보았다. 재우는 혼자 고개를 푹 숙인 채 터덜터덜 걷고 있었다. 가까이 가자 재우의 중얼거리는 소리가 들렸다. “엄마, 아빠랑 같이 산다. 엄마, 아빠랑 같이 산다.” 재우의 목소리가 얼마나 간절하던지 나는 <span class=\"source-underline\">코끝이 찡했다.</span>",
+    "options": [
+      "재우는 부자가 되고 싶다고 말했다.",
+      "재우는 선생님이 한 말을 믿고 있다.",
+      "재우는 지금 엄마, 아빠와 함께 산다.",
+      "재우는 독서 캠프에 참가했다."
+    ],
+    "answer": 3
+  },
+  {
+    "qnum": "15",
+    "source": "TOPIK II 읽기 23 · p.8",
+    "passage": "오늘도 내 휴대 전화에서 휘파람 소리가 들린다. 벨 소리로 정할 만큼 난 휘파람 소리가 좋다. <span class=\"source-underline\">휘파람 소리를 들으면 나도 모르게 얼굴에 미소가 떠오르고 가슴이 콩닥거린다.</span> 거기엔 내 첫사랑이 녹아 있기 때문이다. 25년 전, 나를 따라다니던 수줍음 많던 소년이 있었다. 어느 날, 소년이 물었다. “혹시 휘파람 소리 못 들었어?” 내가 못 들었다고 하자 그 소년은 “매일 저녁 일곱 시에 네 창문 밖에서 불었는데…….” 하고 말했다. 그 뒤 신기한 일이 일어났다. 한 번도 들린 적 없었던 휘파람 소리가 귓가에 선명하게 울렸다. “휘익~ 휘익~.” 어김없이 저녁 일곱 시면 그 소리가 들렸다. 시간이 지나면서 나는 점점 그 소리가 들리기를 기다리게 되었고, 지금 나는 휘파람을 불던 그 소년과 결혼해 알콩달콩 살고 있다.",
+    "options": [
+      "놀라다",
+      "설레다",
+      "긴장하다",
+      "부끄럽다"
+    ],
+    "answer": 1
+  },
+  {
+    "qnum": "16",
+    "source": "TOPIK II 읽기 24 · p.8",
+    "passage": "오늘도 내 휴대 전화에서 휘파람 소리가 들린다. 벨 소리로 정할 만큼 난 휘파람 소리가 좋다. <span class=\"source-underline\">휘파람 소리를 들으면 나도 모르게 얼굴에 미소가 떠오르고 가슴이 콩닥거린다.</span> 거기엔 내 첫사랑이 녹아 있기 때문이다. 25년 전, 나를 따라다니던 수줍음 많던 소년이 있었다. 어느 날, 소년이 물었다. “혹시 휘파람 소리 못 들었어?” 내가 못 들었다고 하자 그 소년은 “매일 저녁 일곱 시에 네 창문 밖에서 불었는데…….” 하고 말했다. 그 뒤 신기한 일이 일어났다. 한 번도 들린 적 없었던 휘파람 소리가 귓가에 선명하게 울렸다. “휘익~ 휘익~.” 어김없이 저녁 일곱 시면 그 소리가 들렸다. 시간이 지나면서 나는 점점 그 소리가 들리기를 기다리게 되었고, 지금 나는 휘파람을 불던 그 소년과 결혼해 알콩달콩 살고 있다.",
+    "options": [
+      "나는 첫사랑인 남자와 결혼하고 싶다.",
+      "지금도 저녁 일곱 시면 휘파람 소리가 들린다.",
+      "내 휴대 전화 벨 소리는 '휘파람'이라는 노래다.",
+      "25년 전 휘파람을 불던 소년은 나의 첫사랑이다."
+    ],
+    "answer": 3
+  },
+  {
+    "qnum": "17",
+    "source": "TOPIK II 읽기 23 · p.9",
+    "passage": "“새로운 미래가 온다”라는 책으로 유명한 미래 학자, 다니엘 핑크가 한국을 방문했을 때의 일이다. 나는 그에 대한 기사를 쓰기 위해 그와 인터뷰를 했다. 한국의 젊은이들에게 해 주고 싶은 조언을 부탁하자 그는 이렇게 대답했다. “계획을 세우지 마십시오.” <span class=\"source-underline\">그의 대답을 듣고 어리둥절해하는 나에게</span> 그는 이렇게 설명했다. “세상은 복잡하고 빨리 변해서 절대 예상대로 되지 않습니다. 계획을 세우는 대신 뭔가 새로운 것을 배우고, 새로운 것을 시도해 보는 것이 중요합니다.” 그리고 그는 멋진 실수의 필요성을 강조하면서, 중요한 것은 실수를 하지 않는 것이 아니라, 어리석은 실수를 반복하지 않는 것이라는 말을 남겼다.",
+    "options": [
+      "갑작스럽다",
+      "감격스럽다",
+      "존경스럽다",
+      "당황스럽다"
+    ],
+    "answer": 3
+  },
+  {
+    "qnum": "18",
+    "source": "TOPIK II 읽기 24 · p.9",
+    "passage": "“새로운 미래가 온다”라는 책으로 유명한 미래 학자, 다니엘 핑크가 한국을 방문했을 때의 일이다. 나는 그에 대한 기사를 쓰기 위해 그와 인터뷰를 했다. 한국의 젊은이들에게 해 주고 싶은 조언을 부탁하자 그는 이렇게 대답했다. “계획을 세우지 마십시오.” <span class=\"source-underline\">그의 대답을 듣고 어리둥절해하는 나에게</span> 그는 이렇게 설명했다. “세상은 복잡하고 빨리 변해서 절대 예상대로 되지 않습니다. 계획을 세우는 대신 뭔가 새로운 것을 배우고, 새로운 것을 시도해 보는 것이 중요합니다.” 그리고 그는 멋진 실수의 필요성을 강조하면서, 중요한 것은 실수를 하지 않는 것이 아니라, 어리석은 실수를 반복하지 않는 것이라는 말을 남겼다.",
+    "options": [
+      "나는 '새로운 미래가 온다'라는 책을 썼다.",
+      "실수는 하되 같은 실수를 반복하지는 말아야 한다.",
+      "계획을 세우는 것보다 실수를 하지 않는 것이 중요하다.",
+      "다니엘 핑크는 미래 학자로서 계획의 필요성을 강조했다."
+    ],
+    "answer": 1
+  },
+  {
+    "qnum": "19",
+    "source": "TOPIK II 읽기 23 · p.10",
+    "passage": "대학에서 학생들을 가르치는 즐거움 중 하나는 사시사철 변모하는 캠퍼스의 아름다움을 온몸으로 느낄 수 있다는 것이다. 아직 바람이 차가운 입학식 즈음에는 매화가, 개강을 할 때쯤에는 진달래, 개나리, 목련이 핀다. 중간고사 즈음에는 단연 벚꽃이다. 계절의 여왕, 5월에는 장미꽃이 피다가 여름 방학이 시작되면 나팔꽃, 해바라기가 보인다. 이윽고 책상 위에 꽂힌 국화를 보면서 나는 가을이 왔음을 안다. 이 꽃들 중에서 어떤 꽃이 가장 훌륭한가? 이것은 참으로 어리석은 질문이다. 가장 훌륭한 꽃이란 없다. 저마다 훌륭하다. 꽃들도 저렇게 자신이 피어야 할 시기를 잘 알고 있는데, <span class=\"source-underline\">왜 인간들은 하나같이 동백처럼 초봄에 피어나지 못해 안달인가?</span>",
+    "options": [
+      "답답하다",
+      "서운하다",
+      "섭섭하다",
+      "허무하다"
+    ],
+    "answer": 0
+  },
+  {
+    "qnum": "20",
+    "source": "TOPIK II 읽기 24 · p.10",
+    "passage": "대학에서 학생들을 가르치는 즐거움 중 하나는 사시사철 변모하는 캠퍼스의 아름다움을 온몸으로 느낄 수 있다는 것이다. 아직 바람이 차가운 입학식 즈음에는 매화가, 개강을 할 때쯤에는 진달래, 개나리, 목련이 핀다. 중간고사 즈음에는 단연 벚꽃이다. 계절의 여왕, 5월에는 장미꽃이 피다가 여름 방학이 시작되면 나팔꽃, 해바라기가 보인다. 이윽고 책상 위에 꽂힌 국화를 보면서 나는 가을이 왔음을 안다. 이 꽃들 중에서 어떤 꽃이 가장 훌륭한가? 이것은 참으로 어리석은 질문이다. 가장 훌륭한 꽃이란 없다. 저마다 훌륭하다. 꽃들도 저렇게 자신이 피어야 할 시기를 잘 알고 있는데, <span class=\"source-underline\">왜 인간들은 하나같이 동백처럼 초봄에 피어나지 못해 안달인가?</span>",
+    "options": [
+      "나는 대학에서 꽃을 가꾸는 일을 한다.",
+      "중간고사를 볼 때쯤에는 장미꽃이 핀다.",
+      "사람들은 동백처럼 일찍 피는 꽃을 몹시 좋아한다.",
+      "계절마다 바뀌는 캠퍼스의 모습을 보는 것이 즐겁다."
+    ],
+    "answer": 3
+  }
+];
+const questionsContainer = document.getElementById("questionsContainer");
+const mainContainer = document.getElementById("mainContainer");
+let reviewed = false;
+let resultData = null;
+let resultBlob = null;
+let imageURL = null;
+let zoom = Number(__kiboStorage.getItem("kibo-zoom") || 100);
+
+function answerLabel(question,index){
+  return `${letters[index]} ${question.options[index]}`;
+}
+
+function renderQuestions(){
+  questionsContainer.innerHTML = questionData.map((question,index)=>{
+    const passageHtml = question.passage.replace(
+      "( _____ )",
+      '<span class="blank-word">( _____ )</span>'
+    );
+
+    return `
+      <article class="question-card" data-index="${index}">
+        <div class="q-top">
+          <div class="q-num">${index+1}</div>
+          <div class="q-page">Q${question.qnum} · ${question.source}</div>
+          <div class="q-status" aria-live="polite"></div>
+        </div>
+
+        <div class="passage">${passageHtml}</div>
+
+        <div class="options">
+          ${question.options.map((option,optionIndex)=>`
+            <button type="button" class="option" data-choice="${optionIndex}" aria-label="${letters[optionIndex]} ${option}">
+              ${letters[optionIndex]} ${option}
+            </button>
+          `).join("")}
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  document.querySelectorAll(".option").forEach(option=>{
+    option.addEventListener("click",()=>{
+      if(reviewed) return;
+      const group=option.parentElement;
+      group.querySelectorAll(".option").forEach(item=>item.classList.remove("selected"));
+      option.classList.add("selected");
+      updateProgress();
+    });
+  });
+}
+
+function updateProgress(){
+  const answered = document.querySelectorAll(".option.selected").length;
+  const total = questionData.length;
+  const percent = total ? Math.round(answered/total*100) : 0;
+  document.getElementById("progressFill").style.width = percent + "%";
+  document.getElementById("progressPercent").textContent = percent + "%";
+  document.getElementById("progressInfo").textContent = `Belgilangan: ${answered} / ${total}`;
+}
+
+function resetReview(){
+  reviewed=false;
+  document.querySelectorAll(".option").forEach(option=>option.classList.remove("review-locked"));
+  resultData=null;
+  document.querySelectorAll(".question-card").forEach(card=>{
+    card.classList.remove("is-correct","is-wrong","is-unanswered","locked");
+    const status=card.querySelector(".q-status");
+    status.className="q-status";
+    status.textContent="";
+    card.querySelectorAll(".option").forEach(option=>option.classList.remove("answer-correct","answer-wrong"));
+  });
+  document.getElementById("resultPanel").hidden=true;
+  const checkButton=document.getElementById("checkBtn");
+  checkButton.disabled=false;
+  checkButton.textContent="✓ Natijani tekshirish";
+  checkButton.style.opacity="";
+}
+
+function checkResults(){
+  let correct=0, answered=0;
+  const rows=[];
+
+  questionData.forEach((question,index)=>{
+    const card=document.querySelector(`[data-index="${index}"]`);
+    const selected=card.querySelector(".option.selected");
+    const correctOption=card.querySelector(`.option[data-choice="${question.answer}"]`);
+    const status=card.querySelector(".q-status");
+    const selectedIndex=selected ? Number(selected.dataset.choice) : null;
+    if(selected) answered++;
+    const isCorrect=selectedIndex===question.answer;
+
+    correctOption.classList.add("answer-correct");
+
+    if(isCorrect){
+      correct++;
+      card.classList.add("is-correct");
+      status.className="q-status show correct";
+      status.textContent="✓ To‘g‘ri";
+    }else{
+      card.classList.add(selected ? "is-wrong" : "is-unanswered");
+      if(selected) selected.classList.add("answer-wrong");
+      status.className="q-status show wrong";
+      status.textContent=selected
+        ? `✗ Xato · ${letters[selectedIndex]}`
+        : `! Javob berilmadi · ${letters[question.answer]}`;
+    }
+    rows.push({number:index+1,question,selectedIndex,isCorrect});
+  });
+
+  const total=questionData.length;
+  const wrong=total-correct;
+  const percent=total ? Math.round(correct/total*100) : 0;
+  resultData={correct,wrong,total,answered,percent,rows};
+
+  document.getElementById("correctScore").textContent=`${correct} / ${total}`;
+  document.getElementById("wrongScore").textContent=`${wrong} / ${total}`;
+  document.getElementById("resultPercent").textContent=percent+"%";
+
+  const good=rows.filter(row=>row.isCorrect);
+  const bad=rows.filter(row=>!row.isCorrect);
+
+  document.getElementById("resultLists").innerHTML=`
+    <div class="list-card good">
+      <h3>✓ To‘g‘ri savollar (${good.length})</h3>
+      <ul>${good.length ? good.map(row=>`<li><b>${row.number}-savol</b> — ${answerLabel(row.question,row.question.answer)}</li>`).join("") : "<li>To‘g‘ri javob yo‘q.</li>"}</ul>
+    </div>
+    <div class="list-card bad">
+      <h3>✗ Xato yoki bo‘sh savollar (${bad.length})</h3>
+      <ul>${bad.length ? bad.map(row=>`
+        <li><b>${row.number}-savol</b><br>
+        Siz: ${row.selectedIndex===null ? "Javob berilmagan" : answerLabel(row.question,row.selectedIndex)}<br>
+        To‘g‘ri: ${answerLabel(row.question,row.question.answer)}</li>`).join("") : "<li>Barcha javoblar to‘g‘ri. Ajoyib! 🎉</li>"}</ul>
+    </div>`;
+
+  reviewed=true;
+  document.querySelectorAll(".option").forEach(option=>option.classList.add("review-locked"));
+  const checkButton=document.getElementById("checkBtn");
+  checkButton.textContent="✓ Natija tekshirildi";
+  checkButton.disabled=true;
+  document.getElementById("resultPanel").hidden=false;
+
+  setTimeout(()=>document.getElementById("resultPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
+}
+
+function rounded(ctx,x,y,width,height,radius){
+  ctx.beginPath();
+  ctx.roundRect(x,y,width,height,radius);
+  ctx.fill();
+}
+
+async function createResultImage(){
+  if(!resultData){ alert("Avval natijani tekshiring."); return; }
+  const wrongRows=resultData.rows.filter(row=>!row.isCorrect);
+  const width=1080;
+  const height=760 + wrongRows.length*78;
+  const canvas=document.createElement("canvas");
+  canvas.width=width; canvas.height=height;
+  const ctx=canvas.getContext("2d");
+
+  const bg=ctx.createLinearGradient(0,0,width,height);
+  bg.addColorStop(0,"#091223"); bg.addColorStop(.55,"#15264a"); bg.addColorStop(1,"#10233c");
+  ctx.fillStyle=bg; ctx.fillRect(0,0,width,height);
+
+  ctx.fillStyle="#f6c453"; ctx.font="800 28px Arial";
+  ctx.fillText("KIBO EFFECT • TOPIK II 읽기 23-24",60,55);
+  ctx.fillStyle="#fff"; ctx.font="800 48px Arial"; ctx.fillText("Test natijasi",60,115);
+  ctx.fillStyle="#aebbd4"; ctx.font="24px Arial";
+  ctx.fillText(`Javob berilgan: ${resultData.answered}/${resultData.total}   •   Natija: ${resultData.percent}%`,60,160);
+
+  ctx.fillStyle="rgba(53,208,127,.18)"; rounded(ctx,60,205,290,100,18);
+  ctx.fillStyle="#b7ffd6"; ctx.font="700 20px Arial"; ctx.fillText("TO‘G‘RI JAVOBLAR",82,225);
+  ctx.fillStyle="#35d07f"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.correct}/${resultData.total}`,82,265);
+
+  ctx.fillStyle="rgba(255,100,118,.18)"; rounded(ctx,390,205,290,100,18);
+  ctx.fillStyle="#ffd2d8"; ctx.font="700 20px Arial"; ctx.fillText("XATO / BO‘SH",412,225);
+  ctx.fillStyle="#ff6476"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.wrong}/${resultData.total}`,412,265);
+
+  ctx.fillStyle="rgba(246,196,83,.18)"; rounded(ctx,720,205,290,100,18);
+  ctx.fillStyle="#ffe5a1"; ctx.font="700 20px Arial"; ctx.fillText("NATIJA FOIZI",742,225);
+  ctx.fillStyle="#f6c453"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.percent}%`,742,265);
+
+  let y=370;
+  ctx.fillStyle="#55e995"; ctx.font="800 27px Arial";
+  ctx.fillText(`✓ TO‘G‘RI SAVOLLAR (${resultData.correct} ta)`,60,y);
+  y+=44;
+  const goodNumbers=resultData.rows.filter(row=>row.isCorrect).map(row=>`Q${row.number}`).join(" • ");
+  ctx.fillStyle="#e4fff0"; ctx.font="23px Arial"; ctx.fillText(goodNumbers || "To‘g‘ri javob yo‘q.",60,y);
+  y+=84;
+  ctx.fillStyle="#ff8492"; ctx.font="800 27px Arial";
+  ctx.fillText(`✗ XATO YOKI BO‘SH SAVOLLAR (${resultData.wrong} ta)`,60,y);
+  y+=48;
+
+  wrongRows.forEach(row=>{
+    const selectedText=row.selectedIndex===null ? "Javob berilmagan" : answerLabel(row.question,row.selectedIndex);
+    const correctText=answerLabel(row.question,row.question.answer);
+    ctx.fillStyle="#ffdce0"; ctx.font="21px Arial"; ctx.fillText(`Q${row.number} — Siz: ${selectedText}`,60,y);
+    y+=30;
+    ctx.fillStyle="#aaffd0"; ctx.fillText(`To‘g‘ri javob: ${correctText}`,85,y);
+    y+=45;
+  });
+
+  ctx.fillStyle="#90a1c4"; ctx.font="18px Arial";
+  ctx.fillText("KIBO EFFECT • Natija avtomatik yaratilgan",60,height-42);
+
+  resultBlob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
+  if(imageURL) URL.revokeObjectURL(imageURL);
+  imageURL=URL.createObjectURL(resultBlob);
+  document.getElementById("resultImage").src=imageURL;
+  document.getElementById("imageModal").hidden=false;
+}
+
+async function downloadImage(){
+  try {
+    let blob = resultBlob;
+    if (!blob && imageURL) { const response = await fetch(imageURL); blob = await response.blob(); }
+    if (!blob) { alert("Avval natija rasmini tayyorlang."); return; }
+    const pngBlob = blob.type === "image/png" ? blob : new Blob([blob], {type:"image/png"});
+    const url = URL.createObjectURL(pngBlob);
+    const a = document.createElement("a"); a.href = url; a.download = "kibo-effect-test-natijasi.png"; a.style.display = "none";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (error) { console.error("PNG yuklashda xatolik:", error); if (imageURL) window.open(imageURL, "_blank"); }
+}
+async function shareImage(){
+  if(!resultBlob) return;
+  const file=new File([resultBlob],"kibo-effect-test-natijasi.png",{type:"image/png"});
+  try{
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:"KIBO EFFECT natijasi",text:"TOPIK II 읽기 23-24 test natijasi",files:[file]});
+    }else downloadImage();
+  }catch(error){
+    if(error.name!=="AbortError") downloadImage();
+  }
+}
+
+function applyTheme(){
+  const mode=__kiboStorage.getItem("kibo-theme") || "night";
+  const isDay=mode==="day";
+  document.body.classList.toggle("day",isDay);
+  document.getElementById("themeIcon").textContent=isDay ? "☀️" : "🌙";
+  document.getElementById("themeLabel").textContent=isDay ? "Day mode" : "Night mode";
+  document.getElementById("themeToggle").setAttribute("aria-label",isDay ? "Night mode'ga o'tish" : "Day mode'ga o'tish");
+}
+
+function applyZoom(){
+  zoom=Math.max(80,Math.min(200,Math.round(zoom/10)*10));
+  document.getElementById("zoomValue").textContent=zoom+"%";
+  __kiboStorage.setItem("kibo-zoom",String(zoom));
+  mainContainer.classList.toggle("zoom-large",zoom>=150);
+  document.documentElement.style.setProperty("--kibo-zoom",zoom/100);
+  // CSS zoom makes the complete test area visually scale while preserving sticky header controls.
+  mainContainer.style.zoom=(zoom/100);
+}
+
+document.getElementById("checkBtn").addEventListener("click",checkResults);
+document.getElementById("saveResultBtn").addEventListener("click",createResultImage);
+document.getElementById("downloadBtn").addEventListener("click",downloadImage);
+document.getElementById("shareBtn").addEventListener("click",shareImage);
+document.getElementById("closeModalBtn").addEventListener("click",()=>document.getElementById("imageModal").hidden=true);
+document.getElementById("scrollTopBtn").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+document.getElementById("imageModal").addEventListener("click",event=>{
+  if(event.target.id==="imageModal") document.getElementById("imageModal").hidden=true;
+});
+document.getElementById("themeToggle").addEventListener("click",()=>{
+  const next=document.body.classList.contains("day") ? "night" : "day";
+  __kiboStorage.setItem("kibo-theme",next);
+  applyTheme();
+});
+document.getElementById("zoomOut").addEventListener("click",()=>{zoom-=10;applyZoom();});
+document.getElementById("zoomIn").addEventListener("click",()=>{zoom+=10;applyZoom();});
+
+renderQuestions();
+applyTheme();
+applyZoom();
+updateProgress();
+
+</script>
+<style id="kibo-mobile-iframe-fix">@media (max-width:600px){html,body{min-height:0 !important;}.container{padding-bottom:24px !important;}}</style>
+<script>(function(){function reportHeight(){try{var h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);if(window.parent!==window){window.parent.postMessage({type:"kibo-test-height",height:h},"*");}}catch(e){}}window.addEventListener("load",reportHeight);window.addEventListener("resize",reportHeight);if(window.ResizeObserver){new ResizeObserver(reportHeight).observe(document.body);}setTimeout(reportHeight,300);setTimeout(reportHeight,1000);})();</script>
+</body>
+</html>

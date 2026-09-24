@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIBO EFFECT - TOPIK II 읽기 11-12</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#070b17; --bg2:#101a33; --bg3:#172548;
+  --card:rgba(18,28,52,.88); --card2:rgba(27,39,71,.95);
+  --text:#f7f9ff; --muted:#a9b3c8;
+  --border:rgba(255,255,255,.10);
+  --yellow:#f6c453; --yellow2:#ffde83;
+  --green:#35d07f; --red:#ff6476; --blue:#24355d;
+  --shadow:0 14px 38px rgba(0,0,0,.30);
+  --page-bg:
+    radial-gradient(circle at 10% 0%,rgba(246,196,83,.10),transparent 24%),
+    radial-gradient(circle at 90% 100%,rgba(93,135,255,.14),transparent 25%),
+    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+}
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; color:var(--text);
+  font-family:"Inter","Noto Sans KR",Arial,sans-serif;
+  background:var(--page-bg);
+}
+button{font-family:inherit}
+body.day{
+  --bg1:#f3f4f6; --bg2:#f3f4f6; --bg3:#f3f4f6;
+  --card:#fff; --card2:#fff; --text:#111; --muted:#5f6368;
+  --border:#d9d9d9; --blue:#e9ecef; --shadow:0 2px 8px rgba(0,0,0,.05);
+  --page-bg:#f3f4f6;
+}
+.page-shell{min-height:100vh}
+header{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; gap:20px;
+  padding:15px 32px; min-height:88px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,11,23,.88); backdrop-filter:blur(14px);
+}
+body.day header{background:#fff;box-shadow:none}
+.header-left{display:flex;align-items:center;gap:14px;min-width:0}
+.header-logo{
+  width:58px;height:58px;object-fit:cover;border-radius:50%;
+  border:2px solid var(--yellow);background:#000;
+  box-shadow:0 0 15px rgba(246,196,83,.45);flex:none;
+}
+.brand h1{margin:0;font-size:27px;font-weight:800;letter-spacing:-.4px}
+.header-tools{
+  margin-left:auto;display:flex;align-items:center;justify-content:flex-end;
+  gap:12px;flex-wrap:nowrap;min-width:0;
+}
+.topik-badge{
+  color:var(--yellow);font-weight:800;font-size:15px;
+  padding:9px 16px;border:1px solid rgba(246,196,83,.25);
+  border-radius:30px;background:rgba(246,196,83,.09);
+  white-space:nowrap;
+}
+body.day .topik-badge{color:#333;background:#f5f5f5;border-color:#d7d7d7}
+.zoom-controls,.mode-button{
+  width:185px;height:56px;padding:5px;border-radius:18px;
+  display:flex;align-items:center;gap:8px;
+  flex:none;
+}
+.zoom-controls{
+  background:#111620;border:1px solid #303746;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+body.day .zoom-controls{background:#f5f5f5;border-color:#d7d7d7;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.zoom-btn{
+  width:44px;height:44px;border-radius:12px;
+  background:#202530;border:1px solid #3b4352;color:#fff;
+  font-size:24px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+body.day .zoom-btn{background:#fff;color:#222;border-color:#d5d5d5}
+.zoom-value{flex:1;text-align:center;font-size:18px;font-weight:700;color:#d8deea}
+body.day .zoom-value{color:#333}
+.mode-button{
+  width:160px;border:1px solid #303746;background:#111620;color:#fff;
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+body.day .mode-button{background:#f5f5f5;color:#333;border-color:#d7d7d7;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.mode-icon{
+  width:44px;height:44px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:#202530;border:1px solid #3b4352;font-size:21px;
+}
+body.day .mode-icon{background:#fff;color:#333;border-color:#d5d5d5}
+.mode-label{font-size:14px;font-weight:700;white-space:nowrap}
+
+.container{
+  max-width:1450px;margin:auto;padding:28px;
+  display:grid;grid-template-columns:340px 1fr;gap:25px;
+}
+.container.zoom-large{grid-template-columns:1fr!important}
+.container.zoom-large .sidebar{
+  position:relative;top:0;width:100%;grid-column:1;order:-1;
+}
+.container.zoom-large .questions{width:100%;grid-column:1;order:2}
+.sidebar{
+  position:sticky;top:100px;align-self:start;padding:24px;
+  border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);
+}
+.sidebar h2{margin:0 0 14px;color:var(--yellow);font-size:24px;font-weight:800}
+body.day .sidebar h2{color:#111}
+.sidebar p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.progress-box{
+  margin-top:20px;padding:16px;border-radius:16px;
+  border:1px solid rgba(246,196,83,.20);background:rgba(246,196,83,.06);
+}
+.progress-title{display:flex;justify-content:space-between;margin-bottom:10px;font-size:14px;font-weight:700}
+.progress-bar{height:11px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.10)}
+body.day .progress-bar{background:#e7e7e7}
+.progress-fill{width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f6c453,#ffde83);transition:.25s}
+.progress-info{margin-top:10px;color:var(--yellow2);font-size:13px;font-weight:700}
+body.day .progress-info{color:#8a6700}
+.info-box{
+  margin-top:18px;padding:14px;border:1px solid var(--border);
+  border-radius:14px;color:var(--muted);background:rgba(255,255,255,.03);
+  line-height:1.65;font-size:13px;
+}
+.questions{display:flex;flex-direction:column;gap:18px;min-width:0}
+.question-card{
+  padding:22px;border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);transition:.2s;
+}
+.question-card:hover{transform:translateY(-2px);border-color:rgba(246,196,83,.4)}
+.question-card.is-correct{border-color:rgba(53,208,127,.8)}
+.question-card.is-wrong,.question-card.is-unanswered{border-color:rgba(255,100,118,.8)}
+.question-card.locked .option{cursor:pointer}
+.q-top{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.q-num{
+  width:35px;height:35px;display:flex;align-items:center;justify-content:center;
+  border-radius:10px;color:#1a1608;font-weight:800;
+  background:linear-gradient(135deg,#f6c453,#ffde83);flex:none;
+}
+.q-page{color:var(--muted);font-size:14px}
+.q-status{
+  display:none;margin-left:auto;padding:7px 10px;border-radius:99px;
+  font-size:12px;font-weight:800;white-space:nowrap;
+}
+.q-status.show{display:block}
+.q-status.correct{color:#b7ffd6;background:rgba(53,208,127,.14);border:1px solid rgba(53,208,127,.35)}
+.q-status.wrong{color:#fff;background:#e5485d;border:1px solid #ff7181}
+body.day .q-status.correct{color:#116b3b;background:#eafaf1;border-color:#73d7a2}
+body.day .q-status.wrong{color:#a61d32;background:#fff0f2;border-color:#f0a0aa}
+.q-text{
+  margin-bottom:18px;padding:22px;border:1px solid rgba(246,196,83,.15);
+  border-radius:16px;color:var(--text);
+  background:linear-gradient(135deg,rgba(246,196,83,.08),rgba(255,255,255,.02)),rgba(0,0,0,.1);
+  font-size:21px;font-weight:700;line-height:1.7;text-align:center;word-break:keep-all;
+}
+.q-subtext{display:block;margin-top:7px;color:var(--muted);font-size:19px;font-weight:500}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.option{
+  padding:14px 16px;border:1px solid var(--border);border-radius:13px;
+  color:var(--text);background:rgba(255,255,255,.035);font-size:16px;
+  cursor:pointer;transition:.2s;
+}
+.option:hover{color:#fff;border-color:rgba(246,196,83,.5);background:rgba(246,196,83,.08)}
+body.day .option{background:#fff;color:#222;border-color:#d9d9d9}
+body.day .option:hover{color:#111;background:#f8f8f8;border-color:#bdbdbd}
+.option.selected{color:#181307;font-weight:800;border-color:transparent;background:linear-gradient(135deg,#f6c453,#ffde83)}
+body.day .option.selected{color:#111;background:#e9ecef;border-color:#bfc4ca}
+.option.answer-correct{color:#04160c!important;font-weight:800;border-color:transparent!important;background:linear-gradient(135deg,#35d07f,#91f5bc)!important}
+.option.answer-wrong{color:#fff!important;font-weight:800;border-color:rgba(255,100,118,.7)!important;background:linear-gradient(135deg,#d94256,#ff7181)!important}
+.finish-area,.result-panel{padding:28px;text-align:center;border-radius:22px;box-shadow:var(--shadow)}
+.finish-area{border:1px solid rgba(246,196,83,.22);background:rgba(246,196,83,.06)}
+.finish-area h2{margin:0 0 8px;color:var(--yellow)}
+body.day .finish-area h2{color:#111}
+.finish-area p{color:var(--muted)}
+.btn{
+  padding:13px 20px;border:none;border-radius:11px;color:#1b1608;
+  font:700 16px inherit;cursor:pointer;background:linear-gradient(135deg,#f6c453,#ffde83);transition:.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-green{color:#06160c;background:linear-gradient(135deg,#31d57f,#83f3b6)}
+.btn-blue{color:#fff;background:#24355d;border:1px solid var(--border)}
+body.day .btn-blue{background:#f0f0f0;color:#111;border-color:#d2d2d2}
+.result-panel{
+  border:1px solid rgba(53,208,127,.4);
+  background:radial-gradient(circle at top right,rgba(53,208,127,.12),transparent 28%),linear-gradient(180deg,rgba(25,47,51,.96),rgba(17,33,49,.96));
+}
+body.day .result-panel{background:#fff;border-color:#9bd9b7}
+.result-panel[hidden],.modal[hidden]{display:none}
+.result-title{margin:0 0 18px;color:#b7ffd6;font-size:26px}
+body.day .result-title{color:#176b42}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.score-card{text-align:left;padding:16px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.04)}
+body.day .score-card{background:#fff}
+.score-card span{display:block;margin-bottom:7px;color:var(--muted);font-size:13px}
+.score-card strong{font-size:24px}
+.green{color:#35d07f}.red{color:#ff6476}.yellow{color:#f6c453}
+body.day .green{color:#16834d}body.day .red{color:#c52f44}body.day .yellow{color:#9a7200}
+.result-lists{display:grid;grid-template-columns:1fr 1fr;gap:15px;text-align:left}
+.list-card{padding:17px;border:1px solid var(--border);border-radius:16px;background:rgba(0,0,0,.14)}
+body.day .list-card{background:#fafafa}
+.list-card h3{margin:0 0 12px;font-size:15px}
+.good h3{color:var(--green)}.bad h3{color:var(--red)}
+.list-card ul{max-height:270px;overflow:auto;padding-left:20px;margin:0;color:var(--text);font-size:13px;line-height:1.7}
+.result-actions,.modal-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.modal{
+  position:fixed;inset:0;z-index:999;display:flex;justify-content:center;align-items:center;
+  padding:20px;background:rgba(3,6,14,.88);backdrop-filter:blur(8px);
+}
+.modal-content{
+  width:min(750px,100%);max-height:94vh;overflow:auto;padding:20px;
+  border:1px solid var(--border);border-radius:22px;background:#111a31;
+}
+body.day .modal-content{background:#fff;border-color:#d9d9d9}
+.modal-content h2{margin:0 0 8px;color:var(--yellow)}
+body.day .modal-content h2{color:#111}
+.modal-content p{color:var(--muted);font-size:13px;line-height:1.6}
+#resultImage{display:block;width:100%;border-radius:14px;border:1px solid var(--border)}
+body.day #resultImage{background:#fff}
+@media(max-width:1100px){
+  header{gap:12px;padding:14px 20px}
+  .header-tools{gap:8px}
+  .brand h1{font-size:23px}
+}
+@media(max-width:1050px){
+  .container{grid-template-columns:1fr}
+  .sidebar{position:relative;top:0}
+}
+@media(max-width:780px){
+  header{align-items:center;overflow-x:auto}
+  .header-left{flex:none}
+  .header-tools{margin-left:auto;flex:none}
+  .container{padding:18px}
+  .q-text{font-size:20px;padding:17px}
+  .q-subtext{font-size:16px}
+}
+@media(max-width:600px){
+  .options{grid-template-columns:1fr}
+  .score-grid,.result-lists{grid-template-columns:1fr}
+  .header-logo{width:48px;height:48px}
+  .brand h1{font-size:20px}
+}
+
+.passage{
+  margin-bottom:18px;padding:22px;border:1px solid rgba(246,196,83,.15);
+  border-radius:16px;color:var(--text);
+  background:linear-gradient(135deg,rgba(246,196,83,.08),rgba(255,255,255,.02)),rgba(0,0,0,.1);
+  font-size:19px;line-height:2;text-align:justify;word-break:keep-all;
+}
+body.day .passage{background:#fff;color:#222;border-color:#e4dccb}
+.option.review-locked{pointer-events:none!important;cursor:default!important}
+</style>
+<script>const __kiboStorage=(()=>{try{const s=window.localStorage;s.getItem('__kibo_probe__');return s}catch(e){const d={};return{getItem:k=>Object.prototype.hasOwnProperty.call(d,k)?d[k]:null,setItem:(k,v)=>d[k]=String(v),removeItem:k=>delete d[k],clear:()=>Object.keys(d).forEach(k=>delete d[k])}}})()</script><style>.kibo-home{height:56px;padding:0 15px;border:1px solid #303746;border-radius:18px;background:#111620;color:#f6c453;font:800 14px/1 Inter,Arial,sans-serif;cursor:pointer;white-space:nowrap}.kibo-home:hover{background:#202530}.day .kibo-home{background:#f5f5f5;border-color:#d7d7d7;color:#333}@media(max-width:700px){.kibo-home{height:42px;padding:0 10px;border-radius:12px;font-size:12px}}</style></head>
+<body>
+<div class="page-shell">
+
+<header>
+  <div class="header-left">
+    <img class="header-logo" src="header-logo.png" alt="KIBO Korean Logo" loading="eager" decoding="async">
+    <div class="brand"><h1>KIBO EFFECT</h1></div>
+  </div>
+  <div class="header-tools">
+    <button type="button" class="kibo-home" onclick="parent.postMessage({type:'kibo-home'},'*')">← Bosh sahifa</button><div class="topik-badge">TOPIK II 읽기 11-12</div>
+    <div class="zoom-controls" aria-label="Matn o‘lchami">
+      <button type="button" class="zoom-btn" id="zoomOut" aria-label="Kichraytirish" title="Kichraytirish">−</button>
+      <span class="zoom-value" id="zoomValue">100%</span>
+      <button type="button" class="zoom-btn" id="zoomIn" aria-label="Yaqinlashtirish" title="Yaqinlashtirish">+</button>
+    </div>
+    <button type="button" id="themeToggle" class="mode-button" aria-label="Day mode'ga o'tish" title="Day/Night mode">
+      <span class="mode-icon" id="themeIcon">🌙</span>
+      <span class="mode-label" id="themeLabel">Night mode</span>
+    </button>
+  </div>
+</header>
+
+<div class="container" id="mainContainer">
+  <aside class="sidebar">
+    <h2>Reading Challenge</h2>
+    <p>Berilgan matnni o‘qib, har bir savol uchun eng mos keluvchi javobni tanlang.</p>
+
+    <div class="progress-box">
+      <div class="progress-title">
+        <span>Test bajarilishi</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-info" id="progressInfo">Belgilangan: 0 / 20</div>
+    </div>
+  </aside>
+
+  <main class="questions">
+    <div id="questionsContainer"></div>
+
+    <section class="finish-area">
+      <h2>Test tugadimi?</h2>
+      <p>Javoblarni tekshirish uchun tugmani bosing.</p>
+      <button type="button" class="btn" id="checkBtn">✓ Natijani tekshirish</button>
+    </section>
+
+    <section class="result-panel" id="resultPanel" hidden>
+      <h2 class="result-title">Test natijasi</h2>
+
+      <div class="score-grid">
+        <div class="score-card">
+          <span>To‘g‘ri javoblar</span>
+          <strong class="green" id="correctScore">0 / 20</strong>
+        </div>
+        <div class="score-card">
+          <span>Xato / bo‘sh javoblar</span>
+          <strong class="red" id="wrongScore">0 / 20</strong>
+        </div>
+        <div class="score-card">
+          <span>Natija foizi</span>
+          <strong class="yellow" id="resultPercent">0%</strong>
+        </div>
+      </div>
+
+      <div class="result-lists" id="resultLists"></div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-green" id="saveResultBtn">🖼 Natijani rasmga saqlash</button>
+        <button type="button" class="btn btn-blue" id="scrollTopBtn">↑ Tepaga qaytish</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="imageModal" hidden>
+  <div class="modal-content">
+    <h2>Natija rasmi tayyor</h2>
+    <p>PNG rasmni ko‘rib chiqing. Telefoningizda ulashish orqali Galereya/Photos yoki boshqa ilovaga yuborishingiz mumkin.</p>
+    <img id="resultImage" alt="KIBO EFFECT test natijasi">
+    <div class="modal-actions">
+      <button type="button" class="btn btn-green" id="shareBtn">↗ Ulashish</button>
+      <button type="button" class="btn btn-blue" id="downloadBtn">⬇ Yuklab olish</button>
+      <button type="button" class="btn btn-blue" id="closeModalBtn">✕ Yopish</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+
+const letters = ["①","②","③","④"];
+const questionData = [
+      {
+        qnum:"11", page:1,
+        passage:"최근 70~80년대를 경험해 볼 수 있는 문화 공간이 생겼다. 서울시에서 새로 문을 연 '추억극장'이 바로 그곳이다. 입장료 2,000원만 내면 남녀노소 누구나 그때 유행했던 영화를 관람할 수 있으며 커피와 차, 과자 등 간단한 간식도 먹을 수 있다. 극장 내부에는 추억의 영화 포스터, 영화표 등이 전시되어 있다.",
+        options:["이곳에서 옛날 영화 포스터를 살 수 있다.","얼마 전 추억의 문화 공간이 새로 만들어졌다.","추억극장은 입장료가 없기 때문에 인기가 많다.","추억극장에서는 최근에 나온 영화도 볼 수 있다."],
+        answer:1
+      },
+      {
+        qnum:"12", page:2,
+        passage:"사람들은 가끔씩 지금과는 다른 내가 되고 싶어 한다. 이런 마음은 가면을 통해서 나타낼 수 있는데 가면을 쓰면 잠시 동안이지만 현실과 다른 나를 표현할 수 있다. 예를 들어 힘이 약한 사람이 호랑이 가면을 쓰게 되면 호랑이처럼 힘이 세다고 생각한다. 그래서 정말 힘센 사람처럼 행동하게 되고 이를 통해 스스로 만족하게 된다.",
+        options:["가면을 쓰면 성격을 바꿀 수 있다.","가면을 쓰면 현실을 더 잘 볼 수 있다.","가면으로 원하던 모습을 표현할 수 있다.","힘을 자랑하기 위해서 호랑이 가면을 쓴다."],
+        answer:2
+      },
+      {
+        qnum:"11", page:3,
+        passage:"주말마다 서울 광화문 주변이 콘서트장으로 바뀐다. 바로 '광화문 콘서트'라는 프로그램 때문이다. 이 프로그램은 매회 가수 한 명이 출연해 10여 곡의 노래를 부르는 음악 프로그램으로 다음 주 첫 방송을 앞두고 있다. 녹화는 광화문 앞 무대에서 일요일 오후 7시부터 시작되며 방청 신청은 프로그램 홈페이지를 통해 300명까지 선착순으로 받는다.",
+        options:["이 프로그램은 평일에 녹화를 진행한다.","광화문 콘서트는 오래된 음악 프로그램이다.","직접 가서 보려면 인터넷으로 신청해야 한다.","이 프로그램에는 여러 명의 가수가 출연한다."],
+        answer:2
+      },
+      {
+        qnum:"12", page:4,
+        passage:"종이 신문을 읽는 가구가 계속 감소하고 있는 것으로 나타났다. 종이 신문을 읽는 집은 지난해보다 5% 정도 감소해서 다섯 집 중 한 집만이 배달해서 읽고 있었다. 인터넷으로 언제든지 뉴스를 볼 수 있게 되면서 종이 신문을 보는 사람이 감소하고 있는 것이다. 한편 이번 조사는 지난해에 조사에 참여한 집으로 전화를 거는 방식으로 진행되었다.",
+        options:["이번 조사는 직접 방문해서 조사하는 방식을 사용했다.","종이 신문을 읽는 사람이 줄면서 인터넷의 사용도 줄었다.","조사된 가구 중에서 절반은 집으로 배달되는 신문을 읽는다.","이번 조사와 지난해 조사는 서로 같은 가구를 대상으로 했다."],
+        answer:3
+      },
+      {
+        qnum:"11", page:5,
+        passage:"아침신문사에서는 오는 12월 20일에 한국어 말하기 대회를 개최한다. 이 대회는 한국에 사는 외국인 대학생을 대상으로 하며 주제는 '나와 한국'이다. 참가를 원하는 사람은 발표할 내용을 원고지 10장 정도의 글로 써서 12월 5일까지 이메일로 보내면 된다. 예선은 원고 심사로 대신하며 본선 참가자는 홈페이지를 통해 공지할 예정이다.",
+        options:["대회에서 발표할 원고의 양은 제한이 없다.","외국에서 살고 있는 사람도 참가할 수 있다.","본선 참가자는 홈페이지에서 확인할 수 있다.","신청자는 신문사에 가서 원고를 제출하면 된다."],
+        answer:2
+      },
+      {
+        qnum:"12", page:6,
+        passage:"조리실 안이 보이는 한 식당이 인기를 끌고 있다. 이 식당은 처음에 깨끗한 주방을 손님들에게 보여 주려고 조리실을 유리로 만들었다. 그런데 손님들은 주방보다는 음식 만드는 과정에 더 큰 관심을 보였다. 요리사의 요리하는 모습이 신기했기 때문이다. 그래서 식당은 손님들을 위해 매일 한 번씩 요리 만드는 것을 공연처럼 보여 주고 있다.",
+        options:["이 식당은 건물 전체가 유리로 만들어졌다.","이 식당의 손님들은 음식 만드는 것을 볼 수 있다.","이 식당은 음식을 먹는 곳과 조리실의 구분이 없다.","이 식당은 손님들을 위해 매일 다른 공연을 준비한다."],
+        answer:1
+      },
+      {
+        qnum:"11", page:7,
+        passage:"최근 초록 콩나물을 찾는 주부들이 늘고 있다. 노란 콩나물은 보통 검은색 천으로 덮어 어두운 곳에서 기른다. 그러나 초록 콩나물은 천으로 가리지 않고 밝은 곳에서 자라게 한다. 햇빛을 받아 초록색으로 변한 콩나물은 노란 콩나물보다 영양가가 높다. 특히 초록 콩나물은 노란 콩나물보다 비타민이 많이 들어 있어서 피로 회복에 좋다.",
+        options:["노란 콩나물은 햇빛을 받고 자란다.","초록 콩나물은 검은색 천을 덮어서 키운다.","노란 콩나물은 초록 콩나물보다 피로 회복에 좋다.","초록 콩나물은 노란 콩나물에 비해 영양가가 많다."],
+        answer:3
+      },
+      {
+        qnum:"12", page:8,
+        passage:"손을 움직이는 것은 뇌와 관련이 있다. 그래서 손을 자주 움직이면 뇌 기능이 좋아질 수 있다. 특히 자주 사용하지 않는 손을 움직일 때 뇌가 더 효과적으로 자극될 수 있다. 평소에 오른손을 많이 쓴다면 왼손을, 왼손을 많이 쓴다면 오른손을 사용하는 것이다. 문을 열고 닫는 일처럼 간단한 일을 그렇게 하는 것만으로도 뇌 기능을 유지하는 데 도움이 된다.",
+        options:["뇌 건강과 손을 움직이는 것은 서로 관계가 없다.","우리 몸과 달리 뇌는 간단한 일로 자극받지 않는다.","뇌 활동을 위해 익숙한 방법으로 손을 쓰는 것이 더 좋다.","자주 사용하지 않던 손을 사용하면 뇌 움직임이 활발해진다."],
+        answer:3
+      },
+      {
+        qnum:"11", page:9,
+        passage:"만화방이 단순히 만화를 보는 공간에서 벗어나 볼거리, 먹을거리를 함께 즐길 수 있는 '만화카페'로 다시 태어나고 있다. 이 만화카페는 '만화를 보는 공간'이라는 점에서 만화방과 비슷하다. 그러나 밝은 조명과 세련된 분위기에서 고급 커피까지 마실 수 있다는 점이 다르다. 만화방이 주로 남자들에게 인기가 많았다면 만화카페는 10, 20대 여성들에게 인기가 많다.",
+        options:["만화카페는 만화방과 실내 분위기가 비슷하다.","만화카페는 주로 남성들에게 인기를 끌고 있다.","만화카페는 커피를 마시기 위한 곳으로 새롭게 태어났다.","만화카페는 볼거리와 먹을거리를 모두 즐길 수 있는 곳이다."],
+        answer:3
+      },
+      {
+        qnum:"12", page:10,
+        passage:"카카오가 건강에 도움이 된다는 사실이 새롭게 알려졌다. 카카오에 있는 단백질, 지방, 칼슘과 같은 영양 성분이 감기 예방, 집중력 향상 등에 효과가 있다는 것이다. 그러나 카카오는 그 자체로 먹기가 어려워 일반적으로 초콜릿 형태로 먹는다. 그런데 너무 단 초콜릿은 오히려 건강을 해칠 수 있어 많이 먹는 것은 피해야 한다.",
+        options:["카카오를 먹으면 집중력을 높일 수 있다.","초콜릿은 영양 성분이 풍부해서 많이 먹어야 한다.","카카오보다 초콜릿 형태로 먹는 것이 건강에 더 좋다.","초콜릿의 재료가 카카오라는 사실이 처음으로 알려졌다."],
+        answer:0
+      },
+      {
+        qnum:"11", page:11,
+        passage:"지난 13일 인주경찰서에 편지 한 통이 배달되었다. 편지를 보낸 사람은 지난달 인주시를 방문했다가 지갑을 잃어버린 외국인 관광객 장 모 씨였다. 장 씨는 말이 통하지 않아 지갑을 찾는 데 어려움을 겪었다. 그때 한 경찰이 사전과 몸짓을 이용해 장 씨와 이야기하며 잃어버린 지갑을 찾는 데 도움을 주었다. 이에 장 씨가 고마움을 담은 감사 편지를 보낸 것이다.",
+        options:["관광객이 경찰에게 감사하는 마음을 표현했다.","관광객이 잃어버린 지갑을 찾지 못하고 돌아갔다.","경찰이 지갑을 잃어버린 관광객에게 편지를 썼다.","경찰이 관광객의 말을 이해하지 못해 도와줄 수 없었다."],
+        answer:0
+      },
+      {
+        qnum:"12", page:12,
+        passage:"최근 공연을 혼자 보는 사람들이 많아졌다. 친구나 연인이 함께 보는 장르로 생각했던 뮤지컬, 연극 등도 혼자 보는 사람들이 늘어난 것이다. 한 조사 결과에 따르면 열 명 중 네 명이 혼자 공연을 관람하는 것으로 나타났다. 혼자 공연을 보는 사람들은 함께 간 사람에게 신경을 쓰지 않고 공연에만 집중할 수 있어서 좋다고 말한다.",
+        options:["사람들은 연극과 뮤지컬을 혼자 보는 장르로 생각한다.","혼자 공연을 보면 공연에 집중할 수 있다는 장점이 있다.","사람들은 공연을 볼 때 다른 사람에게 신경을 쓰지 않는다.","조사 결과에 따르면 공연을 혼자 보는 사람들이 줄고 있다."],
+        answer:1
+      },
+      {
+        qnum:"11", page:13,
+        passage:"인주시의 한 고등학교는 올해부터 여름 교복으로 티셔츠와 반바지를 입고 있다. 기존 정장형 교복은 활동할 때 불편하다는 학생들의 의견이 많았기 때문이다. 몸이 편해지니 학생들은 다양한 활동에 적극적으로 참여하기 시작했고 공부에도 더 집중할 수 있어서 학습 효율이 올라갔다. 새 교복은 기존 교복보다 가격이 저렴해서 학부모에게도 인기다.",
+        options:["학부모들은 정장형 교복을 더 좋아한다.","새 교복은 정장형 교복보다 가격이 비싸다.","기존 교복에 비해 새 교복은 활동할 때 불편하다.","학교는 학생들의 의견을 받아들여서 교복을 바꿨다."],
+        answer:3
+      },
+      {
+        qnum:"12", page:14,
+        passage:"최근 한 아파트에서는 힘들게 일하는 택배 기사, 청소원 등을 위한 무료 카페를 열어서 화제가 되고 있다. 이 카페는 언제든 부담 없이 음료를 마시면서 쉴 수 있는 곳이어서 이용자들이 만족해하고 있다. 주민들은 처음에는 관심을 안 보였지만 지금은 카페에 음료와 간식을 제공하는 등 많은 도움을 주고 있다.",
+        options:["이 카페에 간식을 가져다주는 주민들이 생겼다.","카페를 열 때 아파트 주민들이 적극적으로 도왔다.","이 카페는 아파트 주민들이 돈을 벌기 위해서 열었다.","택배 기사들이 카페의 운영에 참여해 화제가 되고 있다."],
+        answer:0
+      },
+      {
+        qnum:"11", page:15,
+        passage:"지난 24일에 '제7회 소비자 선정 최고 브랜드 대상' 시상식이 인주신문사 대강당에서 개최됐다. 이 상은 소비자의 온라인 투표로 수상 브랜드가 선정되어 의미가 크다. 지난해와 같이 100개 브랜드가 상을 받았는데 올해는 처음으로 친환경 화장품 브랜드 두 개가 포함되었다.",
+        options:["소비자가 수상 브랜드를 선정했다.","기업들이 직접 온라인 투표에 참여했다.","지난해보다 더 많은 브랜드가 선정됐다.","친환경 화장품 브랜드는 상을 못 받았다."],
+        answer:0
+      },
+      {
+        qnum:"12", page:16,
+        passage:"최근 한 나라에서 4,400년 전에 만들어진 무덤이 발견됐다. 이 무덤의 주인은 당시 왕으로 밝혀졌으며 무덤 벽에는 고대 문자와 다양한 색의 그림이 가득했다. 이 무덤은 오랜 시간이 지났지만 색이 거의 그대로 보존되어 있어 역사적 가치가 높다고 전문가들은 전했다. 무덤의 일부는 일반인에게도 곧 공개될 예정이다.",
+        options:["무덤의 주인이 누구인지 찾고 있다.","무덤 안을 구경하는 사람들이 많아졌다.","무덤 안의 그림은 색의 상태가 좋은 편이다.","무덤 바닥에서 다양한 문자와 그림이 발견됐다."],
+        answer:2
+      },
+      {
+        qnum:"11", page:17,
+        passage:"그림책 작가 이수지 씨가 한국인 최초로 어린이책 노벨상이라는 안데르센 상을 받아 주목받고 있다. 이 상은 1956년에 만들어진 상으로 작가가 발표한 모든 작품을 대상으로 심사한다. 이 작가는 어린이들이 꿈꾸고 상상하는 세계를 그림으로 잘 표현해 낸다는 평을 받았다.",
+        options:["이 작가가 받은 상은 작년에 만들어졌다.","이 작가는 한국인 중 처음으로 이 상을 받았다.","이 작가는 자신이 직접 경험한 이야기를 그림으로 표현했다.","이 작가는 자신의 작품 중 한 편을 골라 심사 대상으로 제출했다."],
+        answer:1
+      },
+      {
+        qnum:"12", page:18,
+        passage:"17일 오전 6시 22분 인주시에서 규모 3.2의 지진이 발생했다. 이날 지진은 올해 인주시에서 발생한 지진 중 가장 큰 규모다. 119 상황실에는 지진을 느낀 시민들의 신고가 여러 건 접수됐다. 그러나 이번 지진으로 입은 큰 피해는 없는 것으로 조사됐다. 기상청은 이번 주 내로 규모 2.0 정도의 지진이 몇 번 더 발생할 것으로 보고 있다.",
+        options:["이번 지진은 늦은 밤에 일어났다.","시민들이 지진을 느껴 상황실에 신고를 했다.","이번 지진으로 큰 피해를 입은 사람들이 많다.","이번 주에는 더 이상 지진이 일어나지 않을 것이다."],
+        answer:1
+      },
+      {
+        qnum:"11", page:19,
+        passage:"인주시가 작년에 이어 올해도 10월 한 달간 '찾아가는 자전거 수리 센터'를 운영한다. 평일에는 여러 지역을 직접 방문해 고쳐 주고 주말에는 인주공원에서 수리 서비스를 제공한다. 전문 수리 기사가 자전거를 무료로 고쳐 주고 부품 교체가 필요한 경우에는 저렴한 가격으로 바꿔 준다. 시는 시민들의 자전거 타기 생활화를 위해 이 수리 센터를 운영하는 것이라고 밝혔다.",
+        options:["이 서비스는 일 년 내내 운영된다.","올해 처음으로 이 센터가 운영되기 시작했다.","주말에는 인주공원에서 수리를 받을 수 있다.","이 수리 센터에서는 무료로 부품을 교체해 준다."],
+        answer:2
+      },
+      {
+        qnum:"12", page:20,
+        passage:"피자 가게를 운영하는 김민수 씨의 사연이 잔잔한 감동을 주고 있다. 최근 김 씨는 피자를 배달하러 가다가 오토바이가 빗길에 미끄러지는 사고를 당했다. 다행히 사람이 다치는 피해는 없었지만 피자가 망가져서 배달에 문제가 생겼다. 배달이 늦어지는 것에 대해 김 씨가 고객에게 연락하자 고객은 '천천히 오셔도 돼요. 몸은 괜찮나요?'라며 따뜻한 말부터 전했다고 한다.",
+        options:["고객은 주문한 피자를 취소하겠다고 말했다.","사고가 생겨서 배달 중이던 피자가 망가졌다.","오토바이가 빗길에 미끄러져서 김 씨가 다쳤다.","김 씨는 피자를 시킨 고객에게 연락하다 사고가 났다."],
+        answer:1
+      }
+    ];
+
+const questionsContainer = document.getElementById("questionsContainer");
+const mainContainer = document.getElementById("mainContainer");
+let reviewed = false;
+let resultData = null;
+let resultBlob = null;
+let imageURL = null;
+let zoom = Number(__kiboStorage.getItem("kibo-zoom") || 100);
+
+function answerLabel(question,index){
+  return `${letters[index]} ${question.options[index]}`;
+}
+
+function renderQuestions(){
+  questionsContainer.innerHTML = questionData.map((q,index)=>`
+    <article class="question-card" data-index="${index}">
+      <div class="q-top">
+        <div class="q-num">${index+1}</div>
+        <div class="q-page">Question ${q.qnum} · Page ${q.page}</div>
+        <div class="q-status" aria-live="polite"></div>
+      </div>
+      <div class="passage">${q.passage}</div>
+      <div class="options">
+        ${q.options.map((option,i)=>`
+          <button type="button" class="option" data-choice="${i}" aria-label="${letters[i]} ${option}">
+            ${letters[i]} ${option}
+          </button>
+        `).join("")}
+      </div>
+    </article>
+  `).join("");
+
+  document.querySelectorAll(".option").forEach(option=>{
+    option.addEventListener("click",()=>{
+      if(reviewed) return;
+      const card=option.closest(".question-card");
+      const group=option.parentElement;
+      group.querySelectorAll(".option").forEach(item=>item.classList.remove("selected"));
+      option.classList.add("selected");
+      updateProgress();
+    });
+  });
+}
+
+function updateProgress(){
+  const answered = document.querySelectorAll(".option.selected").length;
+  const total = questionData.length;
+  const percent = total ? Math.round(answered/total*100) : 0;
+  document.getElementById("progressFill").style.width = percent + "%";
+  document.getElementById("progressPercent").textContent = percent + "%";
+  document.getElementById("progressInfo").textContent = `Belgilangan: ${answered} / ${total}`;
+}
+
+function resetReview(){
+  reviewed=false;
+  resultData=null;
+  document.querySelectorAll(".question-card").forEach(card=>{
+    card.classList.remove("is-correct","is-wrong","is-unanswered","locked");
+    const status=card.querySelector(".q-status");
+    status.className="q-status";
+    status.textContent="";
+    card.querySelectorAll(".option").forEach(option=>option.classList.remove("answer-correct","answer-wrong"));
+  });
+  document.getElementById("resultPanel").hidden=true;
+  const checkButton=document.getElementById("checkBtn");
+  checkButton.disabled=false;
+  checkButton.textContent="✓ Natijani tekshirish";
+  checkButton.style.opacity="";
+}
+
+function checkResults(){
+  let correct=0, answered=0;
+  const rows=[];
+
+  questionData.forEach((question,index)=>{
+    const card=document.querySelector(`[data-index="${index}"]`);
+    const selected=card.querySelector(".option.selected");
+    const correctOption=card.querySelector(`.option[data-choice="${question.answer}"]`);
+    const status=card.querySelector(".q-status");
+    const selectedIndex=selected ? Number(selected.dataset.choice) : null;
+    if(selected) answered++;
+    const isCorrect=selectedIndex===question.answer;
+
+    correctOption.classList.add("answer-correct");
+
+    if(isCorrect){
+      correct++;
+      card.classList.add("is-correct");
+      status.className="q-status show correct";
+      status.textContent="✓ To‘g‘ri";
+    }else{
+      card.classList.add(selected ? "is-wrong" : "is-unanswered");
+      if(selected) selected.classList.add("answer-wrong");
+      status.className="q-status show wrong";
+      status.textContent=selected
+        ? `✗ Xato · ${letters[selectedIndex]}`
+        : `! Javob berilmadi · ${letters[question.answer]}`;
+    }
+    rows.push({number:index+1,question,selectedIndex,isCorrect});
+  });
+
+  const total=questionData.length;
+  const wrong=total-correct;
+  const percent=total ? Math.round(correct/total*100) : 0;
+  resultData={correct,wrong,total,answered,percent,rows};
+
+  document.getElementById("correctScore").textContent=`${correct} / ${total}`;
+  document.getElementById("wrongScore").textContent=`${wrong} / ${total}`;
+  document.getElementById("resultPercent").textContent=percent+"%";
+
+  const good=rows.filter(row=>row.isCorrect);
+  const bad=rows.filter(row=>!row.isCorrect);
+
+  document.getElementById("resultLists").innerHTML=`
+    <div class="list-card good">
+      <h3>✓ To‘g‘ri savollar (${good.length})</h3>
+      <ul>${good.length ? good.map(row=>`<li><b>${row.number}-savol</b> — ${answerLabel(row.question,row.question.answer)}</li>`).join("") : "<li>To‘g‘ri javob yo‘q.</li>"}</ul>
+    </div>
+    <div class="list-card bad">
+      <h3>✗ Xato yoki bo‘sh savollar (${bad.length})</h3>
+      <ul>${bad.length ? bad.map(row=>`
+        <li><b>${row.number}-savol</b><br>
+        Siz: ${row.selectedIndex===null ? "Javob berilmagan" : answerLabel(row.question,row.selectedIndex)}<br>
+        To‘g‘ri: ${answerLabel(row.question,row.question.answer)}</li>`).join("") : "<li>Barcha javoblar to‘g‘ri. Ajoyib! 🎉</li>"}</ul>
+    </div>`;
+
+  reviewed=true;
+  document.querySelectorAll(".option").forEach(option=>{option.classList.add("review-locked"); option.setAttribute("aria-disabled","true");});
+  const checkButton=document.getElementById("checkBtn");
+  checkButton.textContent="✓ Natija tekshirildi";
+  checkButton.disabled=true;
+  document.getElementById("resultPanel").hidden=false;
+
+  setTimeout(()=>document.getElementById("resultPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
+}
+
+function rounded(ctx,x,y,width,height,radius){
+  ctx.beginPath();
+  ctx.roundRect(x,y,width,height,radius);
+  ctx.fill();
+}
+
+async function createResultImage(){
+  if(!resultData){ alert("Avval natijani tekshiring."); return; }
+  const wrongRows=resultData.rows.filter(row=>!row.isCorrect);
+  const width=1080;
+  const height=760 + wrongRows.length*78;
+  const canvas=document.createElement("canvas");
+  canvas.width=width; canvas.height=height;
+  const ctx=canvas.getContext("2d");
+
+  const bg=ctx.createLinearGradient(0,0,width,height);
+  bg.addColorStop(0,"#091223"); bg.addColorStop(.55,"#15264a"); bg.addColorStop(1,"#10233c");
+  ctx.fillStyle=bg; ctx.fillRect(0,0,width,height);
+
+  ctx.fillStyle="#f6c453"; ctx.font="800 28px Arial";
+  ctx.fillText("KIBO EFFECT • TOPIK II 읽기 11-12",60,55);
+  ctx.fillStyle="#fff"; ctx.font="800 48px Arial"; ctx.fillText("Test natijasi",60,115);
+  ctx.fillStyle="#aebbd4"; ctx.font="24px Arial";
+  ctx.fillText(`Javob berilgan: ${resultData.answered}/${resultData.total}   •   Natija: ${resultData.percent}%`,60,160);
+
+  ctx.fillStyle="rgba(53,208,127,.18)"; rounded(ctx,60,205,290,100,18);
+  ctx.fillStyle="#b7ffd6"; ctx.font="700 20px Arial"; ctx.fillText("TO‘G‘RI JAVOBLAR",82,225);
+  ctx.fillStyle="#35d07f"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.correct}/${resultData.total}`,82,265);
+
+  ctx.fillStyle="rgba(255,100,118,.18)"; rounded(ctx,390,205,290,100,18);
+  ctx.fillStyle="#ffd2d8"; ctx.font="700 20px Arial"; ctx.fillText("XATO / BO‘SH",412,225);
+  ctx.fillStyle="#ff6476"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.wrong}/${resultData.total}`,412,265);
+
+  ctx.fillStyle="rgba(246,196,83,.18)"; rounded(ctx,720,205,290,100,18);
+  ctx.fillStyle="#ffe5a1"; ctx.font="700 20px Arial"; ctx.fillText("NATIJA FOIZI",742,225);
+  ctx.fillStyle="#f6c453"; ctx.font="800 34px Arial"; ctx.fillText(`${resultData.percent}%`,742,265);
+
+  let y=370;
+  ctx.fillStyle="#55e995"; ctx.font="800 27px Arial";
+  ctx.fillText(`✓ TO‘G‘RI SAVOLLAR (${resultData.correct} ta)`,60,y);
+  y+=44;
+  const goodNumbers=resultData.rows.filter(row=>row.isCorrect).map(row=>`Q${row.number}`).join(" • ");
+  ctx.fillStyle="#e4fff0"; ctx.font="23px Arial"; ctx.fillText(goodNumbers || "To‘g‘ri javob yo‘q.",60,y);
+  y+=84;
+  ctx.fillStyle="#ff8492"; ctx.font="800 27px Arial";
+  ctx.fillText(`✗ XATO YOKI BO‘SH SAVOLLAR (${resultData.wrong} ta)`,60,y);
+  y+=48;
+
+  wrongRows.forEach(row=>{
+    const selectedText=row.selectedIndex===null ? "Javob berilmagan" : answerLabel(row.question,row.selectedIndex);
+    const correctText=answerLabel(row.question,row.question.answer);
+    ctx.fillStyle="#ffdce0"; ctx.font="21px Arial"; ctx.fillText(`Q${row.number} — Siz: ${selectedText}`,60,y);
+    y+=30;
+    ctx.fillStyle="#aaffd0"; ctx.fillText(`To‘g‘ri javob: ${correctText}`,85,y);
+    y+=45;
+  });
+
+  ctx.fillStyle="#90a1c4"; ctx.font="18px Arial";
+  ctx.fillText("KIBO EFFECT • Natija avtomatik yaratilgan",60,height-42);
+
+  resultBlob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
+  if(imageURL) URL.revokeObjectURL(imageURL);
+  imageURL=URL.createObjectURL(resultBlob);
+  document.getElementById("resultImage").src=imageURL;
+  document.getElementById("imageModal").hidden=false;
+}
+
+async function downloadImage(){
+  try {
+    let blob = resultBlob;
+    if (!blob && imageURL) { const response = await fetch(imageURL); blob = await response.blob(); }
+    if (!blob) { alert("Avval natija rasmini tayyorlang."); return; }
+    const pngBlob = blob.type === "image/png" ? blob : new Blob([blob], {type:"image/png"});
+    const url = URL.createObjectURL(pngBlob);
+    const a = document.createElement("a"); a.href = url; a.download = "kibo-effect-test-natijasi.png"; a.style.display = "none";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (error) { console.error("PNG yuklashda xatolik:", error); if (imageURL) window.open(imageURL, "_blank"); }
+}
+async function shareImage(){
+  if(!resultBlob) return;
+  const file=new File([resultBlob],"kibo-effect-test-natijasi.png",{type:"image/png"});
+  try{
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:"KIBO EFFECT natijasi",text:"TOPIK II 읽기 11-12 test natijasi",files:[file]});
+    }else downloadImage();
+  }catch(error){
+    if(error.name!=="AbortError") downloadImage();
+  }
+}
+
+function applyTheme(){
+  const mode=__kiboStorage.getItem("kibo-theme") || "night";
+  const isDay=mode==="day";
+  document.body.classList.toggle("day",isDay);
+  document.getElementById("themeIcon").textContent=isDay ? "☀️" : "🌙";
+  document.getElementById("themeLabel").textContent=isDay ? "Day mode" : "Night mode";
+  document.getElementById("themeToggle").setAttribute("aria-label",isDay ? "Night mode'ga o'tish" : "Day mode'ga o'tish");
+}
+
+function applyZoom(){
+  zoom=Math.max(80,Math.min(200,Math.round(zoom/10)*10));
+  document.getElementById("zoomValue").textContent=zoom+"%";
+  __kiboStorage.setItem("kibo-zoom",String(zoom));
+  mainContainer.classList.toggle("zoom-large",zoom>=150);
+  document.documentElement.style.setProperty("--kibo-zoom",zoom/100);
+  // CSS zoom makes the complete test area visually scale while preserving sticky header controls.
+  mainContainer.style.zoom=(zoom/100);
+}
+
+document.getElementById("checkBtn").addEventListener("click",checkResults);
+document.getElementById("saveResultBtn").addEventListener("click",createResultImage);
+document.getElementById("downloadBtn").addEventListener("click",downloadImage);
+document.getElementById("shareBtn").addEventListener("click",shareImage);
+document.getElementById("closeModalBtn").addEventListener("click",()=>document.getElementById("imageModal").hidden=true);
+document.getElementById("scrollTopBtn").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+document.getElementById("imageModal").addEventListener("click",event=>{
+  if(event.target.id==="imageModal") document.getElementById("imageModal").hidden=true;
+});
+document.getElementById("themeToggle").addEventListener("click",()=>{
+  const next=document.body.classList.contains("day") ? "night" : "day";
+  __kiboStorage.setItem("kibo-theme",next);
+  applyTheme();
+});
+document.getElementById("zoomOut").addEventListener("click",()=>{zoom-=10;applyZoom();});
+document.getElementById("zoomIn").addEventListener("click",()=>{zoom+=10;applyZoom();});
+
+renderQuestions();
+applyTheme();
+applyZoom();
+updateProgress();
+
+</script>
+<style id="kibo-mobile-iframe-fix">@media (max-width:600px){html,body{min-height:0 !important;}.container{padding-bottom:24px !important;}}</style>
+<script>(function(){function reportHeight(){try{var h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);if(window.parent!==window){window.parent.postMessage({type:"kibo-test-height",height:h},"*");}}catch(e){}}window.addEventListener("load",reportHeight);window.addEventListener("resize",reportHeight);if(window.ResizeObserver){new ResizeObserver(reportHeight).observe(document.body);}setTimeout(reportHeight,300);setTimeout(reportHeight,1000);})();</script>
+</body>
+</html>
