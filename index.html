@@ -238,10 +238,9 @@ iframe{
 
 main,
 iframe{
-  height:100vh
-  min-height:0;
+    height:100vh;
+    min-height:0;
 }
-
 
 .user-area{
   position:relative;
@@ -603,7 +602,6 @@ import { initializeApp }
 import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
-  getAppCheck,
   getToken
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app-check.js";
 
@@ -666,13 +664,15 @@ const firebaseApp = initializeApp(firebaseConfig);
  * The site key is a public browser value. Never put a reCAPTCHA secret key,
  * Firebase Admin credential, service-account JSON, or other server secret here.
  */
-const RECAPTCHA_ENTERPRISE_SITE_KEY = "PASTE_YOUR_RECAPTCHA_ENTERPRISE_SITE_KEY_HERE";
+const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcBB80tAAAAADX7WCPLKajV1HHwVDnyaDKLyI6o";
+
+let appCheck = null;
 
 if (
   RECAPTCHA_ENTERPRISE_SITE_KEY &&
   !RECAPTCHA_ENTERPRISE_SITE_KEY.includes("PASTE_YOUR_")
 ) {
-  initializeAppCheck(firebaseApp, {
+  appCheck = initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
     isTokenAutoRefreshEnabled: true
   });
@@ -692,8 +692,9 @@ const db = getFirestore(firebaseApp);
 
 async function syncServerSession(user){
   const idToken = await user.getIdToken(true);
-  const appCheck = getAppCheck(firebaseApp);
-  const appCheckResult = await getToken(appCheck, false);
+const appCheckResult = appCheck
+  ? await getToken(appCheck, false)
+  : null;
   if(!appCheckResult?.token) throw new Error("App Check token olinmadi");
   const response = await fetch("/api/auth/session", {
     method: "POST",
