@@ -102,7 +102,10 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 #app:not(.home) #home{display:none}
 #app:not(.home) #homeBtn{display:grid;place-items:center}
 #app:not(.home) header nav{display:flex}
-#app:not(.home) main{display:block;width:100%;min-width:0;min-height:calc(100vh - 74px);margin:0;padding:0;overflow:hidden}
+#app:not(.home){display:block!important;width:100%;min-width:0}
+#app:not(.home) header{width:100%;}
+#app:not(.home) main{display:block;width:100vw;max-width:100%;min-width:0;min-height:calc(100vh - 74px);margin:0;padding:0;overflow:hidden}
+#app:not(.home) #lessonFrame{width:100%!important;max-width:none!important;display:block;}
 #lessonFrame{display:block;width:100%;max-width:none;height:calc(100vh - 74px);min-height:0;margin:0;padding:0;border:0;outline:0;background:var(--bg)}
  :root[data-theme="dark"] .home-hero{background:linear-gradient(135deg,#181b27 0%,#20213b 58%,#182c2e 100%)}
 :root[data-theme="dark"] .home-hero:before{background:radial-gradient(circle,#35376a 0%,rgba(53,55,106,.34) 34%,transparent 68%)}
