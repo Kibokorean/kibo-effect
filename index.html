@@ -308,6 +308,8 @@ iframe{min-height:0}
 .home-section-head{margin:31px 0 18px}
 .home-title{margin:0;color:var(--text);font-size:29px;letter-spacing:-.6px}
 .home-subtitle{margin:7px 0 0;color:var(--muted);font-size:15px}
+.kibo-dars-grid{margin-bottom:28px}
+.kibo-dars-grid .test-card{min-height:215px}
 .test-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -516,6 +518,26 @@ iframe{min-height:0}
     </section>
 
     <section class="home-section-head">
+      <h2 class="home-title">KIBO DARS</h2>
+      <p class="home-subtitle">Bosqichma-bosqich 3 modul bilan ishlang.</p>
+    </section>
+
+    <div class="test-grid kibo-dars-grid">
+      <article class="test-card" style="--accent:#2f80ed">
+        <div class="card-top"><span class="card-number">1</span><span class="card-icon">📘</span></div>
+        <h2>1-DARS</h2>
+        <p class="card-desc">1–2 읽기 · So‘z yodlash · So‘z testi</p>
+        <button type="button" data-dars="1">▶ 1-DARSni ochish →</button>
+      </article>
+      <article class="test-card" style="--accent:#4c8ef7">
+        <div class="card-top"><span class="card-number">2</span><span class="card-icon">📗</span></div>
+        <h2>2-DARS</h2>
+        <p class="card-desc">3–4 읽기 · 59 ta so‘z · So‘z testi</p>
+        <button type="button" data-dars="2">▶ 2-DARSni ochish →</button>
+      </article>
+    </div>
+
+    <section class="home-section-head">
       <h2 class="home-title">읽기 testlari</h2>
       <p class="home-subtitle">TOPIK II 읽기 bo‘limini tanlang</p>
     </section>
@@ -650,7 +672,8 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
   initializeAppCheck,
-  ReCaptchaEnterpriseProvider
+  ReCaptchaEnterpriseProvider,
+  getToken
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app-check.js";
 
 import {
@@ -714,15 +737,21 @@ const firebaseApp = initializeApp(firebaseConfig);
  */
 const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcBB80tAAAAADX7WCPLKajV1HHwVDnyaDKLyI6o";
 
+let firebaseAppCheck = null;
 if (
   RECAPTCHA_ENTERPRISE_SITE_KEY &&
   !RECAPTCHA_ENTERPRISE_SITE_KEY.includes("PASTE_YOUR_")
 ) {
-  initializeAppCheck(firebaseApp, {
+  firebaseAppCheck = initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
     isTokenAutoRefreshEnabled: true
   });
 }
+
+window.__kiboGetAppCheckToken = async function(){
+  const result = await getToken(firebaseAppCheck, true);
+  return result.token;
+};
 
 // Use durable browser persistence with IndexedDB first and localStorage
 // as a fallback. Explicitly provide the popup resolver for mobile browsers.
@@ -994,6 +1023,14 @@ onAuthStateChanged(
     }
 
     try{
+      const idToken = await user.getIdToken(true);
+      const appCheckToken = await window.__kiboGetAppCheckToken();
+      await fetch("/api/auth/session",{
+        method:"POST",credentials:"include",
+        headers:{"Content-Type":"application/json","X-Firebase-AppCheck":appCheckToken},
+        body:JSON.stringify({idToken})
+      });
+
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       const now = serverTimestamp();
@@ -1094,6 +1131,15 @@ document
 
   });
 
+
+/* KIBO DARS */
+document.querySelectorAll("[data-dars]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    app.classList.remove("home");
+    frame.style.height="100vh";
+    frame.src=`/dars/${button.dataset.dars}.html`;
+  });
+});
 
 /* NAV BUTTONS */
 

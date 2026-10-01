@@ -2,6 +2,7 @@ const { getApps, initializeApp, cert } = require("firebase-admin/app");
 const { getAuth } = require("firebase-admin/auth");
 const { getAppCheck } = require("firebase-admin/app-check");
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
+const crypto = require("crypto");
 
 function getAdminApp() {
   if (getApps().length) return getApps()[0];
@@ -266,12 +267,12 @@ module.exports = async function handler(req, res) {
       "__kibo_session"
     );
 
-    const attemptId = cookie(
+    let attemptId = cookie(
       req,
       "__kibo_attempt"
     );
 
-    if (!session || !attemptId) {
+    if (!session) {
       return res.status(401).json({
         ok: false,
         error: "missing-session"
@@ -307,6 +308,22 @@ module.exports = async function handler(req, res) {
     const firestore = getFirestore(
       adminApp
     );
+
+    // Lesson wrappers are rendered as same-origin srcdoc and therefore do not
+    // necessarily visit /api/test/[id].js first. Create the one-time attempt
+    // lazily on the first grade request when the authenticated session is valid.
+    if (!attemptId) {
+      attemptId = crypto.randomUUID();
+      const now = Date.now();
+      await firestore.collection("testAttempts").doc(attemptId).set({
+        uid: decoded.uid,
+        testId,
+        used: false,
+        createdAt: Timestamp.fromMillis(now),
+        expiresAt: Timestamp.fromMillis(now + 30 * 60 * 1000)
+      });
+      res.setHeader("Set-Cookie", `__kibo_attempt=${encodeURIComponent(attemptId)}; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax`);
+    }
 
     const ref = firestore
       .collection("testAttempts")
