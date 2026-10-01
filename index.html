@@ -308,8 +308,6 @@ iframe{min-height:0}
 .home-section-head{margin:31px 0 18px}
 .home-title{margin:0;color:var(--text);font-size:29px;letter-spacing:-.6px}
 .home-subtitle{margin:7px 0 0;color:var(--muted);font-size:15px}
-.kibo-dars-grid{margin-bottom:28px}
-.kibo-dars-grid .test-card{min-height:215px}
 .test-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -410,6 +408,13 @@ iframe{min-height:0}
   #app:not(.home) .theme-btn{margin-left:auto}
   #app:not(.home) .user-area{margin-left:0}
 }
+
+/* KIBO master header: one compact navigation + one global theme control. */
+#app:not(.home) header{min-height:72px;padding:10px 24px;gap:12px}
+#app:not(.home) header nav{display:flex;flex:1 1 auto;min-width:0;gap:7px;justify-content:flex-start}
+#app:not(.home) header nav button{min-width:92px;height:42px;padding:0 14px;border-radius:13px;font-size:13px;font-weight:800;white-space:nowrap}
+#app:not(.home) .theme-btn{flex:0 0 118px;min-width:118px;height:46px}
+@media(max-width:820px){#app:not(.home) header{padding:9px 14px;gap:8px;flex-wrap:wrap}#app:not(.home) header nav{order:4;flex-basis:100%;width:100%;padding-bottom:2px}#app:not(.home) header nav button{min-width:84px;height:40px}#app:not(.home) .theme-btn{margin-left:auto}}
 </style>
 </head>
 
@@ -451,23 +456,9 @@ iframe{min-height:0}
       <div class="brand">KIBO EFFECT</div>
     </div>
 
-    <nav>
-      <button type="button" data-lesson="읽기 1–2">읽기 1–2</button>
-      <button type="button" data-lesson="읽기 3–4">읽기 3–4</button>
-      <button type="button" data-lesson="읽기 5">읽기 5</button>
-      <button type="button" data-lesson="읽기 6">읽기 6</button>
-      <button type="button" data-lesson="읽기 7">읽기 7</button>
-      <button type="button" data-lesson="읽기 8">읽기 8</button>
-      <button type="button" data-lesson="읽기 9">읽기 9</button>
-      <button type="button" data-lesson="읽기 10">읽기 10</button>
-      <button type="button" data-lesson="읽기 11–12">읽기 11–12</button>
-      <button type="button" data-lesson="읽기 13–15">읽기 13–15</button>
-      <button type="button" data-lesson="읽기 16–18">읽기 16–18</button>
-      <button type="button" data-lesson="읽기 19–20">읽기 19–20</button>
-      <button type="button" data-lesson="읽기 21–22">읽기 21–22</button>
-      <button type="button" data-lesson="읽기 23–24">읽기 23–24</button>
-      <button type="button" data-lesson="읽기 25–27">읽기 25–27</button>
-      <button type="button" data-lesson="읽기 28–31">읽기 28–31</button>
+    <nav aria-label="KIBO DARS navigation">
+      <button type="button" data-lesson="1-DARS">1-DARS</button>
+      <button type="button" data-lesson="2-DARS">2-DARS</button>
     </nav>
 
     <button id="themeToggle" class="theme-btn" type="button" aria-label="Tungi rejimga o'tish">
@@ -517,23 +508,24 @@ iframe{min-height:0}
       </div>
     </section>
 
-    <section class="home-section-head">
-      <h2 class="home-title">KIBO DARS</h2>
-      <p class="home-subtitle">Bosqichma-bosqich 3 modul bilan ishlang.</p>
+    <section class="home-section-head" style="margin-top:28px">
+      <h2 class="home-title">Darslar</h2>
+      <p class="home-subtitle">KIBO KOREAN bosqichlari</p>
     </section>
 
-    <div class="test-grid kibo-dars-grid">
+    <div class="test-grid" id="darsGrid">
       <article class="test-card" style="--accent:#2f80ed">
         <div class="card-top"><span class="card-number">1</span><span class="card-icon">📘</span></div>
-        <h2>1-DARS</h2>
-        <p class="card-desc">1–2 읽기 · So‘z yodlash · So‘z testi</p>
-        <button type="button" data-dars="1">▶ 1-DARSni ochish →</button>
+        <h2>1-DARS · 읽기 1–2</h2>
+        <p class="card-desc">1–2 읽기 testi, so‘z yodlash va so‘z testi.</p>
+        <button type="button" data-dars="1">▶ 1-DARSni boshlash →</button>
       </article>
+
       <article class="test-card" style="--accent:#4c8ef7">
         <div class="card-top"><span class="card-number">2</span><span class="card-icon">📗</span></div>
-        <h2>2-DARS</h2>
-        <p class="card-desc">3–4 읽기 · 59 ta so‘z · So‘z testi</p>
-        <button type="button" data-dars="2">▶ 2-DARSni ochish →</button>
+        <h2>2-DARS · 읽기 3–4</h2>
+        <p class="card-desc">3–4 읽기 testi, 59 ta so‘z va so‘z testi.</p>
+        <button type="button" data-dars="2">▶ 2-DARSni boshlash →</button>
       </article>
     </div>
 
@@ -672,8 +664,7 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
   initializeAppCheck,
-  ReCaptchaEnterpriseProvider,
-  getToken
+  ReCaptchaEnterpriseProvider
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app-check.js";
 
 import {
@@ -737,21 +728,15 @@ const firebaseApp = initializeApp(firebaseConfig);
  */
 const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcBB80tAAAAADX7WCPLKajV1HHwVDnyaDKLyI6o";
 
-let firebaseAppCheck = null;
 if (
   RECAPTCHA_ENTERPRISE_SITE_KEY &&
   !RECAPTCHA_ENTERPRISE_SITE_KEY.includes("PASTE_YOUR_")
 ) {
-  firebaseAppCheck = initializeAppCheck(firebaseApp, {
+  initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
     isTokenAutoRefreshEnabled: true
   });
 }
-
-window.__kiboGetAppCheckToken = async function(){
-  const result = await getToken(firebaseAppCheck, true);
-  return result.token;
-};
 
 // Use durable browser persistence with IndexedDB first and localStorage
 // as a fallback. Explicitly provide the popup resolver for mobile browsers.
@@ -873,59 +858,25 @@ function userAreaContains(target){
 /* TEST SOURCES */
 
 const sources = {
-
-  "읽기 1–2":"test-01.html",
-
-  "읽기 3–4":"test-02.html",
-
-  "읽기 5":"test-03.html",
-
-  "읽기 6":"test-04.html",
-
-  "읽기 7":"test-05.html",
-
-  "읽기 8":"test-06.html",
-
-  "읽기 9":"test-07.html",
-
-  "읽기 10":"test-08.html",
-
-  "읽기 11–12":"test-09.html",
-
-  "읽기 13–15":"test-10.html",
-
-  "읽기 16–18":"test-11.html",
-
-  "읽기 19–20":"test-12.html",
-
-  "읽기 21–22":"test-13.html",
-
-  "읽기 23–24":"test-14.html",
-
-  "읽기 25–27":"test-15.html",
-
-  "읽기 28–31":"test-16.html"
-
+  "1-DARS":"/dars/1.html",
+  "2-DARS":"/dars/2.html"
 };
 
 
 /* OPEN LESSON */
 
 function openLesson(label){
+  const src = sources[label];
+  if(!src) return;
 
   buttons.forEach(button => {
-
-    button.classList.toggle(
-      "active",
-      button.dataset.lesson === label
-    );
-
+    button.classList.toggle("active", button.dataset.lesson === label);
   });
 
   app.classList.remove("home");
   frame.style.height = "100vh";
-  frame.src = sources[label];
-
+  frame.src = src;
+  frame.onload = () => sendMasterTheme();
 }
 
 
@@ -1023,14 +974,6 @@ onAuthStateChanged(
     }
 
     try{
-      const idToken = await user.getIdToken(true);
-      const appCheckToken = await window.__kiboGetAppCheckToken();
-      await fetch("/api/auth/session",{
-        method:"POST",credentials:"include",
-        headers:{"Content-Type":"application/json","X-Firebase-AppCheck":appCheckToken},
-        body:JSON.stringify({idToken})
-      });
-
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       const now = serverTimestamp();
@@ -1100,6 +1043,10 @@ window.addEventListener("message", event => {
     showHome();
     return;
   }
+  if(event.data && event.data.type === "kibo-module-ready"){
+    sendMasterTheme();
+    return;
+  }
   if(event.data && event.data.type === "kibo-test-height" && Number.isFinite(Number(event.data.height))){
     const h=Math.max(300, Number(event.data.height));
     frame.style.height=h+"px";
@@ -1107,39 +1054,26 @@ window.addEventListener("message", event => {
 });
 
 
+/* KIBO DARS MODULES */
+document.querySelectorAll("[data-dars]").forEach(card => {
+  card.addEventListener("click", () => {
+    openLesson(card.dataset.dars === "1" ? "1-DARS" : "2-DARS");
+  });
+});
+
 /* HOME TEST CARDS */
 
 document
   .querySelectorAll("[data-open]")
   .forEach(card => {
-
-    card.addEventListener(
-      "click",
-      () => {
-
-        const label =
-          card.dataset.open;
-
-        app.classList.remove(
-          "home"
-        );
-
-        openLesson(label);
-
-      }
-    );
-
+    card.addEventListener("click", () => {
+      const label = card.dataset.open;
+      if(label === "읽기 1–2") return openLesson("1-DARS");
+      if(label === "읽기 3–4") return openLesson("2-DARS");
+      return;
+    });
   });
 
-
-/* KIBO DARS */
-document.querySelectorAll("[data-dars]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    app.classList.remove("home");
-    frame.style.height="100vh";
-    frame.src=`/dars/${button.dataset.dars}.html`;
-  });
-});
 
 /* NAV BUTTONS */
 
@@ -1169,15 +1103,20 @@ const themeToggle = document.getElementById("themeToggle");
 const themeIcon = document.getElementById("themeIcon");
 const themeText = document.getElementById("themeText");
 
+function sendMasterTheme(){
+  if(!frame || !frame.contentWindow) return;
+  const theme = document.documentElement.dataset.theme === "dark" ? "night" : "day";
+  frame.contentWindow.postMessage({type:"kibo-parent-theme",theme},"*");
+  frame.contentWindow.postMessage({type:"kibo-master-theme",theme},"*");
+}
+
 function applyTheme(theme){
   const dark = theme === "dark";
   document.documentElement.dataset.theme = dark ? "dark" : "light";
   themeIcon.textContent = dark ? "🌙" : "☀️";
   themeText.textContent = dark ? "Night" : "Day";
-  themeToggle.setAttribute(
-    "aria-label",
-    dark ? "Kunduzgi rejimga o'tish" : "Tungi rejimga o'tish"
-  );
+  themeToggle.setAttribute("aria-label", dark ? "Kunduzgi rejimga o'tish" : "Tungi rejimga o'tish");
+  sendMasterTheme();
 }
 
 const savedTheme = localStorage.getItem("kibo-theme");
