@@ -202,7 +202,7 @@ body.night #kiboModuleMenu,body:not(.day) #kiboModuleMenu{background:linear-grad
   else html+=themeSync;
   return html;
 }
-function openModule(i){
+window.openModule = function openModule(i){
   const m=MODULES[i];
   document.getElementById("menu").style.display="none";
   document.getElementById("viewer").classList.add("show");
@@ -217,7 +217,7 @@ function openModule(i){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 window.addEventListener('message', function(e){ if(e && e.data && e.data.type==='kibo-close-module'){ closeModule(); } });
-function closeModule(){
+window.closeModule = function closeModule(){
   const f=document.getElementById("frame");
   f.srcdoc="";
   document.body.classList.remove("test-fullscreen");
