@@ -83,7 +83,7 @@ header{position:sticky;top:0;z-index:20;height:74px;padding:0 28px;display:flex;
 #homeBtn{order:-1;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font-size:20px;display:none}
 nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height:38px;padding:0 13px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-size:13px;font-weight:750}nav button:hover,nav button.active{background:var(--primary-soft);color:var(--primary)}
 .header-spacer{flex:1}.theme-btn{min-width:106px;height:40px;padding:4px 10px 4px 6px;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:999px;font-weight:750;box-shadow:0 5px 16px rgba(30,35,55,.04)}.theme-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:var(--surface-2);font-size:15px}.user-area{position:relative}.user-btn{height:40px;display:flex;align-items:center;gap:8px;padding:3px 9px 3px 4px;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:999px;font-weight:700}.user-photo,.menu-user-photo{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--surface-2);border:1px solid var(--line)}.user-chevron{color:var(--muted)}
-.user-menu{position:absolute;right:0;top:calc(100% + 10px);width:285px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);z-index:30}.user-menu-profile{display:flex;align-items:center;gap:11px;padding:7px 6px 13px;margin-bottom:10px;border-bottom:1px solid var(--line)}.menu-user-photo{width:42px;height:42px}.user-menu-profile strong,.user-menu-profile span{display:block}.user-menu-profile strong{margin-bottom:3px}.user-menu-profile span{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px}#logoutBtn{width:100%;padding:10px 13px;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;font-weight:700}
+.user-menu{position:absolute;right:0;top:calc(100% + 10px);width:285px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);z-index:30}.user-menu-profile{display:flex;align-items:center;gap:11px;padding:7px 6px 13px;margin-bottom:10px;border-bottom:1px solid var(--line)}.menu-user-photo{width:42px;height:42px}.user-menu-profile strong,.user-menu-profile span{display:block}.user-menu-profile strong{margin-bottom:3px}.user-menu-profile span{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px}#profileProgressBtn,#logoutBtn{width:100%;padding:10px 13px;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;font-weight:700}
 #app.home header #homeBtn{display:none}#app.home header nav{display:none}
 #home{width:min(1440px,100%);margin:0 auto;padding:26px 30px 55px}
 .home-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}.home-main{min-width:0}.right-rail{display:grid;gap:14px}
@@ -109,7 +109,11 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 @media(max-width:760px){header{height:auto;min-height:68px;padding:10px 14px;gap:8px;flex-wrap:wrap}.brand-wrap{min-width:0;flex:1}.brand{font-size:16px}.brand-logo{width:34px;height:34px}.theme-btn{min-width:91px}.user-btn span:not(.user-chevron){display:none}nav{order:5;flex-basis:100%;overflow-x:auto;padding-bottom:1px}.header-spacer{display:none}#home{padding:16px 14px 40px}.home-hero{min-height:390px;padding:27px 23px;align-items:flex-start}.hero-title{font-size:38px}.hero-progress{left:23px;right:23px;bottom:22px;width:auto}.home-layout{display:block}.right-rail{display:grid;grid-template-columns:1fr;margin-top:14px}.course-grid{grid-template-columns:1fr 1fr}.content-grid{grid-template-columns:1fr}.course-card{min-height:150px}.searchbar{margin-bottom:12px}}
 @media(max-width:480px){.course-grid{grid-template-columns:1fr}.home-hero{min-height:420px}.hero-title{font-size:34px}.hero-subtitle{font-size:14px}.course-card{min-height:145px}.quick-grid{grid-template-columns:repeat(3,1fr)}}
 #googleLogin:focus-visible,.theme-btn:focus-visible,.user-btn:focus-visible,nav button:focus-visible{outline:3px solid rgba(91,92,240,.28);outline-offset:3px}
-</style>
+
+.live-label{font-size:10px;font-weight:900;letter-spacing:.08em;color:#696bf0}.empty-state{padding:18px;text-align:center;color:var(--muted);font-size:12px}.live-row{width:100%;text-align:left;border:0;cursor:pointer}.live-row:hover{background:var(--surface)}.disabled-row{opacity:.55;cursor:not-allowed!important}.live-calendar{grid-template-columns:repeat(7,1fr)!important}.live-calendar span{min-height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted);font-size:10px}.live-calendar span.done{background:rgba(105,107,240,.16);color:#696bf0;font-weight:800}
+
+.searchbar input{border:0;outline:0;background:transparent;color:var(--text);width:100%;font:inherit;font-size:12px}.searchbar input::placeholder{color:var(--muted)}.inline-action{border:0;background:transparent;color:var(--primary);font:inherit;font-size:11px;font-weight:800;cursor:pointer;padding:4px}
+''</style>
 </head>
 
 <body>
@@ -186,6 +190,7 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
       </button>
       <div id="userMenu" class="user-menu" hidden>
         <div class="user-menu-profile"><img id="menuUserPhoto" class="menu-user-photo" alt="Profil rasmi"><div><strong id="menuUserName">Foydalanuvchi</strong><span id="menuUserEmail"></span></div></div>
+        <button id="profileProgressBtn" type="button">Progressni ko‘rish</button>
         <button id="logoutBtn" type="button">Chiqish</button>
       </div>
     </div>
@@ -195,7 +200,7 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
   <div id="home">
     <div class="home-layout">
       <div class="home-main">
-        <div class="searchbar"><span>⌕</span><span>Qidirish...</span><kbd>⌘ K</kbd></div>
+        <label class="searchbar"><span>⌕</span><input id="globalSearch" type="search" placeholder="Qidirish..." autocomplete="off"><kbd>Ctrl K</kbd></label>
         <section class="home-hero">
           <div class="hero-copy">
             <span class="hero-pill">TOPIK II · KIBO EFFECT</span>
@@ -204,9 +209,9 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
             <div class="hero-actions"><button class="primary-action" type="button" data-dars="1">Davom ettirish →</button><button class="ghost-action" type="button" aria-label="Saqlash">♡</button></div>
           </div>
           <div class="hero-progress">
-            <div class="row"><strong>01 · 읽기 1–2번</strong><span>28 / 50</span></div>
-            <div class="progress-track"><div class="progress-fill"></div></div>
-            <div class="row" style="margin-top:8px"><span>Joriy dars</span><span>56%</span></div>
+            <div class="row"><strong>Joriy natija</strong><span id="liveHeroText">0 / 0</span></div>
+            <div class="progress-track"><div id="liveHeroFill" class="progress-fill" style="width:0%"></div></div>
+            <div class="row" style="margin-top:8px"><span>Umumiy aniqlik</span><span id="liveHeroPercent">0%</span></div>
           </div>
         </section>
 
@@ -219,24 +224,19 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
         </div>
 
         <div class="content-grid">
-          <section class="panel"><div class="panel-head"><h3>So‘nggi darslar</h3><a>Ko‘proq →</a></div><div class="lesson-list">
-            <div class="lesson-row"><div class="lesson-thumb">▶</div><div><strong>읽기 1–2번</strong><span>1-dars · 20:34</span></div><div class="lesson-progress"><div class="mini-track"><i style="width:80%;background:#696bf0"></i></div><em>80%</em></div></div>
-            <div class="lesson-row"><div class="lesson-thumb">▶</div><div><strong>읽기 3–4번</strong><span>2-dars · 18:21</span></div><div class="lesson-progress"><div class="mini-track"><i style="width:60%;background:#58b9bd"></i></div><em>60%</em></div></div>
-            <div class="lesson-row"><div class="lesson-thumb">▶</div><div><strong>단어</strong><span>3-dars · 15:12</span></div><div class="lesson-progress"><div class="mini-track"><i style="width:40%;background:#e5a75e"></i></div><em>40%</em></div></div>
-            <div class="lesson-row"><div class="lesson-thumb">▶</div><div><strong>문법</strong><span>4-dars · 22:18</span></div><div class="lesson-progress"><div class="mini-track"><i style="width:0%;background:#9185e9"></i></div><em>0%</em></div></div>
-          </div></section>
-          <section class="panel word-panel"><div class="panel-head"><h3>So‘zlar mashqi</h3><a>Ko‘proq →</a></div><div class="word-box"><small>Verb · 동사</small><h4>증가하다 🔊</h4><p>jeung-ga-ha-da · ortmoq, ko‘paymoq</p><div class="word-footer"><span style="color:var(--muted);font-size:10px">1 / 20</span><button class="word-next" type="button" data-open="읽기 1–2">Keyingi so‘z →</button></div></div></section>
+          <section class="panel"><div class="panel-head"><h3>So‘nggi darslar</h3><span class="live-label">LIVE</span></div><div id="recentLessons" class="lesson-list"><div class="empty-state">Yuklanmoqda...</div></div></section>
+          <section class="panel word-panel"><div class="panel-head"><h3>So‘zlar</h3><span class="live-label">1-DARS</span></div><div class="word-box"><small>Vocabulary workspace</small><h4>So‘z yodlash</h4><p>So‘zlarni yodlash va test qilish uchun dars modulini oching.</p><div class="word-footer"><span style="color:var(--muted);font-size:10px">Spaced review</span><button class="word-next" type="button" data-open="1-DARS">So‘zlar bo‘limi →</button></div></div></section>
         </div>
       </div>
 
       <aside class="right-rail">
-        <section class="stat-card"><div class="panel-head"><h3>Mening maqsadim</h3><a>Sozlash</a></div><div class="goal-box"><div class="goal-icon">◎</div><div><strong>TOPIK II</strong><span>2026-yil 4-oy</span></div><span style="margin-left:auto;color:var(--muted)">›</span></div><div class="overall"><div class="row"><b>28%</b><span>160 / 600 savol</span></div><div class="progress-track"><div class="progress-fill" style="width:28%"></div></div></div><div class="quick-grid"><div class="quick"><b>32 min</b><span>Bugun</span></div><div class="quick"><b>7 kun</b><span>Ketma-ket</span></div><div class="quick"><b>Lv. 12</b><span>Daraja</span></div></div></section>
-        <section class="stat-card calendar"><div class="calendar-head"><strong>O‘qish faoliyati</strong><span>Oktabr 2026</span></div><div class="calendar-grid"><span class="head">Du</span><span class="head">Se</span><span class="head">Cho</span><span class="head">Pa</span><span class="head">Ju</span><span class="head">Sh</span><span class="head">Ya</span><span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span class="done">5</span><span>6</span><span class="today">7</span><span>8</span><span class="done">9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span class="done">23</span><span>24</span><span>25</span><span>26</span><span class="done">27</span><span>28</span><span>29</span><span class="done">30</span><span>31</span></div></section>
+        <section class="stat-card"><div class="panel-head"><h3>Mening maqsadim</h3><button id="goalSettings" class="inline-action" type="button">Sozlash</button></div><div class="goal-box"><div class="goal-icon">◎</div><div><strong>TOPIK II</strong><span>2026-yil 4-oy</span></div><span style="margin-left:auto;color:var(--muted)">›</span></div><div class="overall"><div class="row"><b>28%</b><span>160 / 600 savol</span></div><div class="progress-track"><div class="progress-fill" style="width:28%"></div></div></div><div class="quick-grid"><div class="quick"><b>32 min</b><span>Bugun</span></div><div class="quick"><b>7 kun</b><span>Ketma-ket</span></div><div class="quick"><b>Lv. 12</b><span>Daraja</span></div></div></section>
+        <section class="stat-card calendar"><div class="calendar-head"><strong>O‘qish faoliyati</strong><span>So‘nggi 35 kun</span></div><div id="liveCalendar" class="calendar-grid live-calendar"></div></section>
         <section class="stat-card"><div class="panel-head"><h3>Testlar</h3><a>Ko‘proq →</a></div><div class="test-list">
           <button class="test-row" type="button" data-open="읽기 1–2"><span class="test-icon">▣</span><span><strong>읽기 모의고사</strong><span>50 savol · 70 min</span></span><span class="arrow">›</span></button>
-          <button class="test-row" type="button" data-open="읽기 3–4"><span class="test-icon" style="background:#eaf8f5;color:#43aa8b">◉</span><span><strong>듣기 모의고사</strong><span>50 savol · 60 min</span></span><span class="arrow">›</span></button>
-          <button class="test-row" type="button" data-open="읽기 1–2"><span class="test-icon" style="background:#fff3e8;color:#d68e4e">▤</span><span><strong>문법 실전 문제</strong><span>40 savol · 50 min</span></span><span class="arrow">›</span></button>
-          <button class="test-row" type="button" data-open="읽기 3–4"><span class="test-icon" style="background:#f0ecff;color:#8268dd">◇</span><span><strong>단어 테스트</strong><span>100 savol · 30 min</span></span><span class="arrow">›</span></button>
+          <button class="test-row disabled-row" type="button" disabled><span class="test-icon" style="background:#eaf8f5;color:#43aa8b">◉</span><span><strong>듣기 모의고사</strong><span>Tez orada</span></span><span class="arrow">—</span></button>
+          <button class="test-row disabled-row" type="button" disabled><span class="test-icon" style="background:#fff3e8;color:#d68e4e">▤</span><span><strong>문법 실전 문제</strong><span>Tez orada</span></span><span class="arrow">—</span></button>
+          <button class="test-row" type="button" data-open="1-DARS"><span class="test-icon" style="background:#f0ecff;color:#8268dd">◇</span><span><strong>단어 테스트</strong><span>1-DARS so‘zlari</span></span><span class="arrow">›</span></button>
         </div></section>
       </aside>
     </div>
@@ -263,6 +263,8 @@ import {
   initializeAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   browserLocalPersistence,
   indexedDBLocalPersistence,
   browserPopupRedirectResolver,
@@ -277,7 +279,9 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  serverTimestamp
+  serverTimestamp,
+  collection,
+  getDocs
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -329,6 +333,7 @@ if (
     provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
     isTokenAutoRefreshEnabled: true
   });
+  window.__kiboGetAppCheckToken = () => getToken(appCheck, true).then(r => r.token);
 }
 
 // Use durable browser persistence with IndexedDB first and localStorage
@@ -447,12 +452,30 @@ function userAreaContains(target){
   const area = document.getElementById("userArea");
   return area && area.contains(target);
 }
+const profileProgressBtn=document.getElementById("profileProgressBtn");
+if(profileProgressBtn) profileProgressBtn.addEventListener("click",()=>{userMenu.hidden=true;showHome();document.getElementById("home")?.scrollIntoView({behavior:"smooth"})});
 
 /* TEST SOURCES */
 
 const sources = {
   "1-DARS":"/dars/1.html",
-  "2-DARS":"/dars/2.html"
+  "2-DARS":"/dars/2.html",
+  "읽기 1–2":"/api/test/test-01",
+  "읽기 3–4":"/api/test/test-02",
+  "읽기 5":"/api/test/test-03",
+  "읽기 6":"/api/test/test-04",
+  "읽기 7":"/api/test/test-05",
+  "읽기 8":"/api/test/test-06",
+  "읽기 9":"/api/test/test-07",
+  "읽기 10":"/api/test/test-08",
+  "읽기 11–12":"/api/test/test-09",
+  "읽기 13–15":"/api/test/test-10",
+  "읽기 16–18":"/api/test/test-11",
+  "읽기 19–20":"/api/test/test-12",
+  "읽기 21–22":"/api/test/test-13",
+  "읽기 23–24":"/api/test/test-14",
+  "읽기 25–27":"/api/test/test-15",
+  "읽기 28–31":"/api/test/test-16"
 };
 
 
@@ -461,15 +484,12 @@ const sources = {
 function openLesson(label){
   const src = sources[label];
   if(!src) return;
-
-  buttons.forEach(button => {
-    button.classList.toggle("active", button.dataset.lesson === label);
-  });
-
+  buttons.forEach(button => button.classList.toggle("active", button.dataset.lesson === label));
   app.classList.remove("home");
   frame.style.height = "100vh";
   frame.src = src;
   frame.onload = () => sendMasterTheme();
+  localStorage.setItem("kibo-last-route", label);
 }
 
 
@@ -553,17 +573,20 @@ googleLogin.addEventListener(
       app.classList.add("home");
       frame.src = "about:blank";
 
-      if(err?.code === "auth/popup-closed-by-user" ||
-         err?.code === "auth/cancelled-popup-request"){
+      if(err?.code === "auth/popup-blocked" || err?.code === "auth/operation-not-supported-in-this-environment"){
+        error.textContent = "Popup bloklandi. Redirect orqali Google kirishi ochilmoqda...";
+        try { await signInWithRedirect(auth, provider); return; } catch(redirectErr){ console.error(redirectErr); }
+      } else if(err?.code === "auth/popup-closed-by-user" || err?.code === "auth/cancelled-popup-request"){
         error.textContent = "Google orqali kirish bekor qilindi.";
-      }else{
-        error.textContent =
-          "Google orqali kirishda xatolik yuz berdi.";
+      } else if(err?.code === "auth/unauthorized-domain"){
+        error.textContent = "Bu domen Firebase Authentication'da ruxsat etilmagan.";
+      } else if(err?.code === "auth/network-request-failed"){
+        error.textContent = "Internet aloqasi bilan muammo. Qayta urinib ko‘ring.";
+      } else {
+        error.textContent = "Google orqali kirishda xatolik yuz berdi.";
       }
-
       googleLogin.disabled = false;
-      googleLogin.textContent =
-        "Google orqali kirish";
+      googleLogin.textContent = "Google orqali kirish";
 
     }
 
@@ -593,70 +616,37 @@ logoutBtn.addEventListener(
 
 /* AUTH STATE */
 
-onAuthStateChanged(
-  auth,
-  async user => {
+async function loadDashboard(user){
+  const stats={tests:0,correct:0,total:0,answered:0,days:new Set(),recent:[]};
+  try{
+    const snap=await getDocs(collection(db,"users",user.uid,"history"));
+    snap.forEach(x=>{const d=x.data();stats.tests++;stats.correct+=Number(d.correct)||0;stats.total+=Number(d.total)||0;stats.answered+=Number(d.answered)||0;const ts=d.submittedAt?.toDate?.();if(ts){stats.days.add(ts.toISOString().slice(0,10));stats.recent.push({...d,submittedAt:ts})}});
+    stats.recent.sort((a,b)=>b.submittedAt-a.submittedAt);
+  }catch(e){console.warn("Dashboard load:",e)}
+  const pct=stats.total?Math.round(stats.correct/stats.total*100):0;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set("liveTests",stats.tests);set("liveAccuracy",pct+"%");set("liveAnswered",stats.total?`${stats.correct}/${stats.total}`:"0/0");set("liveDays",stats.days.size+" kun");
+  const totalQuestions=stats.total||0;
+  const heroFill=document.getElementById("liveHeroFill");if(heroFill)heroFill.style.width=(totalQuestions?Math.min(100,Math.round(stats.correct/totalQuestions*100)):0)+"%";
+  set("liveHeroText",stats.total?`${stats.correct} / ${stats.total}`:"0 / 0");set("liveHeroPercent",pct+"%");set("liveAccuracy2",pct+"%");const overall=document.getElementById("liveOverallFill");if(overall)overall.style.width=pct+"%";
+  const list=document.getElementById("recentLessons");
+  const routes={"test-01":"읽기 1–2","test-02":"읽기 3–4","test-03":"읽기 5","test-04":"읽기 6","test-05":"읽기 7","test-06":"읽기 8","test-07":"읽기 9","test-08":"읽기 10","test-09":"읽기 11–12","test-10":"읽기 13–15","test-11":"읽기 16–18","test-12":"읽기 19–20","test-13":"읽기 21–22","test-14":"읽기 23–24","test-15":"읽기 25–27","test-16":"읽기 28–31"};
+  if(list){list.innerHTML=stats.recent.slice(0,5).map(d=>`<button type="button" class="lesson-row live-row" data-history="${d.testId}"><div class="lesson-thumb">✓</div><div><strong>${routes[d.testId]||d.testId}</strong><span>${d.submittedAt.toLocaleDateString("uz-UZ")} · ${d.correct}/${d.total}</span></div><div class="lesson-progress"><div class="mini-track"><i style="width:${d.percent}%;background:#696bf0"></i></div><em>${d.percent}%</em></div></button>`).join("") || `<div class="empty-state">Hali test natijalari yo‘q.</div>`;list.querySelectorAll("[data-history]").forEach(b=>b.addEventListener("click",()=>openLesson(routes[b.dataset.history]||"읽ish 1–2")));}
+  const cal=document.getElementById("liveCalendar");if(cal){const now=new Date();now.setHours(0,0,0,0);cal.innerHTML=Array.from({length:35},(_,i)=>{const d=new Date(now);d.setDate(now.getDate()-34+i);const k=d.toISOString().slice(0,10);return `<span class="${stats.days.has(k)?"done":""}">${d.getDate()}</span>`}).join("");}
+}
 
-    login.style.display = "grid";
-    app.style.display = "none";
-    app.setAttribute("aria-hidden", "true");
-    app.classList.add("home");
-    frame.src = "about:blank";
-
-    if(!user){
-      clearProfile();
-      googleLogin.disabled = false;
-      googleLogin.textContent = "Google orqali kirish";
-      return;
-    }
-
-    try{
-      await createServerSession(user);
-
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      const now = serverTimestamp();
-
-      if(!userSnap.exists()){
-        await setDoc(userRef, {
-          uid: user.uid,
-          name: user.displayName || "",
-          email: user.email || "",
-          photoURL: user.photoURL || "",
-          createdAt: now,
-          lastLogin: now
-        });
-      }else{
-        await updateDoc(userRef, {
-          name: user.displayName || userSnap.data().name || "",
-          email: user.email || userSnap.data().email || "",
-          photoURL: user.photoURL || userSnap.data().photoURL || "",
-          lastLogin: now
-        });
-      }
-
-      setProfile(user);
-      login.style.display = "none";
-      app.style.display = "grid";
-      app.setAttribute("aria-hidden", "false");
-      app.classList.add("home");
-      frame.src = "about:blank";
-      error.textContent = "";
-
-    }catch(err){
-      console.error(err);
-      const code = err?.message || err?.code || "unknown";
-      console.error("KIBO startup/session error:", err);
-      error.textContent =
-        code.includes("session") || code.includes("app-check")
-          ? "Xavfsiz sessiya yaratilmadi. Sahifani yangilang yoki qayta kiring."
-          : "Profilni yuklashda xatolik yuz berdi.";
-      app.style.display = "none";
-      app.setAttribute("aria-hidden", "true");
-      try{ await signOut(auth); }catch(e){}
-    }
-  }
-);
+onAuthStateChanged(auth, async user=>{
+  login.style.display="grid";app.style.display="none";app.setAttribute("aria-hidden","true");app.classList.add("home");frame.src="about:blank";
+  if(!user){clearProfile();googleLogin.disabled=false;googleLogin.textContent="Google orqali kirish";return;}
+  try{
+    await createServerSession(user);
+    const userRef=doc(db,"users",user.uid), snap=await getDoc(userRef), now=serverTimestamp();
+    const profile={uid:user.uid,name:user.displayName||snap.data()?.name||"",email:user.email||snap.data()?.email||"",photoURL:user.photoURL||snap.data()?.photoURL||"",lastLogin:now};
+    if(!snap.exists()){profile.createdAt=now;await setDoc(userRef,profile)}else await updateDoc(userRef,profile);
+    setProfile(user);login.style.display="none";app.style.display="grid";app.setAttribute("aria-hidden","false");app.classList.add("home");frame.src="about:blank";error.textContent="";await loadDashboard(user);
+  }catch(err){console.error("KIBO startup/session error:",err);error.textContent=(err?.message||"").includes("session")||(err?.message||"").includes("app-check")?"Xavfsiz sessiya yaratilmadi. Sahifani yangilang yoki qayta kiring.":"Profilni yuklashda xatolik yuz berdi.";app.style.display="none";app.setAttribute("aria-hidden","true");try{await clearServerSession();await signOut(auth)}catch(e){}}
+});
+getRedirectResult(auth).catch(err=>{if(err)console.warn("Google redirect result:",err)});
 
 /* HOME */
 
@@ -698,6 +688,7 @@ window.addEventListener("message", event => {
     const h=Math.max(300, Number(event.data.height));
     frame.style.height=h+"px";
   }
+  if(event.data && event.data.type === "kibo-test-result" && auth.currentUser){ loadDashboard(auth.currentUser); }
 });
 
 
@@ -712,14 +703,7 @@ document.querySelectorAll("[data-dars]").forEach(card => {
 
 document
   .querySelectorAll("[data-open]")
-  .forEach(card => {
-    card.addEventListener("click", () => {
-      const label = card.dataset.open;
-      if(label === "읽기 1–2") return openLesson("1-DARS");
-      if(label === "읽기 3–4") return openLesson("2-DARS");
-      return;
-    });
-  });
+  .forEach(card => card.addEventListener("click", () => openLesson(card.dataset.open)));
 
 
 /* NAV BUTTONS */
@@ -744,6 +728,19 @@ buttons.forEach(button => {
 });
 
 
+
+/* SEARCH / PROFILE SHORTCUTS */
+const globalSearch=document.getElementById("globalSearch");
+function runSearch(){
+  const q=(globalSearch?.value||"").trim().toLowerCase();
+  document.querySelectorAll(".course-card,.test-row,.lesson-row").forEach(el=>{
+    if(!q){el.style.display="";return;}
+    el.style.display=el.innerText.toLowerCase().includes(q)?"":"none";
+  });
+}
+if(globalSearch){globalSearch.addEventListener("input",runSearch);document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();globalSearch.focus();}})}
+const goalSettings=document.getElementById("goalSettings");
+if(goalSettings) goalSettings.addEventListener("click",()=>{userMenu.hidden=false;userBtn.setAttribute("aria-expanded","true");userBtn.focus();});
 
 /* DAY / NIGHT MODE */
 const themeToggle = document.getElementById("themeToggle");

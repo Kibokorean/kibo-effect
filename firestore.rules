@@ -1,46 +1,37 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owner(userId) { return signedIn() && request.auth.uid == userId; }
+
     match /users/{userId} {
-      function signedIn() {
-        return request.auth != null;
-      }
-
-      function owner() {
-        return signedIn() && request.auth.uid == userId;
-      }
-
-      // A user can create only their own profile, with an email that matches
-      // the verified Firebase Authentication identity.
-      allow create: if owner()
+      allow create: if owner(userId)
         && request.resource.data.uid == userId
         && request.resource.data.email == request.auth.token.email
-        && request.resource.data.keys().hasOnly([
-          'uid', 'name', 'email', 'photoURL', 'createdAt', 'lastLogin'
-        ]);
-
-      // Users can read only their own profile.
-      allow read: if owner();
-
-      // Users may update profile presentation fields and lastLogin, but cannot
-      // change UID or createdAt, or impersonate another email address.
-      allow update: if owner()
+        && request.resource.data.keys().hasOnly(['uid','name','email','photoURL','createdAt','lastLogin']);
+      allow read: if owner(userId);
+      allow update: if owner(userId)
         && request.resource.data.uid == resource.data.uid
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.email == request.auth.token.email
-        && request.resource.data.keys().hasOnly([
-          'uid', 'name', 'email', 'photoURL', 'createdAt', 'lastLogin'
-        ])
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-          'name', 'email', 'photoURL', 'lastLogin'
-        ]);
-
-      // Do not let clients delete their account profile document. Account
-      // deletion should be handled by a trusted backend/admin flow.
+        && request.resource.data.keys().hasOnly(['uid','name','email','photoURL','createdAt','lastLogin'])
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name','email','photoURL','lastLogin']);
       allow delete: if false;
+
+      match /history/{historyId} {
+        allow read: if owner(userId);
+        allow write: if false;
+      }
+
+      match /progress/{progressId} {
+        allow read, write: if owner(userId);
+      }
     }
 
-    // Everything else is denied until an explicit rule is added for it.
+    match /testAttempts/{attemptId} {
+      allow read, write: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

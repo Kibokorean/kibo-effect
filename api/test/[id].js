@@ -50,9 +50,31 @@ module.exports = async function handler(req,res){
     const decoded=await getAuth(adminApp).verifySessionCookie(decodeURIComponent(match[1]),true);
     if(!decoded.uid) return htmlError(res,403,"Ruxsat yo‘q","Foydalanuvchi tasdiqlanmadi.");
 
-    const attemptId=crypto.randomUUID();
-    const now=Date.now();
-    await getFirestore(adminApp).collection("testAttempts").doc(attemptId).set({uid:decoded.uid,testId:id,used:false,createdAt:Timestamp.fromMillis(now),expiresAt:Timestamp.fromMillis(now+30*60*1000)});
+    const attemptCookieName = `__kibo_attempt_${id.replace("-", "_")}`;
+    const existingCookie = cookie.match(new RegExp(`(?:^|;\\s*)${attemptCookieName}=([^;]+)`));
+    let attemptId = existingCookie ? decodeURIComponent(existingCookie[1]) : "";
+    const attempts = getFirestore(adminApp).collection("testAttempts");
+    const now = Date.now();
+
+    if (attemptId) {
+      const existing = await attempts.doc(attemptId).get();
+      const data = existing.exists ? existing.data() : null;
+      const expiresAt = data?.expiresAt?.toMillis?.() || 0;
+      if (!data || data.uid !== decoded.uid || data.testId !== id || data.used === true || (expiresAt && expiresAt < now)) {
+        attemptId = "";
+      }
+    }
+
+    if (!attemptId) {
+      attemptId = crypto.randomUUID();
+      await attempts.doc(attemptId).set({
+        uid:decoded.uid,
+        testId:id,
+        used:false,
+        createdAt:Timestamp.fromMillis(now),
+        expiresAt:Timestamp.fromMillis(now+30*60*1000)
+      });
+    }
 
    const rawHtml = Buffer.from(TESTS[id], "base64").toString("utf8");
    const html = rawHtml.replace(
@@ -60,11 +82,23 @@ module.exports = async function handler(req,res){
   '$1/header-logo.png$2'
 );
     res.status(200);
-    res.setHeader("Set-Cookie",`__kibo_attempt=${encodeURIComponent(attemptId)}; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax`);
+    res.setHeader("Set-Cookie",`${attemptCookieName}=${encodeURIComponent(attemptId)}; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax`);
     res.setHeader("Content-Type","text/html; charset=utf-8");
     res.setHeader("Cache-Control","no-store, private, max-age=0");
     res.setHeader("X-Content-Type-Options","nosniff");
     res.setHeader("Content-Security-Policy","default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https:; connect-src 'self' https://www.gstatic.com https://apis.google.com https://*.googleapis.com https://*.gstatic.com https://*.firebaseio.com https://*.firebaseapp.com https://firebaseinstallations.googleapis.com https://firebaseappcheck.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://www.googleapis.com https://accounts.google.com https://www.google.com/recaptcha/; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://*.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; form-action 'self' https://accounts.google.com; worker-src 'self' blob:;");
+    const resumeBridge = `<script>(function(){
+      const KEY="kibo-resume:${id}";
+      function read(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}}
+      function save(){try{const a=[...document.querySelectorAll(".question-card")].map(c=>{const b=c.querySelector(".option.selected");return b?Number(b.dataset.choice):null});localStorage.setItem(KEY,JSON.stringify({answers:a,updatedAt:Date.now()}));}catch(e){}}
+      function restore(){try{const d=read();if(!d||!Array.isArray(d.answers))return;document.querySelectorAll(".question-card").forEach((c,i)=>{const v=d.answers[i];if(Number.isInteger(v)){const b=c.querySelector('.option[data-choice="'+v+'"]');if(b)b.click();}});if(typeof updateProgress==='function')updateProgress();}catch(e){}}
+      window.addEventListener("load",()=>setTimeout(restore,50));
+      new MutationObserver(()=>{document.querySelectorAll(".option:not([data-kibo-resume])").forEach(b=>{b.dataset.kiboResume="1";b.addEventListener("click",save,{passive:true})})}).observe(document.body,{childList:true,subtree:true});
+      const originalFetch=window.fetch.bind(window);
+      window.fetch=async function(){const response=await originalFetch(...arguments);try{const url=String(arguments[0]?.url||arguments[0]||"");if(url.includes("/api/test/grade")){response.clone().json().then(data=>{if(data&&data.ok){localStorage.removeItem(KEY);window.parent&&window.parent.postMessage({type:"kibo-test-result",testId:"${id}",correct:data.correct,answered:data.answered,total:data.total,percent:data.percent,submittedAt:Date.now()},"*")}}).catch(()=>{});}}catch(e){}return response};
+    })();<\/script>`;
+    html = html.replace(/<\/body>\s*<\/html>/i, resumeBridge + "</body></html>");
+
     res.end(html);
   }catch(err){
     console.error("Protected test error:",err);

@@ -14,6 +14,13 @@ function getAdminApp(){
 module.exports = async function handler(req,res){
   try {
     if (req.method !== "POST") return res.status(405).json({ok:false,error:"method-not-allowed"});
+    const origin = String(req.headers.origin || "");
+    if (origin) {
+      const allowed = ["https://kibo-effect.vercel.app","https://kibo-effect.firebaseapp.com","https://kibo-effect.web.app"];
+      let sameHost = false;
+      try { sameHost = new URL(origin).protocol === "https:" && new URL(origin).hostname === String(req.headers.host || "").split(":")[0]; } catch {}
+      if (!allowed.includes(origin) && !sameHost) return res.status(403).json({ok:false,error:"bad-origin"});
+    }
     const authHeader = String(req.headers.authorization || "");
     const appCheckToken = String(req.headers["x-firebase-appcheck"] || "");
     if (!authHeader.startsWith("Bearer ") || !appCheckToken) return res.status(401).json({ok:false,error:"missing-auth-or-appcheck"});

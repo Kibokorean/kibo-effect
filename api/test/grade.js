@@ -103,8 +103,14 @@ function sameOrigin(req) {
     "https://kibo-effect.firebaseapp.com",
     "https://kibo-effect.web.app"
   ];
-
-  return allowedOrigins.includes(origin);
+  if (allowedOrigins.includes(origin)) return true;
+  try {
+    const url = new URL(origin);
+    const host = String(req.headers.host || "").split(":")[0];
+    return url.protocol === "https:" && !!host && url.hostname === host;
+  } catch {
+    return false;
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -266,10 +272,8 @@ module.exports = async function handler(req, res) {
       "__kibo_session"
     );
 
-    const attemptId = cookie(
-      req,
-      "__kibo_attempt"
-    );
+    const attemptCookieName = `__kibo_attempt_${testId.replace("-", "_")}`;
+    const attemptId = cookie(req, attemptCookieName);
 
     if (!session || !attemptId) {
       return res.status(401).json({
@@ -311,6 +315,11 @@ module.exports = async function handler(req, res) {
     const ref = firestore
       .collection("testAttempts")
       .doc(attemptId);
+    const historyRef = firestore
+      .collection("users")
+      .doc(decoded.uid)
+      .collection("history")
+      .doc();
 
     /*
       ----------------------------------------------------------
@@ -411,10 +420,16 @@ module.exports = async function handler(req, res) {
           Attemptni ishlatilgan deb belgilaymiz.
         */
 
-        tx.update(ref, {
-          used: true,
-          usedAt: Timestamp.now()
+        tx.set(historyRef, {
+          uid: decoded.uid,
+          testId,
+          correct,
+          answered,
+          total,
+          percent,
+          submittedAt: Timestamp.now()
         });
+        tx.delete(ref);
 
         /*
           MUHIM:
@@ -428,7 +443,8 @@ module.exports = async function handler(req, res) {
           correct,
           answered,
           total,
-          percent
+          percent,
+          results: answers.map((selected, index) => selected !== null && selected === key[index])
         };
       }
     );
@@ -460,7 +476,8 @@ module.exports = async function handler(req, res) {
       correct: result.correct,
       answered: result.answered,
       total: result.total,
-      percent: result.percent
+      percent: result.percent,
+      results: result.results
     });
 
   } catch (err) {
