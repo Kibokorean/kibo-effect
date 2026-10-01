@@ -98,7 +98,12 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.quick{padding:10px 7px;text-align:center;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}.quick b{display:block;font-size:13px}.quick span{display:block;color:var(--muted);font-size:9px;margin-top:3px}
 .calendar{margin-top:14px}.calendar-head{display:flex;justify-content:space-between;align-items:center}.calendar-head strong{font-size:13px}.calendar-head span{font-size:10px;color:var(--muted)}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}.calendar-grid span{height:27px;display:grid;place-items:center;border-radius:8px;color:var(--muted);font-size:9px}.calendar-grid .head{font-weight:800;color:var(--muted)}.calendar-grid .done{background:var(--primary-soft);color:var(--primary);font-weight:800}.calendar-grid .today{border:1px solid var(--primary);color:var(--primary);font-weight:900}
 .test-list{display:grid;gap:7px}.test-row{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:13px;background:var(--surface-2)}.test-icon{width:34px;height:34px;border-radius:10px;background:#eef5ff;color:#5476d9;display:grid;place-items:center}.test-row strong{font-size:11px}.test-row span{display:block;color:var(--muted);font-size:9px;margin-top:2px}.test-row .arrow{margin-left:auto;color:var(--muted)}
-#app.home main{display:none}#app:not(.home) #home{display:none}#app:not(.home) #homeBtn{display:grid;place-items:center}#app:not(.home) header nav{display:flex}
+#app.home main{display:none}
+#app:not(.home) #home{display:none}
+#app:not(.home) #homeBtn{display:grid;place-items:center}
+#app:not(.home) header nav{display:flex}
+#app:not(.home) main{display:block;width:100%;min-width:0;min-height:calc(100vh - 74px);margin:0;padding:0;overflow:hidden}
+#lessonFrame{display:block;width:100%;max-width:none;height:calc(100vh - 74px);min-height:0;margin:0;padding:0;border:0;outline:0;background:var(--bg)}
  :root[data-theme="dark"] .home-hero{background:linear-gradient(135deg,#181b27 0%,#20213b 58%,#182c2e 100%)}
 :root[data-theme="dark"] .home-hero:before{background:radial-gradient(circle,#35376a 0%,rgba(53,55,106,.34) 34%,transparent 68%)}
 :root[data-theme="dark"] .hero-subtitle{color:#a1a9ba}
@@ -486,7 +491,8 @@ function openLesson(label){
   if(!src) return;
   buttons.forEach(button => button.classList.toggle("active", button.dataset.lesson === label));
   app.classList.remove("home");
-  frame.style.height = "100vh";
+  frame.style.width = "100%";
+  frame.style.height = "calc(100vh - 74px)";
   frame.src = src;
   frame.onload = () => sendMasterTheme();
   localStorage.setItem("kibo-last-route", label);
@@ -654,7 +660,8 @@ function showHome(){
 
   app.classList.add("home");
 
-  frame.style.height = "100vh";
+  frame.style.width = "100%";
+  frame.style.height = "calc(100vh - 74px)";
   frame.src =
     "about:blank";
 
@@ -686,6 +693,7 @@ window.addEventListener("message", event => {
   }
   if(event.data && event.data.type === "kibo-test-height" && Number.isFinite(Number(event.data.height))){
     const h=Math.max(300, Number(event.data.height));
+    frame.style.width="100%";
     frame.style.height=h+"px";
   }
   if(event.data && event.data.type === "kibo-test-result" && auth.currentUser){ loadDashboard(auth.currentUser); }
