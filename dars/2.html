@@ -48,8 +48,8 @@ body.test-fullscreen .full-close{display:block;position:fixed;right:18px;bottom:
 body.day.test-fullscreen .full-close{background:rgba(255,255,255,.96);color:#122039;border-color:#d7e2f1}
 body.test-fullscreen .layout{display:block;margin:0}
 body.test-fullscreen .main{width:100%;height:100vh}
-body.test-fullscreen .viewer{display:block;position:fixed;inset:0;width:100vw;height:100vh;margin:0;border:0;border-radius:0;box-shadow:none;z-index:9999;overflow:hidden}
-body.test-fullscreen #frame{width:100vw;height:100vh;min-height:100vh}
+body.test-fullscreen .viewer{display:block;position:fixed;inset:0;width:100vw!important;height:100vh!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;z-index:9999!important;overflow:hidden!important}
+body.test-fullscreen #frame{position:fixed!important;inset:0!important;display:block!important;width:100vw!important;max-width:none!important;min-width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0!important;border:0!important;box-sizing:border-box!important}
 .side{position:sticky;top:18px;border:1px solid rgba(115,148,194,.19);border-radius:25px;background:rgba(255,255,255,.05);box-shadow:var(--shadow);padding:20px}
 .side h3{margin:0;font-size:18px}.side p{color:var(--muted);font-size:10px;line-height:1.6}
 .flow{display:grid;gap:9px;margin-top:17px}.flow-row{padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--soft);display:flex;align-items:center;gap:10px}
@@ -254,14 +254,49 @@ body:not(.night) .stepper:before,body:not(.night) .stepper:after{background:rgba
 
 </style>`;
   const btn = `<button id="kiboModuleMenu" type="button" aria-label="2-DARS menyusiga qaytish" title="2-DARS menyusi" onclick="parent.postMessage({type:'kibo-close-module'}, '*')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg></button>`;
+  css += `<style id="kibo-full-width-test-fix">
+html,body{width:100%!important;min-width:0!important;margin:0!important;padding:0!important;overflow-x:hidden!important;}
+.container{width:100%!important;max-width:1450px!important;margin:0 auto!important;box-sizing:border-box!important;grid-template-columns:minmax(260px,340px) minmax(0,1fr)!important;}
+.questions{width:100%!important;min-width:0!important;}
+.question-card{width:100%!important;max-width:none!important;}
+@media(max-width:700px){.container{grid-template-columns:1fr!important;max-width:none!important;padding:14px 12px 40px!important}.sidebar{position:static!important;width:100%!important;max-width:none!important}}
+</style>`;
   const themeSync = `<script>(function(){window.addEventListener('message',function(e){if(!e||!e.data||e.data.type!=='kibo-master-theme')return;document.body.classList.toggle('day',e.data.theme==='day');document.body.classList.toggle('night',e.data.theme!=='day');});window.parent&&window.parent.postMessage({type:'kibo-module-ready'},'*');})();<\/script>`;
+  if(html.includes('<style id="kibo-workspace-refresh">
+:root{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;--blue:#6668ed;--green:#58b9bd;--shadow:0 14px 40px rgba(36,43,66,.07)}
+body{font-family:Inter,"SF Pro Display","Noto Sans KR",system-ui,sans-serif!important;background:var(--bg)!important;color:var(--text)!important}
+body.day{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;background:var(--bg)!important}
+body:not(.day){--bg:#10131a;--panel:#171b24;--soft:#1d222d;--text:#f3f5f9;--muted:#9aa5b7;--line:#2a303c;background:var(--bg)!important}
+.app{width:min(1400px,calc(100% - 36px))!important;padding-bottom:40px!important}.top{height:72px!important;border-bottom:1px solid var(--line)!important}.brand .logo{width:38px!important;height:38px!important;border-radius:11px!important;background:var(--blue)!important;border:0!important;box-shadow:none!important}.brand h1{font-size:18px!important}.brand p{font-size:9px!important;color:var(--muted)!important}.hero{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important;padding:25px!important}.hero h2{font-size:27px!important}.modules{gap:12px!important}.module{border:1px solid var(--line)!important;border-radius:18px!important;background:var(--soft)!important;box-shadow:none!important}.module-num{background:var(--blue)!important}.viewer{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.viewer-head{background:var(--soft)!important}.side{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.flow-row{background:var(--soft)!important;border-color:var(--line)!important}
+#kiboDarsHome{width:40px!important;height:40px!important;left:16px!important;top:16px!important;border-radius:12px!important;background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 7px 18px rgba(30,35,55,.08)!important;font-size:22px!important}
+@media(max-width:650px){.app{width:100%!important;padding:0 10px 20px!important}.top{height:64px!important}.hero{border-radius:18px!important}.module{border-radius:16px!important}}
+</style>
+</head>')) html=html.replace('<style id="kibo-workspace-refresh">
+:root{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;--blue:#6668ed;--green:#58b9bd;--shadow:0 14px 40px rgba(36,43,66,.07)}
+body{font-family:Inter,"SF Pro Display","Noto Sans KR",system-ui,sans-serif!important;background:var(--bg)!important;color:var(--text)!important}
+body.day{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;background:var(--bg)!important}
+body:not(.day){--bg:#10131a;--panel:#171b24;--soft:#1d222d;--text:#f3f5f9;--muted:#9aa5b7;--line:#2a303c;background:var(--bg)!important}
+.app{width:min(1400px,calc(100% - 36px))!important;padding-bottom:40px!important}.top{height:72px!important;border-bottom:1px solid var(--line)!important}.brand .logo{width:38px!important;height:38px!important;border-radius:11px!important;background:var(--blue)!important;border:0!important;box-shadow:none!important}.brand h1{font-size:18px!important}.brand p{font-size:9px!important;color:var(--muted)!important}.hero{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important;padding:25px!important}.hero h2{font-size:27px!important}.modules{gap:12px!important}.module{border:1px solid var(--line)!important;border-radius:18px!important;background:var(--soft)!important;box-shadow:none!important}.module-num{background:var(--blue)!important}.viewer{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.viewer-head{background:var(--soft)!important}.side{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.flow-row{background:var(--soft)!important;border-color:var(--line)!important}
+#kiboDarsHome{width:40px!important;height:40px!important;left:16px!important;top:16px!important;border-radius:12px!important;background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 7px 18px rgba(30,35,55,.08)!important;font-size:22px!important}
+@media(max-width:650px){.app{width:100%!important;padding:0 10px 20px!important}.top{height:64px!important}.hero{border-radius:18px!important}.module{border-radius:16px!important}}
+</style>
+</head>',css+'<style id="kibo-workspace-refresh">
+:root{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;--blue:#6668ed;--green:#58b9bd;--shadow:0 14px 40px rgba(36,43,66,.07)}
+body{font-family:Inter,"SF Pro Display","Noto Sans KR",system-ui,sans-serif!important;background:var(--bg)!important;color:var(--text)!important}
+body.day{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;background:var(--bg)!important}
+body:not(.day){--bg:#10131a;--panel:#171b24;--soft:#1d222d;--text:#f3f5f9;--muted:#9aa5b7;--line:#2a303c;background:var(--bg)!important}
+.app{width:min(1400px,calc(100% - 36px))!important;padding-bottom:40px!important}.top{height:72px!important;border-bottom:1px solid var(--line)!important}.brand .logo{width:38px!important;height:38px!important;border-radius:11px!important;background:var(--blue)!important;border:0!important;box-shadow:none!important}.brand h1{font-size:18px!important}.brand p{font-size:9px!important;color:var(--muted)!important}.hero{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important;padding:25px!important}.hero h2{font-size:27px!important}.modules{gap:12px!important}.module{border:1px solid var(--line)!important;border-radius:18px!important;background:var(--soft)!important;box-shadow:none!important}.module-num{background:var(--blue)!important}.viewer{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.viewer-head{background:var(--soft)!important}.side{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.flow-row{background:var(--soft)!important;border-color:var(--line)!important}
+#kiboDarsHome{width:40px!important;height:40px!important;left:16px!important;top:16px!important;border-radius:12px!important;background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 7px 18px rgba(30,35,55,.08)!important;font-size:22px!important}
+@media(max-width:650px){.app{width:100%!important;padding:0 10px 20px!important}.top{height:64px!important}.hero{border-radius:18px!important}.module{border-radius:16px!important}}
+</style>
+</head>');
   if(html.includes('<body')) html=html.replace(/(<body[^>]*>)/i,'$1'+btn);
   else html=btn+html;
   if(html.includes('</body>')) html=html.replace('</body>',themeSync+'</body>');
   else html+=themeSync;
   return html;
 }
-window.openModule = function openModule(i){
+function openModule(i){
   const m=MODULES[i];
   document.getElementById("menu").style.display="none";
   document.getElementById("viewer").classList.add("show");
@@ -276,7 +311,7 @@ window.openModule = function openModule(i){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 window.addEventListener('message', function(e){ if(e && e.data && e.data.type==='kibo-close-module'){ closeModule(); } });
-window.closeModule = function closeModule(){
+function closeModule(){
   const f=document.getElementById("frame");
   f.srcdoc="";
   document.body.classList.remove("test-fullscreen");
