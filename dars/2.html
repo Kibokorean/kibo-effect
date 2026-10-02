@@ -219,11 +219,24 @@ body:not(.night) .stepper:before,body:not(.night) .stepper:after{background:rgba
 .pill{display:none!important;}
 
 </style>`;
-  const btn = `<button id="kiboModuleMenu" type="button" aria-label="2-DARS menyusiga qaytish" title="2-DARS menyusi" onclick="parent.postMessage({type:'kibo-close-module'}, '*')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg></button>`;
+  const btn = ``;
   const themeSync = `<script>(function(){window.addEventListener('message',function(e){if(!e||!e.data||e.data.type!=='kibo-master-theme')return;document.body.classList.toggle('day',e.data.theme==='day');document.body.classList.toggle('night',e.data.theme!=='day');});window.parent&&window.parent.postMessage({type:'kibo-module-ready'},'*');})();<\/script>`;
-  // Keep the original DARS page styles intact. Inject only the module menu and theme sync.
-  if(html.includes('<body')) html=html.replace(/(<body[^>]*>)/i,'$1'+btn);
-  else html=btn+html;
+  // The parent index.html owns the only visible header/navigation.
+  // Strip all inner module chrome so the content starts directly below the global header.
+  const chromeFix = `<style id="kibo-single-header-module-fix">
+header, body > header, .app > header, .top, .kibo-stage-strip, #kiboModuleMenu, .header-tools, .top-actions { display:none !important; }
+html, body { margin:0 !important; padding:0 !important; min-height:100% !important; overflow-x:hidden !important; }
+body { padding-top:0 !important; }
+.container, .main, .main-menu-layout { margin-top:0 !important; padding-top:24px !important; }
+.container { padding-left:28px !important; padding-right:28px !important; }
+.main { padding-left:20px !important; padding-right:20px !important; }
+.main-menu-layout { padding-left:20px !important; padding-right:20px !important; }
+@media (max-width:700px){
+  .container, .main, .main-menu-layout { padding-top:16px !important; padding-left:12px !important; padding-right:12px !important; }
+}
+</style>`;
+  if(html.includes('</head>')) html=html.replace('</head>',chromeFix+'</head>');
+  else html=chromeFix+html;
   if(html.includes('</body>')) html=html.replace('</body>',themeSync+'</body>');
   else html+=themeSync;
   return html;
