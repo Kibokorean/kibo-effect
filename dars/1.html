@@ -15,11 +15,6 @@ body{color:var(--text);background:radial-gradient(circle at 50% -20%,rgba(55,126
 body.day{--bg:#edf3fb;--panel:#fff;--soft:#f4f8fd;--text:#122039;--muted:#667791;--line:#d7e2f1;background:radial-gradient(circle at 50% -20%,#dcecff,transparent 42%),#edf3fb}
 button{font:inherit;cursor:pointer}
 .app{width:min(1440px,calc(100% - 28px));margin:auto;padding-bottom:35px}
-.top{height:105px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(128,160,205,.14)}
-.brand{display:flex;align-items:center;gap:13px}
-.logo{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#257cff,#67a9ff);color:#fff;font-size:23px;font-weight:1000;border:2px solid #f6c453;box-shadow:0 0 15px rgba(246,196,83,.3)}
-.brand h1{margin:0;font-size:25px}.brand p{margin:4px 0 0;color:var(--muted);font-size:10px}
-.theme{height:46px;padding:0 17px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--text);font-weight:900}
 .layout{display:grid;grid-template-columns:1fr;gap:20px;margin-top:22px;align-items:start}
 .main{min-width:0}
 .hero{border:1px solid rgba(115,148,194,.19);border-radius:28px;background:rgba(255,255,255,.05);box-shadow:var(--shadow);padding:28px}
@@ -77,72 +72,22 @@ button{font-family:inherit!important;}
 }
 </style>
 
-<style id="kibo-parent-theme-style">
-/* DARS page theme is controlled by KIBO EFFECT main menu. */
-#theme{display:none!important}
-#kiboDarsHome{
-  position:fixed;left:14px;top:14px;z-index:2147483646;
-  width:50px;height:50px;border-radius:50%;
-  border:1px solid #8aa4c4;background:#fff;color:#183b66;
-  display:grid;place-items:center;cursor:pointer;
-  box-shadow:0 8px 20px rgba(39,67,99,.24),0 2px 7px rgba(39,67,99,.12);
-  font-size:28px;font-weight:900;line-height:1;
-}
-body:not(.day) #kiboDarsHome{
-  background:linear-gradient(145deg,rgba(255,255,255,.20),rgba(255,255,255,.06));
-  color:#fff;border-color:rgba(255,255,255,.28);
-  box-shadow:0 8px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.20);
-}
-@media(max-width:650px){
-  #kiboDarsHome{left:10px;top:10px;width:46px;height:46px;font-size:25px}
-}
-</style>
 <style id="kibo-workspace-refresh">
 :root{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;--blue:#6668ed;--green:#58b9bd;--shadow:0 14px 40px rgba(36,43,66,.07)}
 body{font-family:Inter,"SF Pro Display","Noto Sans KR",system-ui,sans-serif!important;background:var(--bg)!important;color:var(--text)!important}
 body.day{--bg:#f5f7fb;--panel:#fff;--soft:#f8f9fc;--text:#111827;--muted:#748096;--line:#e7eaf0;background:var(--bg)!important}
 body:not(.day){--bg:#10131a;--panel:#171b24;--soft:#1d222d;--text:#f3f5f9;--muted:#9aa5b7;--line:#2a303c;background:var(--bg)!important}
 .app{width:min(1400px,calc(100% - 36px))!important;padding-bottom:40px!important}.top{height:72px!important;border-bottom:1px solid var(--line)!important}.brand .logo{width:38px!important;height:38px!important;border-radius:11px!important;background:var(--blue)!important;border:0!important;box-shadow:none!important}.brand h1{font-size:18px!important}.brand p{font-size:9px!important;color:var(--muted)!important}.hero{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important;padding:25px!important}.hero h2{font-size:27px!important}.modules{gap:12px!important}.module{border:1px solid var(--line)!important;border-radius:18px!important;background:var(--soft)!important;box-shadow:none!important}.module-num{background:var(--blue)!important}.viewer{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.viewer-head{background:var(--soft)!important}.side{border:1px solid var(--line)!important;border-radius:20px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.flow-row{background:var(--soft)!important;border-color:var(--line)!important}
-.theme{display:none!important}\n#kiboDarsHome{width:40px!important;height:40px!important;left:16px!important;top:16px!important;border-radius:12px!important;background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 7px 18px rgba(30,35,55,.08)!important;font-size:22px!important}
 @media(max-width:650px){.app{width:100%!important;padding:0 10px 20px!important}.top{height:64px!important}.hero{border-radius:18px!important}.module{border-radius:16px!important}}
 </style>
-
-<style id="kibo-apple-dars-final">
-:root{--bg:#f5f5f7;--panel:#fff;--soft:#f8f8fa;--text:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--blue:#0071e3;--shadow:0 8px 30px rgba(0,0,0,.055)}
-body:not(.day){--bg:#000;--panel:#161617;--soft:#1d1d1f;--text:#f5f5f7;--muted:#a1a1a6;--line:#38383a;--blue:#2997ff;--shadow:0 10px 34px rgba(0,0,0,.32)}
-html,body{background:var(--bg)!important;color:var(--text)!important;-webkit-font-smoothing:antialiased!important;text-rendering:optimizeLegibility!important}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Noto Sans KR",system-ui,sans-serif!important}
-.app{width:min(1480px,calc(100% - 48px))!important;padding-bottom:48px!important}
-.top{height:72px!important;padding:0 8px!important;border-bottom:1px solid var(--line)!important}
-.brand{gap:11px!important}.brand .logo{width:42px!important;height:42px!important;border-radius:12px!important;background:var(--surface,#fff)!important;border:1px solid var(--line)!important;box-shadow:none!important;color:var(--text)!important;font-size:17px!important}.brand h1{font-size:19px!important;letter-spacing:-.4px!important}.brand p{font-size:9px!important;color:var(--muted)!important}
-.theme{display:none!important}
-.layout{display:block!important;margin-top:22px!important}.main{width:100%!important}
-.hero{border:1px solid var(--line)!important;border-radius:24px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important;padding:32px!important}.hero h2{font-size:32px!important;letter-spacing:-1px!important}.hero p{font-size:12px!important;color:var(--muted)!important}
-.modules{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-top:26px!important}.module{min-height:172px!important;padding:22px!important;border:1px solid var(--line)!important;border-radius:20px!important;background:var(--soft)!important;color:var(--text)!important;box-shadow:none!important}.module:hover{transform:translateY(-2px)!important;border-color:color-mix(in srgb,var(--blue) 35%,var(--line))!important;box-shadow:0 12px 30px rgba(0,0,0,.06)!important}.module-num{width:36px!important;height:36px!important;border-radius:10px!important;background:var(--text)!important;color:var(--panel)!important;margin-bottom:18px!important}.module strong{font-size:16px!important;letter-spacing:-.2px!important}.module small{font-size:10px!important;line-height:1.55!important;color:var(--muted)!important}.module-status{margin-top:16px!important;color:var(--blue)!important;font-size:9px!important;letter-spacing:.1px!important}
-.viewer{margin-top:18px!important;border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;box-shadow:var(--shadow)!important}.viewer-head{height:52px!important;background:var(--surface-2,var(--soft))!important;border-bottom:1px solid var(--line)!important}.viewer-title{font-size:12px!important}.side{display:none!important}
-#frame{width:100%!important;height:calc(100vh - 160px)!important;min-height:720px!important;background:var(--bg)!important}
-#kiboDarsHome{position:fixed!important;left:20px!important;top:86px!important;width:42px!important;height:42px!important;border-radius:50%!important;background:var(--panel)!important;color:var(--text)!important;border:1px solid var(--line)!important;box-shadow:0 6px 20px rgba(0,0,0,.08)!important;font-size:22px!important;display:grid!important;place-items:center!important}
-body.test-fullscreen .top{display:none!important}.app{transition:none!important}
-body.test-fullscreen #kiboDarsHome{top:18px!important;left:18px!important;z-index:100000!important}
-@media(max-width:900px){.app{width:min(100% - 28px,760px)!important}.modules{grid-template-columns:1fr!important}.module{min-height:138px!important}.hero{padding:24px!important}}
-@media(max-width:650px){.app{width:100%!important;padding:0 10px 24px!important}.top{height:64px!important}.brand .logo{width:38px!important;height:38px!important}.brand h1{font-size:17px!important}.hero{padding:20px!important;border-radius:20px!important}.hero h2{font-size:28px!important}.module{border-radius:18px!important;padding:18px!important}.viewer{border-radius:18px!important}#frame{height:calc(100vh - 120px)!important;min-height:650px!important}#kiboDarsHome{left:12px!important;top:76px!important;width:40px!important;height:40px!important}}
-</style>
 </head>
-<body><button id="kiboDarsHome" type="button" aria-label="1-DARS menyusiga qaytish" title="1-DARS menyusi">←</button>
+<body>
 <div class="app">
-<header class="top">
-  <div class="brand">
-    <div class="logo">K</div>
-    <div><h1>KIBO KOREAN</h1><p>1-DARS · 읽기 1–2</p></div>
-  </div>
-  <button class="theme" id="theme" type="button" aria-hidden="true" tabindex="-1">☀️ Day</button>
-</header>
-
 <div class="layout">
   <main class="main">
     <section class="hero" id="menu">
       <h2>1-DARS</h2>
-      <p>읽기 1–2 uchun test → so‘z yodlash → so‘z testi</p>
+      <p>1-bosqich</p>
       <div class="modules">
         <button class="module" onclick="openModule(0)">
           <div class="module-num">1</div>
@@ -190,48 +135,40 @@ function decodeData(b64){
 function addModuleMenuButton(html){
   const css = `
 <style id="kibo-module-menu-style">
-header .header-left,header .brand,.picker-brand{display:none!important}
+header .header-left,
+header .brand,
+.picker-brand{display:none!important}
 header .header-tools{margin-left:auto!important}
-header .mode-button,header .theme,header .exit-menu,#theme{display:none!important}
-body:has(> .app > header.top) > .app > header.top{display:grid!important;grid-template-columns:1fr!important;height:78px!important;align-items:center!important}
+header .mode-button,
+header .theme,
+header .exit-menu,
+#theme{display:none!important}
+body:has(> .app > header.top) > .app > header.top{display:grid!important;grid-template-columns:1fr!important;height:100px!important;align-items:center!important}
 body:has(> .app > header.top) > .app > header.top .stepper{grid-column:1!important;display:flex!important;width:100%!important}
 body:has(> .app > header.top) > .app > header.top .top-actions{display:none!important}
-#kiboModuleMenu{position:fixed;left:18px;top:18px;z-index:2147483647;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid #d2d2d7;background:#fff;color:#1d1d1f;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.10);transition:.16s}
-#kiboModuleMenu svg{width:22px;height:22px;display:block;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
-#kiboModuleMenu:hover{transform:translateY(-1px)}
-body:not(.day) #kiboModuleMenu{background:#161617;color:#f5f5f7;border-color:#38383a}
-#kibo-apple-iframe-final{display:block}
-:root{--apple-bg:#f5f5f7;--apple-surface:#fff;--apple-soft:#f8f8fa;--apple-text:#1d1d1f;--apple-muted:#6e6e73;--apple-line:#d2d2d7;--apple-blue:#0071e3}
-html,body{background:var(--apple-bg)!important;color:var(--apple-text)!important;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Noto Sans KR",system-ui,sans-serif!important;-webkit-font-smoothing:antialiased!important;text-rendering:optimizeLegibility!important}
-body:not(.day){--apple-bg:#000;--apple-surface:#161617;--apple-soft:#1d1d1f;--apple-text:#f5f5f7;--apple-muted:#a1a1a6;--apple-line:#38383a;--apple-blue:#2997ff;background:var(--apple-bg)!important;color:var(--apple-text)!important}
-body.day{background:var(--apple-bg)!important;color:var(--apple-text)!important}
-body.day .container,body.day .app,body.day main,body.day .workspace,body.day .card,body.day .question-card,body.day .panel,body.day .viewer,body.day .menu-card{background:var(--apple-surface)!important;color:var(--apple-text)!important}
-body:not(.day) .container,body:not(.day) .app,body:not(.day) main,body:not(.day) .workspace,body:not(.day) .card,body:not(.day) .question-card,body:not(.day) .panel,body:not(.day) .viewer,body:not(.day) .menu-card{background:var(--apple-surface)!important;color:var(--apple-text)!important}
-header{background:color-mix(in srgb,var(--apple-surface) 90%,transparent)!important;border-bottom:1px solid var(--apple-line)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;box-shadow:0 1px 0 rgba(0,0,0,.025)!important}
-button{font-family:inherit!important}
-button,.primary,.secondary,.action,.mode-button,.exit-menu{border-radius:12px!important}
-button.primary,.primary{background:var(--apple-text)!important;color:var(--apple-surface)!important;border:0!important;box-shadow:none!important}
-button.secondary,.secondary,.action{background:var(--apple-surface)!important;color:var(--apple-text)!important;border:1px solid var(--apple-line)!important;box-shadow:none!important}
-input{border:1px solid var(--apple-line)!important;border-radius:12px!important;background:var(--apple-surface)!important;color:var(--apple-text)!important}
-.questions,.question-list{gap:14px!important}
-.question-card,.card,.panel,.viewer,.menu-card{border:1px solid var(--apple-line)!important;border-radius:20px!important;box-shadow:0 8px 30px rgba(0,0,0,.045)!important}
-.option,.choice,.answer-option{border:1px solid var(--apple-line)!important;border-radius:14px!important;background:var(--apple-surface)!important;color:var(--apple-text)!important;box-shadow:none!important}
-.option:hover,.choice:hover,.answer-option:hover{border-color:color-mix(in srgb,var(--apple-blue) 42%,var(--apple-line))!important;background:color-mix(in srgb,var(--apple-blue) 5%,var(--apple-surface))!important}
-.q-num,.module-num,.number{background:var(--apple-text)!important;color:var(--apple-surface)!important;box-shadow:none!important}
-.progress-bar,.progress-track{background:color-mix(in srgb,var(--apple-muted) 18%,transparent)!important}.progress-fill{background:var(--apple-text)!important}
-.mode-button,header .theme,#theme,.theme,.zoom-controls,.zoom-control,.topik-badge,.exit-menu{display:none!important}
-@media(max-width:700px){.question-card,.card,.panel,.viewer{border-radius:16px!important}.option,.choice,.answer-option{border-radius:12px!important}#kiboModuleMenu{left:12px;top:12px;width:40px;height:40px}}
+#kiboModuleMenu{position:fixed;left:18px;top:18px;z-index:2147483647;width:52px;height:52px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:linear-gradient(145deg,rgba(255,255,255,.20),rgba(255,255,255,.06));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;font:700 34px/1 Arial,sans-serif;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.20);transition:.16s}
+#kiboModuleMenu svg{width:27px;height:27px;display:block;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#kiboModuleMenu:hover{transform:translateY(-2px)}
+body.day #kiboModuleMenu{background:#fff;color:#183b66;border-color:#8aa4c4}
+body.night #kiboModuleMenu,body:not(.day) #kiboModuleMenu{background:linear-gradient(145deg,rgba(255,255,255,.20),rgba(255,255,255,.06));color:#fff}
+@media(max-width:650px){#kiboModuleMenu{left:14px;top:14px;width:46px;height:46px}#kiboModuleMenu svg{width:24px;height:24px}}
+.stepper{display:flex!important;align-items:flex-start!important;justify-content:center!important;position:relative!important;min-width:270px!important;height:78px!important;padding-top:5px!important;box-sizing:border-box!important}
+.current-stage-info{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;line-height:1!important}
+.current-stage-info strong{display:flex!important;align-items:center!important;justify-content:center!important;min-width:102px!important;width:102px!important;height:46px!important;padding:0 14px!important;box-sizing:border-box!important;border-radius:999px!important;color:#fff!important;font-size:15px!important;font-weight:900!important;white-space:nowrap!important;background:linear-gradient(135deg,#2d82ff,#4d9cff)!important}
+.current-stage-info span{display:block!important;margin-top:7px!important;font-size:13px!important;font-weight:850!important;color:var(--text)!important;white-space:nowrap!important}
+.current-stage-number{display:none!important}
+.pill{display:none!important}
+@media(max-width:650px){.stepper{min-width:230px!important;height:70px!important}.current-stage-info strong{min-width:98px!important;width:98px!important;height:43px!important;font-size:14px!important}.current-stage-info span{font-size:12px!important}}
 </style>`;
-  const btn = `<button id="kiboModuleMenu" type="button" aria-label="Dars menyusiga qaytish" title="Dars menyusi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg></button>`;
+  const btn = `<button id="kiboModuleMenu" type="button" aria-label="1-DARS menyusiga qaytish" title="1-DARS menyusi" onclick="parent.postMessage({type:'kibo-close-module'}, '*')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg></button>`;
   const themeSync = `<script>(function(){window.addEventListener('message',function(e){if(!e||!e.data||e.data.type!=='kibo-master-theme')return;document.body.classList.toggle('day',e.data.theme==='day');document.body.classList.toggle('night',e.data.theme!=='day');});window.parent&&window.parent.postMessage({type:'kibo-module-ready'},'*');})();<\/script>`;
-  if(html.includes('</head>')) html=html.replace('</head>',css+'</head>');
+  // Keep the original DARS page styles intact. Inject only the module menu and theme sync.
   if(html.includes('<body')) html=html.replace(/(<body[^>]*>)/i,'$1'+btn);
   else html=btn+html;
   if(html.includes('</body>')) html=html.replace('</body>',themeSync+'</body>');
   else html+=themeSync;
   return html;
 }
-
 function openModule(i){
   const m=MODULES[i];
   document.getElementById("menu").style.display="none";
@@ -257,32 +194,20 @@ function closeModule(){
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape" && document.body.classList.contains("test-fullscreen")) closeModule();
 });
-const themeBtn=document.getElementById("theme");
 function currentMasterTheme(){return localStorage.getItem("kibo-master-theme")==="day"?"day":"night";}
 function sendThemeToModule(){
   const f=document.getElementById("frame");
   if(f && f.contentWindow) f.contentWindow.postMessage({type:"kibo-master-theme",theme:currentMasterTheme()},"*");
 }
-function applyTheme(){
-  const day=currentMasterTheme()==="day";
-  document.body.classList.toggle("day",day);
-  themeBtn.textContent=day?"🌙 Night":"☀️ Day";
-  sendThemeToModule();
-}
-themeBtn.onclick=()=>{localStorage.setItem("kibo-master-theme",currentMasterTheme()==="day"?"night":"day");applyTheme()};
 window.addEventListener("message",e=>{if(e&&e.data&&e.data.type==="kibo-module-ready") sendThemeToModule();});
-applyTheme();
+
 </script>
 <script>
 (function(){
-  const home=document.getElementById("kiboDarsHome");
-  if(home) home.addEventListener("click",()=>window.parent.postMessage({type:"kibo-home"}, "*"));
   function applyParentTheme(theme){
     const day=theme==="day";
     document.body.classList.toggle("day",day);
     document.body.classList.toggle("night",!day);
-    const btn=document.getElementById("theme");
-    if(btn) btn.style.display="none";
     try{ localStorage.setItem("kibo-master-theme",day?"day":"night"); }catch(e){}
     const f=document.getElementById("frame");
     if(f&&f.contentWindow) f.contentWindow.postMessage({type:"kibo-master-theme",theme:day?"day":"night"},"*");
