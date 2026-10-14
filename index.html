@@ -187,6 +187,8 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
     <nav aria-label="KIBO navigation">
       <button type="button" data-lesson="1-DARS">1-DARS</button>
       <button type="button" data-lesson="2-DARS">2-DARS</button>
+      <button type="button" data-module="korean" aria-label="KIBO KOREAN modulini ochish">KIBO KOREAN</button>
+      <button type="button" data-module="vocabulary" aria-label="Lug‘at yodlash modulini ochish">Lug‘at yodlash</button>
     </nav>
     <div class="header-spacer"></div>
     <button id="themeToggle" class="theme-btn" type="button" aria-label="Tungi rejimga o'tish">
@@ -252,6 +254,7 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 
   <main>
     <iframe id="lessonFrame" title="TOPIK II 읽기 darsi"></iframe>
+    <iframe id="moduleFrame" title="KIBO o‘quv moduli" loading="lazy" hidden></iframe>
   </main>
 
 </section>
@@ -784,6 +787,46 @@ themeToggle.addEventListener("click", () => {
 });
 
 
+</script>
+
+
+<style id="kibo-integration-shell">
+#moduleFrame{display:none;width:100%;height:calc(100vh - 74px);min-height:650px;border:0;background:var(--bg)}
+#app.module-view main{display:block!important;width:100%!important;max-width:100%!important;min-height:calc(100vh - 74px);padding:0!important;margin:0!important;overflow:hidden}
+#app.module-view #home,#app.module-view #lessonFrame{display:none!important}
+#app.module-view #moduleFrame{display:block!important}
+#app.module-view header nav button[data-module].active{background:var(--primary-soft);color:var(--primary)}
+@media(max-width:760px){#moduleFrame{height:calc(100dvh - 116px);min-height:560px}}
+</style>
+<script>
+(function(){
+  const app=document.getElementById('app');
+  const frame=document.getElementById('moduleFrame');
+  const homeBtn=document.getElementById('homeBtn');
+  const nav=document.querySelector('header nav');
+  if(!app||!frame||!nav)return;
+  const moduleButtons=[...nav.querySelectorAll('[data-module]')];
+  function openModule(name){
+    const paths={korean:'/korean/index.html',vocabulary:'/vocabulary/index.html'};
+    if(!paths[name])return;
+    if(frame.dataset.module!==name){frame.src=paths[name];frame.dataset.module=name;}
+    app.classList.remove('home');
+    app.classList.add('module-view');
+    app.setAttribute('aria-hidden','false');
+    moduleButtons.forEach(b=>b.classList.toggle('active',b.dataset.module===name));
+    nav.querySelectorAll('[data-lesson]').forEach(b=>b.classList.remove('active'));
+    if(homeBtn)homeBtn.style.display='grid';
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  function closeModule(){
+    app.classList.remove('module-view');
+    app.classList.add('home');
+    if(homeBtn)homeBtn.style.display='none';
+    moduleButtons.forEach(b=>b.classList.remove('active'));
+  }
+  moduleButtons.forEach(b=>b.addEventListener('click',()=>openModule(b.dataset.module)));
+  if(homeBtn)homeBtn.addEventListener('click',closeModule);
+})();
 </script>
 
 </body>

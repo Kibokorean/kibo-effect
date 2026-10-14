@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<link rel="icon" type="image/png" href="header-logo.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KIBO EFFECT — TOPIK II 읽기</title>
+
+<style>
+:root{
+  color-scheme:dark;
+  font-family:Inter,Arial,sans-serif;
+  background:#070b17;
+  color:#f7f9ff
+}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(246,196,83,.13),transparent 31%),
+    linear-gradient(135deg,#070b17,#101a33)
+}
+
+#login{
+  min-height:100vh;
+  display:none;
+  place-items:center;
+  padding:24px
+}
+
+.login-card{
+  width:min(420px,100%);
+  padding:34px;
+  border:1px solid rgba(246,196,83,.32);
+  border-radius:24px;
+  background:rgba(18,28,52,.95);
+  box-shadow:0 18px 55px rgba(0,0,0,.4);
+  text-align:center
+}
+
+h1{
+  margin:0 0 8px;
+  color:#f6c453;
+  font-size:28px
+}
+
+p{
+  color:#b9c3d8;
+  line-height:1.5
+}
+
+#googleLogin{
+  width:100%;
+  margin-top:24px;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#f6c453,#ffde83);
+  color:#1a1608;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer
+}
+
+#googleLogin:hover{
+  transform:translateY(-1px)
+}
+
+#googleLogin:disabled{
+  opacity:.6;
+  cursor:not-allowed
+}
+
+#error{
+  min-height:20px;
+  margin-top:14px;
+  color:#ff8b99;
+  font-size:14px
+}
+
+#app{
+  display:none;
+  min-height:100vh;
+  grid-template-rows:auto 1fr
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:2;
+  padding:13px 18px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:rgba(7,11,23,.96);
+  border-bottom:1px solid rgba(255,255,255,.12)
+}
+
+.brand{
+  color:#f6c453;
+  font-weight:900;
+  white-space:nowrap
+}
+
+#homeBtn{
+  padding:9px 13px;
+  color:#dce5f6;
+  background:#1c2845;
+  border:1px solid #334363;
+  border-radius:12px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer
+}
+
+#logoutBtn{
+  margin-left:auto;
+  padding:9px 13px;
+  color:#fff;
+  background:#242c40;
+  border:1px solid #3b496b;
+  border-radius:12px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:2px
+}
+
+nav button{
+  flex:none;
+  padding:9px 13px;
+  color:#dce5f6;
+  background:#1c2845;
+  border:1px solid #334363;
+  border-radius:12px;
+  font:inherit;
+  cursor:pointer
+}
+
+nav button:hover,
+nav button.active{
+  color:#171207;
+  background:#f6c453;
+  border-color:#f6c453
+}
+
+main,
+iframe{
+  width:100%;
+  height:calc(100vh - 66px);
+  border:0;
+  display:block;
+  background:#070b17
+}
+
+#home{
+  display:none;
+  padding:34px max(24px,5vw) 60px
+}
+
+.home-title{
+  margin:0;
+  color:#fff;
+  font-size:34px
+}
+
+.home-subtitle{
+  margin:7px 0 28px;
+  color:#aab6cf
+}
+
+.test-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fill,minmax(245px,1fr));
+  gap:18px
+}
+
+.test-card{
+  min-height:225px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  padding:21px;
+  border:1px solid #333952;
+  border-radius:20px;
+  background:#121522;
+  box-shadow:7px 8px 0 rgba(255,255,255,.035)
+}
+
+.test-card:before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:18px;
+  width:72px;
+  height:3px;
+  background:var(--accent)
+}
+
+.test-card h2{
+  margin:26px 0 5px;
+  color:#fff;
+  font-size:21px
+}
+
+.test-card button{
+  margin-top:auto;
+  padding:10px 0 0;
+  text-align:right;
+  color:var(--accent);
+  background:transparent;
+  border:0;
+  font-size:13px;
+  cursor:pointer
+}
+
+.home #home{
+  display:block
+}
+
+.home header,
+.home main{
+  display:none
+}
+
+#app>header{
+  display:none
+}
+
+main,
+iframe{
+  height:100vh
+  min-height:0;
+}
+
+@media(max-width:600px){
+
+  iframe{height:100vh;min-height:0;display:block;}
+
+  header{
+    display:block
+  }
+
+  .brand{
+    margin:10px 0
+  }
+
+  #logoutBtn{
+    margin:10px 0;
+    width:100%
+  }
+
+  nav{
+    padding-bottom:4px
+  }
+
+  main,
+  iframe{
+    height:calc(100vh - 150px)
+  }
+
+  #home{
+    padding:24px 16px 45px
+  }
+
+  .home-title{
+    font-size:28px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+
+  <div class="login-card">
+
+    <h1>KIBO EFFECT</h1>
+
+    <p>
+      TOPIK II 읽기 mashqlari
+    </p>
+
+    <button id="googleLogin" type="button">
+      Google orqali kirish
+    </button>
+
+    <div id="error" aria-live="polite"></div>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+<section id="app" class="home" aria-hidden="true">
+
+  <!-- HOME -->
+  <div id="home">
+
+    <h1 class="home-title">
+      Barcha testlar
+    </h1>
+
+    <p class="home-subtitle">
+      TOPIK II 읽기 bo‘limini tanlang
+    </p>
+
+    <div class="test-grid">
+
+      <article class="test-card" style="--accent:#c8f64f">
+        <h2>읽기 1–2</h2>
+        <button type="button" data-open="읽기 1–2">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ff5aa5">
+        <h2>읽기 3–4</h2>
+        <button type="button" data-open="읽기 3–4">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#63d8ff">
+        <h2>읽기 5</h2>
+        <button type="button" data-open="읽기 5">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ffba4c">
+        <h2>읽기 6</h2>
+        <button type="button" data-open="읽기 6">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#a88aff">
+        <h2>읽기 7</h2>
+        <button type="button" data-open="읽기 7">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#56e8b5">
+        <h2>읽기 8</h2>
+        <button type="button" data-open="읽기 8">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#c8f64f">
+        <h2>읽기 9</h2>
+        <button type="button" data-open="읽기 9">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ff5aa5">
+        <h2>읽기 10</h2>
+        <button type="button" data-open="읽기 10">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#63d8ff">
+        <h2>읽기 11–12</h2>
+        <button type="button" data-open="읽기 11–12">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ffba4c">
+        <h2>읽기 13–15</h2>
+        <button type="button" data-open="읽기 13–15">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#a88aff">
+        <h2>읽기 16–18</h2>
+        <button type="button" data-open="읽기 16–18">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#56e8b5">
+        <h2>읽기 19–20</h2>
+        <button type="button" data-open="읽기 19–20">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#c8f64f">
+        <h2>읽기 21–22</h2>
+        <button type="button" data-open="읽기 21–22">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ff5aa5">
+        <h2>읽기 23–24</h2>
+        <button type="button" data-open="읽기 23–24">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#63d8ff">
+        <h2>읽기 25–27</h2>
+        <button type="button" data-open="읽기 25–27">
+          Testni ochish →
+        </button>
+      </article>
+
+      <article class="test-card" style="--accent:#ffba4c">
+        <h2>읽기 28–31</h2>
+        <button type="button" data-open="읽기 28–31">
+          Testni ochish →
+        </button>
+      </article>
+
+    </div>
+
+  </div>
+
+
+  <!-- HEADER -->
+  <header>
+
+    <button id="homeBtn" type="button">
+      ← Bosh sahifa
+    </button>
+
+    <div class="brand">
+      KIBO EFFECT
+    </div>
+
+    <nav>
+
+      <button type="button" data-lesson="읽기 1–2">읽기 1–2</button>
+      <button type="button" data-lesson="읽기 3–4">읽기 3–4</button>
+      <button type="button" data-lesson="읽기 5">읽기 5</button>
+      <button type="button" data-lesson="읽기 6">읽기 6</button>
+      <button type="button" data-lesson="읽기 7">읽기 7</button>
+      <button type="button" data-lesson="읽기 8">읽기 8</button>
+      <button type="button" data-lesson="읽기 9">읽기 9</button>
+      <button type="button" data-lesson="읽기 10">읽기 10</button>
+      <button type="button" data-lesson="읽기 11–12">읽기 11–12</button>
+      <button type="button" data-lesson="읽기 13–15">읽기 13–15</button>
+      <button type="button" data-lesson="읽기 16–18">읽기 16–18</button>
+      <button type="button" data-lesson="읽기 19–20">읽기 19–20</button>
+      <button type="button" data-lesson="읽기 21–22">읽기 21–22</button>
+      <button type="button" data-lesson="읽기 23–24">읽기 23–24</button>
+      <button type="button" data-lesson="읽기 25–27">읽기 25–27</button>
+      <button type="button" data-lesson="읽기 28–31">읽기 28–31</button>
+
+    </nav>
+
+    <button id="logoutBtn" type="button">
+      Chiqish
+    </button>
+
+  </header>
+
+
+  <main>
+    <iframe
+      id="lessonFrame"
+      title="TOPIK II 읽기 darsi">
+    </iframe>
+  </main>
+
+</section>
+
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  initializeAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  browserLocalPersistence,
+  indexedDBLocalPersistence,
+  browserPopupRedirectResolver,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCFYGvmhpYPNRjjf1gft4qLxuhROZ3lbz4",
+
+  authDomain:
+    "kibo-4628d.firebaseapp.com",
+
+  projectId:
+    "kibo-4628d",
+
+  storageBucket:
+    "kibo-4628d.firebasestorage.app",
+
+  messagingSenderId:
+    "978546474276",
+
+  appId:
+    "1:978546474276:web:a7ed1720809e5d2eaa47b1",
+
+  measurementId:
+    "G-S86TM0DV2Y"
+};
+
+
+/* INITIALIZE */
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+// Use durable browser persistence with IndexedDB first and localStorage
+// as a fallback. Explicitly provide the popup resolver for mobile browsers.
+const auth = initializeAuth(firebaseApp, {
+  persistence: [
+    indexedDBLocalPersistence,
+    browserLocalPersistence
+  ],
+  popupRedirectResolver: browserPopupRedirectResolver
+});
+
+const db = getFirestore(firebaseApp);
+
+const provider = new GoogleAuthProvider();
+// Do not force account selection. Returning users keep their Firebase session
+// and do not need to choose their Google account again.
+
+
+
+/* ELEMENTS */
+
+const login =
+  document.getElementById("login");
+
+const app =
+  document.getElementById("app");
+
+const error =
+  document.getElementById("error");
+
+const googleLogin =
+  document.getElementById("googleLogin");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const frame =
+  document.getElementById("lessonFrame");
+
+const buttons =
+  [...document.querySelectorAll("[data-lesson]")];
+
+
+/* TEST SOURCES */
+
+const sources = {
+
+  "읽기 1–2":"test-01.html",
+
+  "읽기 3–4":"test-02.html",
+
+  "읽기 5":"test-03.html",
+
+  "읽기 6":"test-04.html",
+
+  "읽기 7":"test-05.html",
+
+  "읽기 8":"test-06.html",
+
+  "읽기 9":"test-07.html",
+
+  "읽기 10":"test-08.html",
+
+  "읽기 11–12":"test-09.html",
+
+  "읽기 13–15":"test-10.html",
+
+  "읽기 16–18":"test-11.html",
+
+  "읽기 19–20":"test-12.html",
+
+  "읽기 21–22":"test-13.html",
+
+  "읽기 23–24":"test-14.html",
+
+  "읽기 25–27":"test-15.html",
+
+  "읽기 28–31":"test-16.html"
+
+};
+
+
+/* OPEN LESSON */
+
+function openLesson(label){
+
+  buttons.forEach(button => {
+
+    button.classList.toggle(
+      "active",
+      button.dataset.lesson === label
+    );
+
+  });
+
+  app.classList.remove("home");
+  frame.style.height = "100vh";
+  frame.src = sources[label];
+
+}
+
+
+/* GOOGLE LOGIN */
+
+googleLogin.addEventListener(
+  "click",
+  async () => {
+
+    error.textContent = "";
+
+    // Keep the protected app hidden until Firestore approval is confirmed.
+    login.style.display = "grid";
+    app.style.display = "none";
+    app.setAttribute("aria-hidden", "true");
+
+    googleLogin.disabled = true;
+
+    googleLogin.textContent =
+      "Kirish...";
+
+    try{
+
+      await signInWithPopup(
+        auth,
+        provider
+      );
+
+    }catch(err){
+
+      console.error(err);
+
+      // A cancelled/closed Google popup must never reveal the app.
+      login.style.display = "grid";
+      app.style.display = "none";
+      app.setAttribute("aria-hidden", "true");
+      app.classList.add("home");
+      frame.src = "about:blank";
+
+      if(err?.code === "auth/popup-closed-by-user" ||
+         err?.code === "auth/cancelled-popup-request"){
+        error.textContent = "Google orqali kirish bekor qilindi.";
+      }else{
+        error.textContent =
+          "Google orqali kirishda xatolik yuz berdi.";
+      }
+
+      googleLogin.disabled = false;
+      googleLogin.textContent =
+        "Google orqali kirish";
+
+    }
+
+  }
+);
+
+
+/* LOGOUT */
+
+logoutBtn.addEventListener(
+  "click",
+  async () => {
+
+    try{
+
+      await signOut(auth);
+
+    }catch(err){
+
+      console.error(err);
+
+    }
+
+  }
+);
+
+
+/* AUTH STATE */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+    // Never expose the app until the Firestore approval check succeeds.
+    login.style.display = "grid";
+    app.style.display = "none";
+    app.setAttribute("aria-hidden", "true");
+    app.classList.add("home");
+    frame.src = "about:blank";
+
+    if(!user){
+      // No remembered session: show the login screen.
+      login.style.display = "grid";
+      return;
+    }
+
+    try{
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      // First login: create a pending account, then immediately sign out.
+      if(!userSnap.exists()){
+        await setDoc(userRef, {
+          name: user.displayName || "",
+          email: user.email || "",
+          approved: false,
+          createdAt: serverTimestamp()
+        });
+
+        await signOut(auth);
+        error.textContent =
+          "Hisobingiz yaratildi. Admin tasdiqlashini kuting.";
+        return;
+      }
+
+      const userData = userSnap.data();
+
+      // Pending/rejected users must remain on the login screen.
+      if(userData.approved !== true){
+        await signOut(auth);
+        error.textContent =
+          "Hisobingiz hali tasdiqlanmagan.";
+        return;
+      }
+
+      // Approved user: show HOME only. Do not auto-open any test.
+      login.style.display = "none";
+      app.style.display = "grid";
+      app.setAttribute("aria-hidden", "false");
+      app.classList.add("home");
+      frame.src = "about:blank";
+      error.textContent = "";
+
+    }catch(err){
+      console.error(err);
+      error.textContent =
+        "Hisobni tekshirishda xatolik yuz berdi.";
+      app.style.display = "none";
+      app.setAttribute("aria-hidden", "true");
+      try{ await signOut(auth); }catch(e){}
+    }
+  }
+);
+
+/* HOME */
+
+function showHome(){
+
+  app.classList.add("home");
+
+  frame.style.height = "100vh";
+  frame.src =
+    "about:blank";
+
+}
+
+
+document
+  .getElementById("homeBtn")
+  .addEventListener(
+    "click",
+    showHome
+  );
+
+
+/* HOME MESSAGE FROM TEST IFRAMES */
+window.addEventListener("message", event => {
+  if(event.source !== frame.contentWindow) return;
+  if(event.data && event.data.type === "kibo-home"){
+    showHome();
+    return;
+  }
+  if(event.data && event.data.type === "kibo-test-height" && Number.isFinite(Number(event.data.height))){
+    const h=Math.max(300, Number(event.data.height));
+    frame.style.height=h+"px";
+  }
+});
+
+
+/* HOME TEST CARDS */
+
+document
+  .querySelectorAll("[data-open]")
+  .forEach(card => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        const label =
+          card.dataset.open;
+
+        app.classList.remove(
+          "home"
+        );
+
+        openLesson(label);
+
+      }
+    );
+
+  });
+
+
+/* NAV BUTTONS */
+
+buttons.forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      app.classList.remove(
+        "home"
+      );
+
+      openLesson(
+        button.dataset.lesson
+      );
+
+    }
+  );
+
+});
+
+
+</script>
+
+</body>
+</html>

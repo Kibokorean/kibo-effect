@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>KIBO EFFECT - TOPIK II 읽기 5</title><style>
+:root{
+--bg1:#070b17;--bg2:#101a33;--bg3:#172548;
+--card:rgba(18,28,52,.88);--card2:rgba(27,39,71,.95);
+--text:#f7f9ff;--muted:#a9b3c8;--border:rgba(255,255,255,.10);
+--yellow:#f6c453;--yellow2:#ffde83;--green:#35d07f;--red:#ff6476;--blue:#24355d;
+--shadow:0 14px 38px rgba(0,0,0,.30);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,"Noto Sans KR",sans-serif;
+background:radial-gradient(circle at 10% 0%,rgba(246,196,83,.10),transparent 24%),radial-gradient(circle at 90% 100%,rgba(93,135,255,.14),transparent 25%),linear-gradient(135deg,#070b17,#101a33,#172548)}
+body.day{--bg1:#f3f4f6;--bg2:#f3f4f6;--bg3:#f3f4f6;--card:#fff;--card2:#fff;--text:#111;--muted:#5f6368;--border:#d9d9d9;--blue:#e9ecef;--shadow:0 2px 8px rgba(0,0,0,.05);background:#f3f4f6}
+button{font-family:inherit}
+header{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:15px 32px;border-bottom:1px solid var(--border);background:rgba(7,11,23,.88);backdrop-filter:blur(14px)}
+body.day header{background:#fff;border-bottom:1px solid #d4d4d4}
+.header-left{display:flex;align-items:center;gap:14px;min-width:0}
+.header-logo{width:58px;height:58px;object-fit:cover;border-radius:50%;border:2px solid #f6c453;background:#000;box-shadow:0 0 15px rgba(246,196,83,.45)}
+body.day .header-logo{background:#fff;box-shadow:none}
+.brand-title{margin:0;font-size:27px;font-weight:800;letter-spacing:-.4px}
+body.day .brand-title{color:#111}
+.header-tools{display:flex;align-items:center;gap:12px;min-width:0}
+.topik-badge{color:#f6c453;font-weight:800;font-size:15px;padding:9px 16px;border:1px solid rgba(246,196,83,.25);border-radius:30px;background:rgba(246,196,83,.09);white-space:nowrap}
+body.day .topik-badge{color:#333;background:#f5f5f5;border-color:#d7d7d7}
+.zoom-controls{width:185px;height:56px;padding:5px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:0;border:1px solid #303746;border-radius:18px;background:#111620;box-shadow:0 4px 14px rgba(0,0,0,.22);overflow:hidden}
+body.day .zoom-controls{background:#f5f5f5;border-color:#d7d7d7;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.zoom-btn{width:44px;height:44px;border-radius:12px;border:1px solid #3b4352;background:#202530;color:#fff;font:800 24px/1 Arial;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.zoom-btn:hover{background:#272d39;border-color:#4a5364}.zoom-btn:active{transform:scale(.97)}.zoom-btn:disabled{opacity:.45;cursor:not-allowed}
+body.day .zoom-btn{background:#fff;color:#222;border-color:#d5d5d5}.zoom-value{color:#d8deea;font-size:18px;font-weight:700}
+body.day .zoom-value{color:#333}
+.mode-button{width:160px;height:56px;padding:5px;display:flex;align-items:center;gap:8px;border-radius:18px;border:1px solid #303746;background:#111620;color:#f5f7fb;box-shadow:0 4px 14px rgba(0,0,0,.22);cursor:pointer}
+body.day .mode-button{background:#f5f5f5;border-color:#d7d7d7;color:#333;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.mode-icon{width:44px;height:44px;flex:none;border-radius:12px;border:1px solid #3b4352;background:#202530;display:flex;align-items:center;justify-content:center;font-size:21px}
+body.day .mode-icon{background:#fff;border-color:#d5d5d5;color:#333}
+.mode-label{font:700 14px/1 Arial,Inter,sans-serif;white-space:nowrap;color:#d8deea}.day .mode-label{color:#333}
+.container{max-width:1450px;margin:auto;padding:28px;display:grid;grid-template-columns:340px 1fr;gap:25px}
+.sidebar{position:sticky;top:100px;align-self:start;padding:24px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,var(--card),var(--card2));box-shadow:var(--shadow)}
+.sidebar h2{margin:0 0 14px;color:#f6c453;font-size:24px}.day .sidebar h2{color:#111}
+.sidebar p{margin:0;color:#a9b3c8;font-size:14px;line-height:1.7}.day .sidebar p{color:#5f6368}
+.progress-box{margin-top:20px;padding:16px;border-radius:16px;border:1px solid rgba(246,196,83,.20);background:rgba(246,196,83,.06)}
+.progress-title{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:10px}
+.progress-bar{height:11px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.10)}.day .progress-bar{background:#e8e8e8}
+.progress-fill{initial-width:0;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f6c453,#ffde83);transition:.25s}
+.progress-info{margin-top:10px;color:#ffde83;font-size:13px;font-weight:700}.day .progress-info{color:#8b6b00}
+.info-box{margin-top:18px;padding:14px;border-radius:14px;border:1px solid var(--border);color:#c9d3e9;background:rgba(255,255,255,.03);line-height:1.65;font-size:13px}.day .info-box{color:#5f6368;background:#fff}
+.questions{display:flex;flex-direction:column;gap:18px}
+.question-card{padding:22px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,var(--card),var(--card2));box-shadow:var(--shadow);transition:.2s}
+.question-card:hover{transform:translateY(-2px);border-color:rgba(246,196,83,.4)}
+.question-card.is-correct{border-color:rgba(53,208,127,.8)}.question-card.is-wrong,.question-card.is-unanswered{border-color:rgba(255,100,118,.8)}
+.q-top{display:flex;align-items:center;gap:11px;margin-bottom:15px}.q-num{width:35px;height:35px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:#1a1608;font-weight:800;background:linear-gradient(135deg,#f6c453,#ffde83)}
+.q-page{color:#a9b3c8;font-size:14px}.day .q-page{color:#5f6368}
+.q-status{display:none;margin-left:auto;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 3px 10px rgba(53,208,127,.14)}
+.q-status.show{display:block}.q-status.correct{color:#b7ffd6;background:rgba(53,208,127,.18);border:1px solid rgba(53,208,127,.65)}
+.day .q-status.correct{color:#087a42;background:#e8fff2;border:1px solid #79dfaa}
+.q-status.wrong{color:#ffd2d8;background:rgba(255,100,118,.18);border:1px solid rgba(255,100,118,.65);box-shadow:0 3px 10px rgba(255,100,118,.14)}
+.day .q-status.wrong{color:#a61d32;background:#fff0f2;border:1px solid #f0a0aa;box-shadow:none}
+.q-text{
+  padding:22px;
+  margin-bottom:18px;
+  border-radius:16px;
+  border:1px solid rgba(246,196,83,.15);
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.7;
+  background:
+    linear-gradient(135deg,rgba(246,196,83,.08),rgba(255,255,255,.02)),
+    rgba(0,0,0,.1);
+  word-break:keep-all;
+  color:var(--text);
+}
+.blank{color:#f6c453;font-weight:800}
+.q-subtext{
+  display:block;
+  margin-top:8px;
+  color:#dce5f6;
+  font-size:18px;
+  font-weight:500;
+}
+body.day .q-text{
+  background:#fff !important;
+  color:#222 !important;
+  border-color:#e4dccb !important;
+}
+body.day .q-subtext{
+  color:#666 !important;
+}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.option{padding:14px 16px;border:1px solid var(--border);border-radius:13px;color:#dce4f4;background:rgba(255,255,255,.035);font-size:16px;cursor:pointer;transition:.2s;text-align:left}
+.option:hover{color:#fff;border-color:rgba(246,196,83,.5);background:rgba(246,196,83,.08)}
+.option.selected{color:#181307;font-weight:800;border-color:transparent;background:linear-gradient(135deg,#f6c453,#ffde83)}
+.answer-correct{color:#04160c!important;font-weight:800;border-color:transparent!important;background:linear-gradient(135deg,#35d07f,#91f5bc)!important}
+.answer-wrong{color:#fff4f5!important;font-weight:800;border-color:rgba(255,100,118,.7)!important;background:linear-gradient(135deg,#d94256,#ff7181)!important}
+.day .option{color:#111;background:#fff;border-color:#d5d5d5}.day .option:hover{color:#111;background:#f5f5f5;border-color:#aaa}.day .option.selected{color:#111;background:#e9ecef;border-color:#bfc3c7}
+.finish-area{padding:28px;text-align:center;border-radius:22px;box-shadow:var(--shadow);border:1px solid rgba(246,196,83,.22);background:rgba(246,196,83,.06)}
+.finish-area h2{margin:0 0 8px;color:#f6c453}.day .finish-area h2{color:#111}.finish-area p{color:#a9b3c8}.day .finish-area p{color:#5f6368}
+.btn{padding:13px 20px;border:none;border-radius:11px;color:#1b1608;font:700 16px inherit;cursor:pointer;background:linear-gradient(135deg,#f6c453,#ffde83);transition:.2s}.btn:hover{transform:translateY(-2px)}
+.btn-green{color:#06160c;background:linear-gradient(135deg,#31d57f,#83f3b6)}.btn-blue{color:#fff;background:#24355d;border:1px solid var(--border)}.day .btn-blue{color:#111;background:#f0f0f0;border:1px solid #d2d2d2}
+.result-panel{padding:28px;text-align:center;border-radius:22px;box-shadow:var(--shadow);border:1px solid rgba(53,208,127,.4);background:radial-gradient(circle at top right,rgba(53,208,127,.12),transparent 28%),linear-gradient(180deg,rgba(25,47,51,.96),rgba(17,33,49,.96))}
+.result-panel[hidden],.modal[hidden]{display:none}.day .result-panel{background:#fff;border:1px solid #cfcfcf;color:#111}
+.result-title{margin:0 0 18px;color:#b7ffd6;font-size:26px}.day .result-title{color:#111}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.score-card{text-align:left;padding:16px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.04)}.day .score-card{background:#fff;border-color:#d9d9d9}
+.score-card span{display:block;margin-bottom:7px;color:var(--muted);font-size:13px}.score-card strong{font-size:24px}
+.green{color:#35d07f}.red{color:#ff6476}.yellow{color:#f6c453}.day .green{color:#16834d}.day .red{color:#c52f44}.day .yellow{color:#9a7200}
+.result-lists{display:grid;grid-template-columns:1fr 1fr;gap:15px;text-align:left}.list-card{padding:17px;border:1px solid var(--border);border-radius:16px;background:rgba(0,0,0,.14)}.day .list-card{background:#fff;border-color:#d9d9d9}
+.list-card h3{margin:0 0 12px;font-size:15px}.good h3{color:#35d07f}.bad h3{color:#ff6476}.list-card ul{max-height:270px;overflow:auto;padding-left:20px;margin:0;color:#d5ddec;font-size:13px;line-height:1.7}.day .list-card ul{color:#333}
+.result-actions,.modal-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.modal{position:fixed;inset:0;z-index:999;display:flex;justify-content:center;align-items:center;padding:20px;background:rgba(3,6,14,.88);backdrop-filter:blur(8px)}.day .modal{background:rgba(0,0,0,.35)}
+.modal-content{width:min(750px,100%);max-height:94vh;overflow:auto;padding:20px;border:1px solid var(--border);border-radius:22px;background:#111a31}.day .modal-content{background:#fff;border:1px solid #d9d9d9;box-shadow:0 10px 35px rgba(0,0,0,.15)}
+.modal-content h2{margin:0 0 8px;color:#f6c453}.day .modal-content h2{color:#111}.modal-content p{color:var(--muted);font-size:13px;line-height:1.6}
+#resultImage{display:block;width:100%;border-radius:14px;border:1px solid var(--border)}
+@media(max-width:1050px){.container{grid-template-columns:1fr}.sidebar{position:relative;top:0}}
+@media(max-width:700px){.header-tools{flex:none}.container{padding:18px}.q-text{font-size:20px}.score-grid,.result-lists{grid-template-columns:1fr}}
+@media(max-width:600px){header{padding:12px 16px}.brand-title{font-size:21px}.header-logo{width:48px;height:48px}.options{grid-template-columns:1fr}}
+
+/* Result shown: answer options stay visible but are not clickable. */
+.option.review-locked{
+  pointer-events:none !important;
+  cursor:default !important;
+}
+
+
+/* ===== KIBO MOBILE RESPONSIVE FIX ===== */
+@media (max-width: 768px){
+  html,body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
+
+  header{
+    position:sticky;
+    top:0;
+    width:100%;
+    padding:10px 12px;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .header-left{
+    flex:1 1 auto;
+    min-width:0;
+    gap:9px;
+  }
+
+  .header-logo{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+  }
+
+  .brand-title{
+    font-size:18px;
+    line-height:1.15;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .header-tools{
+    width:100%;
+    flex:0 0 100%;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:7px;
+  }
+
+  .topik-badge{
+    grid-column:1 / -1;
+    width:100%;
+    text-align:center;
+    padding:7px 10px;
+    font-size:12px;
+    border-radius:12px;
+  }
+
+  .zoom-controls,
+  .mode-button{
+    width:100%;
+    height:44px;
+    min-width:0;
+    border-radius:13px;
+  }
+
+  .zoom-controls{
+    padding:3px;
+  }
+
+  .zoom-btn{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    font-size:20px;
+  }
+
+  .zoom-value{
+    font-size:14px;
+  }
+
+  .mode-button{
+    padding:3px;
+    gap:6px;
+  }
+
+  .mode-icon{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    font-size:17px;
+  }
+
+  .mode-label{
+    font-size:12px;
+  }
+
+  .container{
+    width:100%;
+    max-width:100%;
+    display:block;
+    padding:10px;
+  }
+
+  .sidebar{
+    position:relative;
+    top:auto;
+    width:100%;
+    margin-bottom:12px;
+    padding:16px;
+    border-radius:16px;
+  }
+
+  .sidebar h2{
+    font-size:20px;
+  }
+
+  .sidebar p,
+  .info-box{
+    font-size:12px;
+  }
+
+  .questions{
+    width:100%;
+    gap:10px;
+  }
+
+  .question-card{
+    width:100%;
+    padding:12px;
+    border-radius:16px;
+  }
+
+  .q-top{
+    gap:8px;
+    margin-bottom:10px;
+  }
+
+  .q-num{
+    width:31px;
+    height:31px;
+    min-width:31px;
+    border-radius:9px;
+    font-size:13px;
+  }
+
+  .q-page{
+    font-size:12px;
+  }
+
+  .q-status{
+    padding:5px 8px;
+    font-size:10px;
+  }
+
+  .q-text{
+    width:100%;
+    padding:14px 10px;
+    margin-bottom:10px;
+    border-radius:12px;
+    font-size:17px;
+    line-height:1.6;
+    word-break:keep-all;
+    overflow-wrap:anywhere;
+  }
+
+  .q-subtext{
+    font-size:14px;
+    line-height:1.5;
+  }
+
+  .options{
+    width:100%;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .option{
+    width:100%;
+    min-height:44px;
+    padding:11px 12px;
+    border-radius:11px;
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .finish-area,
+  .result-panel{
+    width:100%;
+    padding:16px;
+    border-radius:16px;
+  }
+
+  .finish-area h2,
+  .result-title{
+    font-size:21px;
+  }
+
+  .score-grid,
+  .result-lists{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .score-card,
+  .list-card{
+    padding:12px;
+    border-radius:12px;
+  }
+
+  .result-actions,
+  .modal-actions{
+    gap:8px;
+  }
+
+  .btn{
+    width:100%;
+    padding:11px 14px;
+    font-size:14px;
+  }
+
+  .modal{
+    padding:10px;
+  }
+
+  .modal-content{
+    width:100%;
+    max-width:100%;
+    max-height:94vh;
+    padding:14px;
+    border-radius:16px;
+  }
+
+  #resultImage{
+    max-width:100%;
+    height:auto;
+  }
+}
+
+@media (max-width: 390px){
+  .container{
+    padding:8px;
+  }
+
+  header{
+    padding:9px 10px;
+  }
+
+  .brand-title{
+    font-size:16px;
+  }
+
+  .header-logo{
+    width:38px;
+    height:38px;
+    flex-basis:38px;
+  }
+
+  .q-text{
+    font-size:16px;
+    padding:12px 9px;
+  }
+
+  .option{
+    font-size:13px;
+    padding:10px;
+  }
+
+  .mode-label{
+    font-size:11px;
+  }
+}
+
+</style><script>const __kiboStorage=(()=>{try{const s=window.localStorage;s.getItem('__kibo_probe__');return s}catch(e){const d={};return{getItem:k=>Object.prototype.hasOwnProperty.call(d,k)?d[k]:null,setItem:(k,v)=>d[k]=String(v),removeItem:k=>delete d[k],clear:()=>Object.keys(d).forEach(k=>delete d[k])}}})()</script><style>.kibo-home{height:56px;padding:0 15px;border:1px solid #303746;border-radius:18px;background:#111620;color:#f6c453;font:800 14px/1 Inter,Arial,sans-serif;cursor:pointer;white-space:nowrap}.kibo-home:hover{background:#202530}.day .kibo-home{background:#f5f5f5;border-color:#d7d7d7;color:#333}@media(max-width:700px){.kibo-home{height:42px;padding:0 10px;border-radius:12px;font-size:12px}}</style></head><body>
+<header>
+<div class="header-left"><img class="header-logo" src="header-logo.png" alt="KIBO Korean Logo" loading="eager" decoding="async"><h1 class="brand-title">KIBO EFFECT</h1></div>
+<div class="header-tools">
+<button type="button" class="kibo-home" onclick="parent.postMessage({type:'kibo-home'},'*')">← Bosh sahifa</button><div class="topik-badge">TOPIK II 읽기 5</div>
+<div class="zoom-controls"><button id="zoomOut" class="zoom-btn" aria-label="Uzoqlashtirish">−</button><span id="zoomValue" class="zoom-value">100%</span><button id="zoomIn" class="zoom-btn" aria-label="Yaqinlashtirish">+</button></div>
+<button id="themeToggle" class="mode-button" aria-label="Switch to day mode"><span id="themeIcon" class="mode-icon">🌙</span><span id="themeLabel" class="mode-label">Night mode</span></button>
+</div></header>
+<div class="container">
+<aside class="sidebar"><h2>Grammar Challenge</h2><p>TOPIK II 읽기 5 testi. Har bir savol uchun eng mos keluvchi javobni tanlang.</p>
+<div class="progress-box"><div class="progress-title"><span>Test bajarilishi</span><span id="progressPercent">0%</span></div><div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div><div id="progressInfo" class="progress-info">Belgilangan: 0 / 20</div></div></aside>
+<main class="questions"><div id="questionsContainer"></div>
+<section class="finish-area"><h2>Test tugadimi?</h2><p>Javoblarni tekshirish uchun tugmani bosing.</p><button id="checkBtn" class="btn">✓ Natijani tekshirish</button></section>
+<section id="resultPanel" class="result-panel" hidden><h2 class="result-title">Test natijasi</h2>
+<div class="score-grid"><div class="score-card"><span>To‘g‘ri javoblar</span><strong id="correctScore" class="green">0 / 20</strong></div><div class="score-card"><span>Xato / bo‘sh javoblar</span><strong id="wrongScore" class="red">0 / 20</strong></div><div class="score-card"><span>Natija foizi</span><strong id="resultPercent" class="yellow">0%</strong></div></div>
+<div id="resultLists" class="result-lists"></div>
+<div class="result-actions"><button id="saveResultBtn" class="btn btn-green">🖼 Natijani rasmga saqlash</button><button id="scrollTopBtn" class="btn btn-blue">↑ Tepaga qaytish</button></div></section>
+</main></div>
+<div id="imageModal" class="modal" hidden><div class="modal-content"><h2>Natija rasmi tayyor</h2><p>Rasmni ulashing yoki yuklab oling.</p><img id="resultImage" alt="KIBO EFFECT test natijasi"><div class="modal-actions"><button id="shareBtn" class="btn btn-green">📲 Share / Galereyaga saqlash</button><button id="downloadBtn" class="btn">⬇ Rasmni yuklab olish</button><button id="closeModalBtn" class="btn btn-blue">Yopish</button></div></div></div>
+<script>
+const questionData = [
+      {
+        title: "날마다 새로운 세상을 읽는다.",
+        subtitle: "세상을 보는 눈!",
+        options: ["신문", "사전", "시계", "연필"],
+        answer: 0
+      },
+      {
+        title: "문제는 신선도!",
+        subtitle: "알아서 온도를 조절한다.",
+        options: ["컴퓨터", "냉장고", "선풍기", "세탁기"],
+        answer: 1
+      },
+      {
+        title: "언제 어디서나 깨끗하게 싹싹!",
+        subtitle: "잘 풀리고 잘 닦입니다.",
+        options: ["연필", "휴지", "책상", "거울"],
+        answer: 1
+      },
+      {
+        title: "시원한 바람을 만나다",
+        subtitle: "맑고 깨끗한 자연 느낌 그대로!",
+        options: ["청소기", "선풍기", "세탁기", "전화기"],
+        answer: 1
+      },
+      {
+        title: "비타민이 가득!",
+        subtitle: "하루 필요한 야채가~ 이 한 병에!",
+        options: ["주스", "콜라", "우유", "커피"],
+        answer: 0
+      },
+      {
+        title: "눕는 순간 잠이 솔솔~",
+        subtitle: "아침까지 편안하게",
+        options: ["수건", "침대", "시계", "신발"],
+        answer: 1
+      },
+      {
+        title: "몸에 좋은 영양소가 가득~",
+        subtitle: "매일 아침 신선함을 마셔요!",
+        options: ["과자", "안경", "우유", "신발"],
+        answer: 2
+      },
+      {
+        title: "더위를 싹~",
+        subtitle: "자연 바람을 선물합니다.",
+        options: ["에어컨", "청소기", "냉장고", "세탁기"],
+        answer: 0
+      },
+      {
+        title: "가벼움을 신다!",
+        subtitle: "어떤 길에서도 편한 세상을 경험해 보세요.",
+        options: ["안경", "침대", "운동화", "노트북"],
+        answer: 2
+      },
+      {
+        title: "입속 치아 사이사이를 깨끗이!",
+        subtitle: "부드럽게 잘 닦여요~",
+        options: ["비누", "칫솔", "안경", "수건"],
+        answer: 1
+      }
+    ];
+const letters=["①","②","③","④"];
+const totalQuestions=questionData.length;
+let reviewed=false,resultData=null,resultBlob=null,imageURL=null,zoom=Number(__kiboStorage.getItem("kibo-zoom")||100);
+const questionsContainer=document.getElementById("questionsContainer"),container=document.querySelector(".container");
+function renderQuestions(){
+questionsContainer.innerHTML=questionData.map((q,i)=>`<article class="question-card" data-index="${i}"><div class="q-top"><div class="q-num">${i+1}</div><div class="q-page">Question 1-2 · Page ${q.page}</div><div class="q-status"></div></div><div class="q-text">${q.title}<span class="q-subtext">${q.subtitle||""}</span></div><div class="options">${q.options.map((o,j)=>`<button type="button" class="option" data-choice="${j}">${letters[j]} ${o}</button>`).join("")}</div></article>`).join("");
+document.querySelectorAll(".option").forEach(btn=>btn.addEventListener("click",()=>{
+const card=btn.closest(".question-card");
+if(reviewed) resetReview();
+card.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
+btn.classList.add("selected");updateProgress();
+}));
+}
+function updateProgress(){const answered=document.querySelectorAll(".option.selected").length,p=Math.round(answered/totalQuestions*100);document.getElementById("progressFill").style.width=p+"%";document.getElementById("progressPercent").textContent=p+"%";document.getElementById("progressInfo").textContent=`Belgilangan: ${answered} / ${totalQuestions}`;}
+function resetReview(){
+  document.querySelectorAll(".option").forEach(option=>{
+    option.classList.remove("review-locked");
+    option.removeAttribute("aria-disabled");
+  });
+reviewed=false;resultData=null;document.querySelectorAll(".question-card").forEach(c=>{c.classList.remove("is-correct","is-wrong","is-unanswered");const s=c.querySelector(".q-status");s.className="q-status";s.textContent="";c.querySelectorAll(".option").forEach(o=>o.classList.remove("answer-correct","answer-wrong"));});document.getElementById("resultPanel").hidden=true;}
+function checkResults(){
+resetReview();let correct=0,answered=0;const rows=[];
+questionData.forEach((q,i)=>{const card=document.querySelector(`[data-index="${i}"]`),sel=card.querySelector(".option.selected"),correctOpt=card.querySelector(`[data-choice="${q.answer}"]`),status=card.querySelector(".q-status");const selectedIndex=sel?Number(sel.dataset.choice):null;if(sel)answered++;const ok=selectedIndex===q.answer;correctOpt.classList.add("answer-correct");
+if(ok){correct++;card.classList.add("is-correct");status.className="q-status show correct";status.textContent="✓ To‘g‘ri";}else{card.classList.add(sel?"is-wrong":"is-unanswered");if(sel)sel.classList.add("answer-wrong");status.className="q-status show wrong";status.textContent=sel?`✗ Xato · ${letters[selectedIndex]}`:`! Javob berilmadi · ${letters[q.answer]}`;}
+rows.push({number:i+1,question:q,selectedIndex,isCorrect:ok});});
+const wrong=totalQuestions-correct,percent=Math.round(correct/totalQuestions*100);resultData={correct,wrong,answered,percent,rows};reviewed=true;
+  document.querySelectorAll(".option").forEach(option=>{
+    option.classList.add("review-locked");
+    option.setAttribute("aria-disabled","true");
+  });
+
+document.getElementById("correctScore").textContent=`${correct} / ${totalQuestions}`;document.getElementById("wrongScore").textContent=`${wrong} / ${totalQuestions}`;document.getElementById("resultPercent").textContent=percent+"%";
+const good=rows.filter(r=>r.isCorrect),bad=rows.filter(r=>!r.isCorrect);
+const label=(r,idx)=>`${letters[idx]} ${r.question.options[idx]}`;
+document.getElementById("resultLists").innerHTML=`<div class="list-card good"><h3>✓ To‘g‘ri savollar (${good.length})</h3><ul>${good.length?good.map(r=>`<li><b>${r.number}-savol</b> — ${label(r,r.question.answer)}</li>`).join(""):"<li>To‘g‘ri javob yo‘q.</li>"}</ul></div><div class="list-card bad"><h3>✗ Xato yoki bo‘sh savollar (${bad.length})</h3><ul>${bad.length?bad.map(r=>`<li><b>${r.number}-savol</b><br>Siz: ${r.selectedIndex===null?"Javob berilmagan":label(r,r.selectedIndex)}<br>To‘g‘ri: ${label(r,r.question.answer)}</li>`).join(""):"<li>Barcha javoblar to‘g‘ri. Ajoyib! 🎉</li>"}</ul></div>`;
+document.getElementById("resultPanel").hidden=false;setTimeout(()=>document.getElementById("resultPanel").scrollIntoView({behavior:"smooth"}),60);
+}
+function createResultImage(){
+if(!resultData)return;const rows=resultData.rows,wrongRows=rows.filter(r=>!r.isCorrect),canvas=document.createElement("canvas");canvas.width=1080;canvas.height=900+53*wrongRows.length;const ctx=canvas.getContext("2d");const bg=ctx.createLinearGradient(0,0,1080,canvas.height);bg.addColorStop(0,"#091223");bg.addColorStop(.55,"#15264a");bg.addColorStop(1,"#10233c");ctx.fillStyle=bg;ctx.fillRect(0,0,1080,canvas.height);
+ctx.fillStyle="#f6c453";ctx.font="800 28px Arial";ctx.fillText("KIBO EFFECT • TOPIK II 읽기 5",60,55);ctx.fillStyle="#fff";ctx.font="800 48px Arial";ctx.fillText("Test natijasi",60,115);ctx.fillStyle="#aebbd4";ctx.font="24px Arial";ctx.fillText(`Javob berilgan: ${resultData.answered}/${totalQuestions} • Natija: ${resultData.percent}%`,60,160);
+const box=(x,title,val,bgcol,titlecol,valcol)=>{ctx.fillStyle=bgcol;ctx.beginPath();ctx.roundRect(x,205,290,100,18);ctx.fill();ctx.fillStyle=titlecol;ctx.font="700 20px Arial";ctx.fillText(title,x+22,235);ctx.fillStyle=valcol;ctx.font="800 34px Arial";ctx.fillText(val,x+22,275)};box(60,"TO‘G‘RI JAVOBLAR",`${resultData.correct}/${totalQuestions}`,"rgba(53,208,127,.18)","#b7ffd6","#35d07f");box(390,"XATO / BO‘SH",`${resultData.wrong}/${totalQuestions}`,"rgba(255,100,118,.18)","#ffd2d8","#ff6476");box(720,"NATIJA FOIZI",resultData.percent+"%","rgba(246,196,83,.18)","#ffe5a1","#f6c453");
+let y=370;ctx.fillStyle="#55e995";ctx.font="800 27px Arial";ctx.fillText(`✓ TO‘G‘RI SAVOLLAR (${resultData.correct} ta)`,60,y);y+=44;ctx.fillStyle="#e4fff0";ctx.font="23px Arial";ctx.fillText(rows.filter(r=>r.isCorrect).map(r=>"Q"+r.number).join(" • ")||"To‘g‘ri javob yo‘q.",60,y);y+=84;ctx.fillStyle="#ff8492";ctx.font="800 27px Arial";ctx.fillText(`✗ XATO YOKI BO‘SH SAVOLLAR (${resultData.wrong} ta)`,60,y);y+=48;wrongRows.forEach(r=>{ctx.fillStyle="#ffdce0";ctx.font="21px Arial";ctx.fillText(`Q${r.number} — Siz: ${r.selectedIndex===null?"Javob berilmagan":letters[r.selectedIndex]+" "+r.question.options[r.selectedIndex]}`,60,y);y+=30;ctx.fillStyle="#aaffd0";ctx.fillText(`To‘g‘ri javob: ${letters[r.question.answer]} ${r.question.options[r.question.answer]}`,85,y);y+=45});ctx.fillStyle="#90a1c4";ctx.font="18px Arial";ctx.fillText("KIBO EFFECT • Natija avtomatik yaratilgan",60,canvas.height-42);
+canvas.toBlob(blob=>{resultBlob=blob;if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(blob);document.getElementById("resultImage").src=imageURL;document.getElementById("imageModal").hidden=false},"image/png");
+}
+async function downloadImage(){
+  try {
+    let blob = resultBlob;
+    if (!blob && imageURL) { const response = await fetch(imageURL); blob = await response.blob(); }
+    if (!blob) { alert("Avval natija rasmini tayyorlang."); return; }
+    const pngBlob = blob.type === "image/png" ? blob : new Blob([blob], {type:"image/png"});
+    const url = URL.createObjectURL(pngBlob);
+    const a = document.createElement("a"); a.href = url; a.download = "kibo-effect-test-natijasi.png"; a.style.display = "none";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (error) { console.error("PNG yuklashda xatolik:", error); if (imageURL) window.open(imageURL, "_blank"); }
+}
+async function shareImage(){if(!resultBlob)return;const file=new File([resultBlob],"kibo-effect-topik-1-2-natijasi.png",{type:"image/png"});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))await navigator.share({title:"KIBO EFFECT natijasi",text:"TOPIK II 읽기 5 test natijasi",files:[file]});else downloadImage()}catch(e){if(e.name!=="AbortError")downloadImage()}}
+function applyTheme(){const day=(__kiboStorage.getItem("kibo-theme")||"night")==="day";document.body.classList.toggle("day",day);document.getElementById("themeIcon").textContent=day?"☀️":"🌙";document.getElementById("themeLabel").textContent=day?"Day mode":"Night mode";document.getElementById("themeToggle").setAttribute("aria-label",day?"Switch to night mode":"Switch to day mode")}
+function applyZoom(){zoom=Math.max(80,Math.min(200,zoom));document.getElementById("zoomValue").textContent=zoom+"%";__kiboStorage.setItem("kibo-zoom",zoom);document.body.style.zoom=zoom/100;document.getElementById("zoomOut").disabled=zoom<=80;document.getElementById("zoomIn").disabled=zoom>=200;container.style.gridTemplateColumns=zoom>=150?"1fr":"340px 1fr";if(zoom>=150){container.style.gap="18px";document.querySelector(".sidebar").style.cssText+=";position:relative;top:0;width:100%;grid-column:1;order:-1";document.querySelector(".questions").style.cssText+=";width:100%;grid-column:1;order:2"}else{document.querySelector(".sidebar").style.cssText="";document.querySelector(".questions").style.cssText=""}}
+document.getElementById("checkBtn").onclick=checkResults;document.getElementById("saveResultBtn").onclick=createResultImage;document.getElementById("downloadBtn").onclick=downloadImage;document.getElementById("shareBtn").onclick=shareImage;document.getElementById("closeModalBtn").onclick=()=>document.getElementById("imageModal").hidden=true;document.getElementById("scrollTopBtn").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});document.getElementById("imageModal").onclick=e=>{if(e.target.id==="imageModal")e.currentTarget.hidden=true};document.getElementById("themeToggle").onclick=()=>{__kiboStorage.setItem("kibo-theme",document.body.classList.contains("day")?"night":"day");applyTheme()};document.getElementById("zoomOut").onclick=()=>{zoom-=10;applyZoom()};document.getElementById("zoomIn").onclick=()=>{zoom+=10;applyZoom()};
+renderQuestions();applyTheme();applyZoom();updateProgress();
+
+</script>
+<style id="kibo-mobile-iframe-fix">@media (max-width:600px){html,body{min-height:0 !important;}.container{padding-bottom:24px !important;}}</style>
+<script>(function(){function reportHeight(){try{var h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);if(window.parent!==window){window.parent.postMessage({type:"kibo-test-height",height:h},"*");}}catch(e){}}window.addEventListener("load",reportHeight);window.addEventListener("resize",reportHeight);if(window.ResizeObserver){new ResizeObserver(reportHeight).observe(document.body);}setTimeout(reportHeight,300);setTimeout(reportHeight,1000);})();</script>
+</body></html>
