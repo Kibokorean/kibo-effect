@@ -25,10 +25,10 @@ main{margin-left:248px;padding:28px 30px 40px;max-width:1800px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:13px;box-shadow:var(--shadow)}.panel h3{font-size:14px;margin:0 0 13px}.bar{height:10px;background:var(--panel2);border-radius:99px;overflow:hidden}.bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,#4285f4,#36c5b0)}.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}.legend span{background:var(--panel2);padding:9px 12px;border-radius:10px;font-size:11px;color:var(--muted)}
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.calendar span{height:29px;background:var(--panel2);border-radius:5px;display:grid;place-items:center;font-size:10px;color:var(--muted)}.calendar .day{font-size:9px;background:transparent;font-weight:800}
 #workspace{display:none;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);min-height:75vh}
-.workspace-head{height:58px;display:flex;align-items:center;gap:12px;padding:0 15px;border-bottom:1px solid var(--line)}.back{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:8px 12px}.workspace-title{font-weight:800;font-size:14px}.workspace-head .grow{flex:1}iframe{display:block;width:100%;height:calc(100vh - 180px);min-height:680px;border:0;background:white}
+.workspace-head{height:58px;display:flex;align-items:center;gap:12px;padding:0 15px;border-bottom:1px solid var(--line)}.back{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:8px 12px}.workspace-title{font-weight:800;font-size:14px}.workspace-head .grow{flex:1}#module-content{padding:18px;min-height:70vh;background:var(--panel);overflow:hidden}#module-content>*{max-width:100%}#module-content img,#module-content video{max-width:100%;height:auto}
 .mobilebar{display:none}
 @media(max-width:1000px){.sidebar{width:210px}main{margin-left:210px;padding:20px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.quick{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:680px){.sidebar{display:none}main{margin:0;padding:12px 12px 88px}.topline{margin-bottom:12px}.hero{padding:17px}.hello{font-size:18px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{padding:14px;min-height:138px}.tile h3{font-size:13px}.tile p{font-size:11px}.metrics{grid-template-columns:1fr}.metric{padding:13px}.quick{gap:7px}.quick button{font-size:11px;padding:4px}.mobilebar{display:grid;position:fixed;bottom:0;left:0;right:0;grid-template-columns:repeat(4,1fr);background:var(--panel);border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom));z-index:20}.mobilebar button{border:0;background:transparent;color:var(--muted);font-size:10px;display:grid;gap:3px;justify-items:center}.mobilebar b{font-size:18px}iframe{height:calc(100vh - 160px);min-height:600px}}
+@media(max-width:680px){.sidebar{display:none}main{margin:0;padding:12px 12px 88px}.topline{margin-bottom:12px}.hero{padding:17px}.hello{font-size:18px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{padding:14px;min-height:138px}.tile h3{font-size:13px}.tile p{font-size:11px}.metrics{grid-template-columns:1fr}.metric{padding:13px}.quick{gap:7px}.quick button{font-size:11px;padding:4px}.mobilebar{display:grid;position:fixed;bottom:0;left:0;right:0;grid-template-columns:repeat(4,1fr);background:var(--panel);border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom));z-index:20}.mobilebar button{border:0;background:transparent;color:var(--muted);font-size:10px;display:grid;gap:3px;justify-items:center}.mobilebar b{font-size:18px}#module-content{padding:10px}}
 </style></head>
 <body>
 <aside class="sidebar">
@@ -66,20 +66,51 @@ main{margin-left:248px;padding:28px 30px 40px;max-width:1800px}
   <div class="panel"><h3>O‘rganish yo‘nalishlari</h3><div class="bar"><i></i></div><div class="legend"><span>🔵 Darslar</span><span>🟢 TOPIK amaliyoti</span><span>🟠 Lug‘at va takrorlash</span></div></div>
   <div class="panel"><h3>Haftalik reja</h3><div class="calendar"><span class="day">DU</span><span class="day">SE</span><span class="day">CH</span><span class="day">PA</span><span class="day">JU</span><span class="day">SH</span><span class="day">YA</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span></div></div>
  </section>
- <section id="workspace"><div class="workspace-head"><button class="back" id="back">← Orqaga</button><span class="workspace-title" id="workspaceTitle">Modul</span><span class="grow"></span><button class="back" id="reload">↻ Yangilash</button></div><iframe id="moduleFrame" title="KIBO moduli"></iframe></section>
+ <section id="workspace" style="display:none"><div class="workspace-head"><button class="back" id="back">← Bosh sahifa</button><span class="workspace-title" id="workspaceTitle">Modul</span><span class="grow"></span></div><div id="module-content"></div></section>
  <section id="simpleView" class="panel" style="display:none"><h2 id="simpleTitle"></h2><p id="simpleText" style="color:var(--muted);line-height:1.7"></p><button class="back" id="simpleHome">Bosh sahifaga qaytish</button></section>
 </main>
 <nav class="mobilebar"><button data-view="home"><b>⌂</b>Bosh sahifa</button><button data-open="dars/1.html" data-title="Darslar"><b>▣</b>Darslar</button><button data-open="korean/index.html" data-title="TOPIK testlar"><b>✓</b>Testlar</button><button data-open="vocabulary/index.html" data-title="Lug‘at yodlash"><b>가</b>Lug‘at</button></nav>
 <script>
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const dashboard=$('#dashboard'), workspace=$('#workspace'), simple=$('#simpleView'), frame=$('#moduleFrame');
+const dashboard=$('#dashboard'), workspace=$('#workspace'), simple=$('#simpleView'), mount=$('#module-content');
+const moduleStyles=new Set();
 function setActive(el){$$('.nav').forEach(n=>n.classList.toggle('active',n===el));}
-function home(){dashboard.style.display='block';workspace.style.display='none';simple.style.display='none';$$('[data-view="home"]').forEach(setActive)}
-function openModule(path,title){dashboard.style.display='none';simple.style.display='none';workspace.style.display='block';$('#workspaceTitle').textContent=title||'KIBO moduli';frame.src=path;window.scrollTo(0,0);$$('[data-open]').forEach(n=>n.classList.toggle('active',n.dataset.open===path))}
-function simplePage(which){dashboard.style.display='none';workspace.style.display='none';simple.style.display='block';$('#simpleTitle').textContent=which==='progress'?'O‘quv progressi':'Sozlamalar';$('#simpleText').textContent=which==='progress'?'Darslar, testlar va lug‘at modullari shu yagona platformadan ochiladi. Har bir modulning mavjud natijalari o‘z ichki tizimida saqlanishi mumkin. Umumiy progress sinxronizatsiyasi uchun Firebase ma’lumotlar modelini alohida birlashtirish talab etiladi.':'Ko‘rinish rejimini yuqoridagi Day/Night tugmasi orqali almashtiring. Tanlov brauzeringizda saqlanadi.';}
+function home(){dashboard.style.display='block';workspace.style.display='none';simple.style.display='none';$$('[data-view="home"]').forEach(setActive);window.scrollTo(0,0)}
+function absolutize(value,base){try{return new URL(value,base).href}catch(e){return value}}
+async function openModule(path,title){
+ dashboard.style.display='none';simple.style.display='none';workspace.style.display='block';$('#workspaceTitle').textContent=title||'KIBO moduli';mount.innerHTML='<div style="padding:32px;text-align:center;color:var(--muted)">Modul yuklanmoqda…</div>';window.scrollTo(0,0);
+ $$('[data-open]').forEach(n=>n.classList.toggle('active',n.dataset.open===path));
+ try{
+  const response=await fetch(path); if(!response.ok)throw new Error('HTTP '+response.status);
+  const source=await response.text(); const doc=new DOMParser().parseFromString(source,'text/html');
+  // Keep the user inside the one-page application: inject the module body into this document.
+  doc.querySelectorAll('script').forEach(x=>x.remove());
+  doc.querySelectorAll('style,link[rel="stylesheet"]').forEach((node,i)=>{
+   const key=path+'::'+i;if(moduleStyles.has(key))return;moduleStyles.add(key);
+   if(node.tagName==='STYLE'){const st=document.createElement('style');st.dataset.module=path;st.textContent=node.textContent;document.head.appendChild(st)}
+   else {const l=document.createElement('link');l.rel='stylesheet';l.href=absolutize(node.getAttribute('href'),new URL(path,location.href));l.dataset.module=path;document.head.appendChild(l)}
+  });
+  const content=doc.body.innerHTML;
+  mount.innerHTML=content;
+  // Fix local asset links and form actions relative to the module source.
+  mount.querySelectorAll('[src]').forEach(n=>{const v=n.getAttribute('src');if(v&&!/^(data:|https?:|#|blob:|javascript:)/i.test(v))n.setAttribute('src',absolutize(v,new URL(path,location.href)))});
+  mount.querySelectorAll('[href]').forEach(n=>{const v=n.getAttribute('href');if(v&&!v.startsWith('#')&&!/^(https?:|mailto:|tel:|javascript:|data:)/i.test(v))n.setAttribute('href',absolutize(v,new URL(path,location.href)))});
+  mount.querySelectorAll('form[action]').forEach(n=>n.action=absolutize(n.getAttribute('action'),new URL(path,location.href)));
+  // Execute module scripts in source order within the current page.
+  const original=await fetch(path).then(r=>r.text());const parsed=new DOMParser().parseFromString(original,'text/html');
+  for(const old of parsed.querySelectorAll('script')){
+   const code=old.textContent||'';if(!code.trim())continue;
+   const script=document.createElement('script');script.dataset.module=path;
+   if(old.src){script.src=absolutize(old.getAttribute('src'),new URL(path,location.href));script.async=false}
+   else script.textContent=code;
+   document.body.appendChild(script);
+  }
+ }catch(err){mount.innerHTML='<div style="padding:24px"><h3>Modulni yuklab bo‘lmadi</h3><p style="color:var(--muted)">Bu modulni sayt serveri orqali ochish kerak. Faylni bevosita file:// orqali ochganda brauzer fetch’ni bloklashi mumkin.</p><code>'+String(err.message||err)+'</code></div>'}
+}
+function simplePage(which){dashboard.style.display='none';workspace.style.display='none';simple.style.display='block';$('#simpleTitle').textContent=which==='progress'?'O‘quv progressi':'Sozlamalar';$('#simpleText').textContent=which==='progress'?'Modullar endi shu sahifaning ichida ochiladi. Har bir modulning o‘zidagi progress saqlash mexanizmi saqlanadi; umumiy Firebase sinxronizatsiyasi alohida tekshirilishi kerak.':'Ko‘rinish rejimini yuqoridagi Day/Night tugmasi orqali almashtiring.';}
 $$('[data-open]').forEach(el=>el.addEventListener('click',()=>openModule(el.dataset.open,el.dataset.title)));
 $$('[data-view]').forEach(el=>el.addEventListener('click',()=>{if(el.dataset.view==='home')home();else simplePage(el.dataset.view);setActive(el)}));
-$('#back').onclick=home;$('#homeBtn').onclick=home;$('#simpleHome').onclick=home;$('#reload').onclick=()=>{try{frame.contentWindow.location.reload()}catch(e){frame.src=frame.src}};
+$('#back').onclick=home;$('#homeBtn').onclick=home;$('#simpleHome').onclick=home;
 const root=document.documentElement;const saved=localStorage.getItem('kibo-theme');if(saved==='dark')root.dataset.theme='dark';
 function theme(){root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';localStorage.setItem('kibo-theme',root.dataset.theme);$('#theme').textContent=root.dataset.theme==='dark'?'☾':'☼'}
 $('#theme').textContent=root.dataset.theme==='dark'?'☾':'☼';$('#theme').onclick=theme;
