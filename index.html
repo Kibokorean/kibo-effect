@@ -226,7 +226,7 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 </aside></div></div>
 
   <main>
-    <div id="testWorkspace" class="test-workspace" hidden aria-live="polite"></div>
+    <iframe id="testWorkspace" class="test-workspace" hidden title="TOPIK testi" aria-live="polite"></iframe>
     <section id="vocabularyView" hidden aria-label="KIBO Lug‘at"><div id="vocabWorkspace"></div></section>
   </main>
 
@@ -466,21 +466,9 @@ const sources = {
 async function openLesson(label){
   const src=sources[label];if(!src)return;
   app.classList.remove("home","vocabulary-mode");document.getElementById("vocabularyView").hidden=true;
-  frame.hidden=false;frame.style.display="block";frame.innerHTML='<div class="test-loading">TOPIK testi xavfsiz tarzda yuklanmoqda…</div>';
+  frame.hidden=false;frame.style.display="block";frame.removeAttribute("src");
   localStorage.setItem("kibo-last-route",label);
-  try{
-    const response=await fetch(src,{credentials:"same-origin",cache:"no-store"});if(!response.ok)throw new Error("Testga kirish rad etildi ("+response.status+")");
-    const parsed=new DOMParser().parseFromString(await response.text(),"text/html");
-    const scopeCss=css=>{let out="",i=0,start=0;while(i<css.length){if(css[i]==="{"){const head=css.slice(start,i).trim();let depth=1,j=i+1;while(j<css.length&&depth){if(css[j]==="{")depth++;else if(css[j]==="}")depth--;j++;}const inner=css.slice(i+1,j-1);if(/^@(media|supports|container)\b/.test(head))out+=head+"{"+scopeCss(inner)+"}";else if(head.startsWith("@"))out+=head+"{"+inner+"}";else{const sels=head.split(",").map(x=>{x=x.trim().replace(/^(html|body|:root)(?=[:.#\s\[]|$)/,"#testWorkspace").replace(/^\.(night|day)(?=[:.#\s\[]|$)/,"#testWorkspace$&");return x==="#testWorkspace"||x.startsWith("#testWorkspace")?x:"#testWorkspace "+x});out+=sels.join(",")+"{"+inner+"}";}i=j;start=j;}else{i++;}}return out+css.slice(start);};
-    for(const style of parsed.querySelectorAll("style")){const s=document.createElement("style");s.textContent=scopeCss(style.textContent);frame.appendChild(s);}
-    const page=parsed.body.cloneNode(true);page.querySelectorAll("script,style").forEach(n=>n.remove());frame.insertAdjacentHTML("beforeend",page.innerHTML);
-    window.kiboTestStorage=new Proxy(window.localStorage,{get(target,key){if(["getItem","setItem","removeItem"].includes(key))return(name,...args)=>target[key]("__kibo_test_"+auth.currentUser.uid+"_"+name,...args);const v=target[key];return typeof v==="function"?v.bind(target):v;}});
-    if(!window.kiboTestGradeBridge){window.kiboTestGradeBridge=true;const baseFetch=window.fetch.bind(window);window.fetch=async(...args)=>{const response=await baseFetch(...args);try{const url=String(args[0]?.url||args[0]||"");if(url.includes("/api/test/grade"))response.clone().json().then(data=>{if(data?.ok&&auth.currentUser)loadDashboard(auth.currentUser);}).catch(()=>{});}catch{}return response;};}
-    const scopedDocument={get body(){return frame;},get documentElement(){return frame;},getElementById(id){return frame.querySelector("#"+CSS.escape(id));},querySelector(s){return frame.querySelector(s);},querySelectorAll(s){return frame.querySelectorAll(s);},createElement(tag){return document.createElement(tag);},addEventListener(...a){return frame.addEventListener(...a);}};
-    window.kiboTestDocument=scopedDocument;
-    for(const old of parsed.querySelectorAll("script")){const s=document.createElement("script");s.textContent=old.textContent.replace(/\bwindow\.localStorage\b/g,"window.kiboTestStorage").replace(/\b__kiboStorage\b/g,"window.kiboTestStorage").replace(/window\.parent!==window && typeof window\.parent\.__kiboGetAppCheckToken==="function"/g,'typeof window.__kiboGetAppCheckToken==="function"').replace(/await window\.parent\.__kiboGetAppCheckToken\(\)/g,'await window.__kiboGetAppCheckToken()').replace(/document\.getElementById\((["'])resultPanel\1\)\.scrollIntoView\(/g,'document.getElementById("resultPanel")?.scrollIntoView?.(').replace(/\bdocument\./g,"window.kiboTestDocument.");document.body.appendChild(s);s.remove();}
-    sendMasterTheme();
-  }catch(e){frame.innerHTML="<div class='test-loading'>Test yuklanmadi. Qayta kirib urinib ko‘ring.</div>";console.error("TOPIK test load:",e);}
+  frame.src=src;
 }
 
 
@@ -627,8 +615,8 @@ async function loadDashboard(user){
 }
 
 onAuthStateChanged(auth, async user=>{
-  login.style.display="grid";app.style.display="none";app.setAttribute("aria-hidden","true");app.classList.add("home");frame.hidden=true;frame.replaceChildren();
-  if(!user){clearProfile();if(vocabObserver){vocabObserver.disconnect();vocabObserver=null;}vocabLoaded=false;vocabLoadedUid=null;vocabRoot.replaceChildren();googleLogin.disabled=false;googleLogin.textContent="Google orqali kirish";return;}
+  login.style.display="grid";app.style.display="none";app.setAttribute("aria-hidden","true");app.classList.add("home");frame.hidden=true;frame.removeAttribute("src");
+  if(!user){clearProfile();if(vocabObserver){vocabObserver.disconnect();vocabObserver=null;}vocabLoaded=false;vocabLoadedUid=null;vocabSavedState={};vocabFrame=null;vocabLoadingUid=null;vocabRoot.replaceChildren();googleLogin.disabled=false;googleLogin.textContent="Google orqali kirish";return;}
   try{
     await createServerSession(user);
     const userRef=doc(db,"users",user.uid), snap=await getDoc(userRef), now=serverTimestamp();
@@ -644,7 +632,7 @@ getRedirectResult(auth).catch(err=>{if(err)console.warn("Google redirect result:
 function showHome(){
 
   app.classList.add("home");app.classList.remove("vocabulary-mode");
-  document.getElementById("vocabularyView").hidden=true;frame.hidden=true;frame.replaceChildren();
+  document.getElementById("vocabularyView").hidden=true;frame.hidden=true;frame.removeAttribute("src");
 
 }
 
@@ -659,37 +647,47 @@ document
 
 
 const vocabView=document.getElementById("vocabularyView"), vocabRoot=document.getElementById("vocabWorkspace");
-let vocabLoaded=false,vocabLoadedUid=null,vocabObserver=null;
+let vocabLoaded=false,vocabLoadedUid=null,vocabObserver=null,vocabSavedState={},vocabLoadingUid=null;
+let vocabFrame=null;
 async function openVocabulary(){
-  if(!auth.currentUser){showHome();return;}
+  const user=auth.currentUser;if(!user){showHome();return;}
   app.classList.remove("home");app.classList.add("vocabulary-mode");frame.style.display="none";vocabView.hidden=false;
-  if(vocabLoaded&&vocabLoadedUid===auth.currentUser.uid){vocabRoot.scrollIntoView({behavior:"smooth",block:"start"});return;}
-  if(vocabObserver){vocabObserver.disconnect();vocabObserver=null;}vocabLoaded=false;vocabRoot.replaceChildren();
+  if(vocabLoaded&&vocabLoadedUid===user.uid&&vocabFrame?.isConnected){vocabRoot.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  if(vocabLoadingUid===user.uid)return;
+  vocabLoadingUid=user.uid;vocabLoaded=false;vocabLoadedUid=null;vocabRoot.replaceChildren();
   vocabRoot.innerHTML='<div class="vocab-loading">Lug‘at yuklanmoqda…</div>';
   try{
-    const res=await fetch('/vocabulary.fragment.html',{credentials:'same-origin'});if(!res.ok)throw new Error('Lug‘at yuklanmadi');
-    const raw=await res.text(), parsed=new DOMParser().parseFromString(raw,'text/html');
-    const data=await getDoc(doc(db,'users',auth.currentUser.uid,'progress','vocabulary'));
-    const saved=data.exists()&&data.data().vocabulary||{};
-    const cachePrefix='__kibo_vocab_'+auth.currentUser.uid+'_';
-    window.kiboVocabStorage={getItem(key){return localStorage.getItem(cachePrefix+key)??saved[key]??null;},setItem(key,val){localStorage.setItem(cachePrefix+key,String(val));saved[key]=String(val);setDoc(doc(db,'users',auth.currentUser.uid,'progress','vocabulary'),{vocabulary:saved},{merge:true}).catch(e=>console.error('Lug‘at progressini saqlab bo‘lmadi',e));},removeItem(key){localStorage.removeItem(cachePrefix+key);delete saved[key];setDoc(doc(db,'users',auth.currentUser.uid,'progress','vocabulary'),{vocabulary:saved},{merge:true}).catch(e=>console.error(e));}};
-    const styles=[...parsed.querySelectorAll('style')];styles.forEach(s=>{const st=document.createElement('style');st.textContent=s.textContent;vocabRoot.appendChild(st);});
-    const body=parsed.body.cloneNode(true);body.querySelectorAll('script,style').forEach(x=>x.remove());
-    vocabRoot.insertAdjacentHTML('beforeend',body.innerHTML);
-    window.kiboVocabRoot=vocabRoot;window.kiboVocabGet=id=>vocabRoot.querySelector('#'+CSS.escape(id));
-    const patchScript=(text)=>text.replace(/\blocalStorage\.(getItem|setItem|removeItem)\s*\(/g,'window.kiboVocabStorage.$1(').replace(/\bkiboVocabStorage\./g,'window.kiboVocabStorage.').replace(/document\.body/g,'window.kiboVocabRoot').replace(/document\.getElementById\(/g,'kiboVocabGet(').replace(/document\.querySelector(All)?\(/g,'window.kiboVocabRoot.querySelector$1(').replace(/document\.addEventListener\(/g,'window.kiboVocabRoot.addEventListener(').replace(/(?<!\?)\.scrollIntoView\(/g,'?.scrollIntoView?.(');
-    for(const [i,old] of [...parsed.querySelectorAll('script')].entries()){const s=document.createElement('script');s.textContent=patchScript(old.textContent)+'\n//# sourceURL=kibo-vocabulary-'+(old.id||('script-'+i))+'.js';document.body.appendChild(s);s.remove();}
-    vocabLoaded=true;vocabLoadedUid=auth.currentUser.uid;
-    vocabObserver=new MutationObserver(()=>{const dark=vocabRoot.classList.contains('night');if((document.documentElement.dataset.theme==='dark')!==dark)applyTheme(dark?'dark':'light');});vocabObserver.observe(vocabRoot,{attributes:true,attributeFilter:['class']});
+    const [res,progress]=await Promise.all([
+      fetch('/vocabulary.fragment.html',{credentials:'same-origin',cache:'no-store'}),
+      getDoc(doc(db,'users',user.uid,'progress','vocabulary'))
+    ]);
+    if(auth.currentUser?.uid!==user.uid)return;
+    if(!res.ok)throw new Error('Lug‘at yuklanmadi ('+res.status+')');
+    const saved=progress.exists()&&progress.data().vocabulary&&typeof progress.data().vocabulary==='object'?progress.data().vocabulary:{};vocabSavedState={...saved};
+    const parsed=new DOMParser().parseFromString(await res.text(),'text/html');
+    const wrapper=parsed.createElement('div');wrapper.id='vocabWorkspace';
+    while(parsed.body.firstChild)wrapper.appendChild(parsed.body.firstChild);
+    parsed.body.appendChild(wrapper);
+    const boot=parsed.createElement('script');
+    const uid=JSON.stringify(user.uid);const initial=JSON.stringify(saved).replace(/</g,'\\u003c');
+    boot.textContent='(function(){const uid='+uid+',prefix="__kibo_vocab_"+uid+"_",saved='+initial+',nativeStorage=window.localStorage;const adapter={getItem(key){return nativeStorage.getItem(prefix+key)??saved[key]??null},setItem(key,value){value=String(value);nativeStorage.setItem(prefix+key,value);saved[key]=value;window.parent.postMessage({type:"kibo-vocab-storage",uid,key,value},location.origin)},removeItem(key){nativeStorage.removeItem(prefix+key);delete saved[key];window.parent.postMessage({type:"kibo-vocab-storage",uid,key,remove:true},location.origin)},clear(){Object.keys(saved).forEach(key=>this.removeItem(key))},key(index){return nativeStorage.key(index)},get length(){return nativeStorage.length}};Object.defineProperty(window,"localStorage",{configurable:true,value:adapter})})();';
+    wrapper.insertBefore(boot,wrapper.firstChild);
+    vocabRoot.replaceChildren();
+    vocabFrame=document.createElement('iframe');vocabFrame.title='KIBO Lug‘at';vocabFrame.style.cssText='display:block;width:100%;height:calc(100vh - 74px);min-height:680px;border:0;background:transparent';
+    vocabFrame.addEventListener('load',()=>sendMasterTheme(),{once:true});
+    vocabRoot.appendChild(vocabFrame);
+    vocabFrame.srcdoc='<!doctype html>'+parsed.documentElement.outerHTML;
+    vocabLoaded=true;vocabLoadedUid=user.uid;
     vocabRoot.scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){vocabRoot.innerHTML='<div class="vocab-loading">Lug‘atni ochishda xatolik. Sahifani yangilang.</div>';console.error(e);}
+  }catch(e){vocabRoot.innerHTML='<div class="vocab-loading">Lug‘atni ochishda xatolik. Sahifani yangilang.</div>';console.error('Vocabulary load failed:',e);}
+  finally{if(vocabLoadingUid===user.uid)vocabLoadingUid=null;}
 }
 document.getElementById('openVocabulary')?.addEventListener('click',openVocabulary);
 document.getElementById('openVocabularyNav')?.addEventListener('click',openVocabulary);
 
 /* HOME MESSAGE FROM TEST IFRAMES */
 window.addEventListener("message", event => {
-  if(event.source !== window) return;
+  if(event.source !== frame.contentWindow && event.source !== vocabFrame?.contentWindow) return;
   if(event.data && event.data.type === "kibo-home"){
     showHome();
     return;
@@ -700,6 +698,12 @@ window.addEventListener("message", event => {
   }
   if(event.data && event.data.type === "kibo-close-module"){
     showHome();
+    return;
+  }
+  if(event.data && event.data.type === "kibo-vocab-storage" && auth.currentUser && event.data.uid===auth.currentUser.uid && typeof event.data.key==="string" && event.data.key.length<=200){
+    const ref=doc(db,"users",auth.currentUser.uid,"progress","vocabulary");
+    if(event.data.remove){const current=vocabSavedState;delete current[event.data.key];vocabSavedState=current;setDoc(ref,{vocabulary:current},{merge:true}).catch(e=>console.error("Lug‘at progressini saqlab bo‘lmadi",e));}
+    else if(typeof event.data.value==="string" && event.data.value.length<=100000){const current=vocabSavedState;current[event.data.key]=event.data.value;vocabSavedState=current;setDoc(ref,{vocabulary:current},{merge:true}).catch(e=>console.error("Lug‘at progressini saqlab bo‘lmadi",e));}
     return;
   }
   if(event.data && event.data.type === "kibo-test-height" && Number.isFinite(Number(event.data.height))){
@@ -766,7 +770,9 @@ const themeIcon = document.getElementById("themeIcon");
 const themeText = document.getElementById("themeText");
 
 function sendMasterTheme(){
-  const dark=document.documentElement.dataset.theme==="dark";if(frame)frame.classList.toggle("day",!dark);if(vocabLoaded)vocabRoot.classList.toggle("night",dark);
+  const dark=document.documentElement.dataset.theme==="dark";
+  if(frame?.contentWindow)frame.contentWindow.postMessage({type:"kibo-master-theme",theme:dark?"night":"day"},location.origin);
+  if(vocabFrame?.contentWindow)vocabFrame.contentWindow.postMessage({type:"kibo-master-theme",theme:dark?"night":"day"},location.origin);
 }
 
 function applyTheme(theme){
