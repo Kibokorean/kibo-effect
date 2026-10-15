@@ -77,7 +77,7 @@ module.exports = async function handler(req,res){
     }
 
    const rawHtml = Buffer.from(TESTS[id], "base64").toString("utf8");
-   const html = rawHtml.replace(
+   let html = rawHtml.replace(
   /(["'(])(?:\.\/)?header-logo\.png(["')])/g,
   '$1/korean-logo.png$2'
 );
