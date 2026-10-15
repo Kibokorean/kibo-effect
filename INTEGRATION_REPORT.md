@@ -26,3 +26,8 @@
 - Bu muhitda haqiqiy Google login, Firebase App Check, Firebase Admin credential’lari, Firestore yozuvi va Vercel deploy tekshirilmagan. `SECURE_TESTS_SETUP.md`, `APP_CHECK_SETUP.md` va `DEPLOY_CHECKLIST.md` bo‘yicha Vercel muhit o‘zgaruvchilarini tasdiqlash kerak.
 - `test-11` savol versiyasi ikki yuborilgan loyiha orasida farq qiladi. Hozir EFFECT’ning serverda baholanadigan himoyalangan varianti ishlatiladi; KOREAN arxividagi farqli savollar uchun mos server answer key va grading natijasini tasdiqlash kerak.
 - Smoke sinovida Firebase va HTTP endpointlari mock qilindi; bu haqiqiy hisob/credential sinovi emas.
+
+
+## Firebase project alignment (2026-10-15)
+
+The standalone Korean module Firebase web configuration has been aligned to the `kibo-effect` project used by the main integrated `index.html`. This only changes the client project configuration; deploy-time Firebase Admin environment variables and Firebase Console settings must also point to `kibo-effect`. The destination project must have Google sign-in enabled, `kibo-effect.vercel.app` authorized, the matching App Check site key registered, and the Firestore rules from this repository deployed. Existing data in `kibo-4628d` is not migrated by changing client configuration.
