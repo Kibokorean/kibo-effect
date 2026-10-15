@@ -131,6 +131,24 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
 .unified-tools{margin-bottom:14px}.unified-tools p{margin:4px 0 0;color:var(--muted);font-size:12px}
 #home .home-layout{grid-template-columns:minmax(0,1fr) 340px}
 @media(max-width:900px){#home .home-layout{grid-template-columns:1fr}.vocabulary-nav{padding:8px}}
+
+/* HoloCard vanilla port */
+.holo-demo-view{display:none;min-height:calc(100vh - 74px);padding:clamp(20px,5vw,64px);align-items:center;justify-content:center;background:var(--bg)}
+#app.holocard-mode #home,#app.holocard-mode #testWorkspace,#app.holocard-mode #vocabularyView{display:none!important}
+#app.holocard-mode .holo-demo-view{display:flex!important}
+.holo-demo-shell{width:min(100%,960px);display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,320px);gap:40px;align-items:center}
+.holo-demo-copy .eyebrow{color:var(--primary);font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.holo-demo-copy h1{font-size:clamp(32px,5vw,56px);letter-spacing:-.04em;line-height:1.02;margin:12px 0}
+.holo-demo-copy p{color:var(--muted);line-height:1.7}
+.holo-card-vanilla{--tilt-x:0deg;--tilt-y:0deg;position:relative;width:100%;max-width:320px;aspect-ratio:63/88;border-radius:23px;transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));transform-style:preserve-3d;transition:transform .12s ease-out;overflow:hidden;isolation:isolate;box-shadow:0 24px 50px #0003;cursor:grab;background:#161a2c}
+.holo-card-vanilla:active{cursor:grabbing}
+.holo-card-vanilla img{width:100%;height:100%;display:block;object-fit:cover;pointer-events:none}
+.holo-card-vanilla:before,.holo-card-vanilla:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.holo-card-vanilla:before{z-index:1;background:repeating-conic-gradient(from 0deg at var(--shine-x,50%) var(--shine-y,50%),#fff0 0deg,#fff9 2deg,#75e9ff99 4deg,#e7a7ff88 6deg,#fff0 9deg) center/160% 160%;mix-blend-mode:color-dodge;opacity:.7}
+.holo-card-vanilla:after{z-index:2;background:radial-gradient(circle at var(--shine-x,50%) var(--shine-y,50%),#fff9 0,#8cecff66 9%,#f5a9ff33 26%,transparent 58%),linear-gradient(125deg,#fff8,transparent 24%,#91dfff33 46%,transparent 62%,#fff6);mix-blend-mode:screen;opacity:.8}
+.holo-card-vanilla .holo-border{position:absolute;inset:0;z-index:3;border:4px solid #e2e6ecaa;border-radius:inherit;box-shadow:inset 0 0 12px #fff8;pointer-events:none}
+@media(max-width:700px){.holo-demo-shell{grid-template-columns:1fr;justify-items:center;text-align:center;gap:24px}.holo-demo-copy{max-width:520px}.holo-card-vanilla{max-width:260px}}
+
 </style>
 </head>
 
@@ -198,6 +216,7 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
     </nav>
     <div class="header-spacer"></div>
     <button id="openVocabularyNav" class="vocabulary-nav" type="button">Lug‘at</button>
+    <button id="openHoloCardNav" class="vocabulary-nav" type="button">HoloCard</button>
     <button id="themeToggle" class="theme-btn" type="button" aria-label="Tungi rejimga o'tish">
       <span id="themeIcon" class="theme-icon">☀️</span><span id="themeText">Day</span>
     </button>
@@ -228,6 +247,20 @@ nav{display:flex;align-items:center;gap:4px;flex:1;min-width:0}nav button{height
   <main>
     <div id="testWorkspace" class="test-workspace" hidden aria-live="polite"></div>
     <section id="vocabularyView" hidden aria-label="KIBO Lug‘at"><div id="vocabWorkspace"></div></section>
+<section id="holoCardView" class="holo-demo-view" aria-label="HoloCard Pikachu">
+      <div class="holo-demo-shell">
+        <div class="holo-demo-copy">
+          <span class="eyebrow">KIBO · SPECIAL CARD</span>
+          <h1>Pikachu<br>Holo Card</h1>
+          <p>Kartani sichqoncha bilan harakatlantiring — holografik yorqinlik va rangli folga effektini ko‘ring.</p>
+          <p style="font-size:12px">Preset: bursts · Tilt: 30° · Radius: 23px</p>
+        </div>
+        <div class="holo-card-vanilla" id="kiboHoloCard" role="img" aria-label="Pikachu holografik kartasi">
+          <img src="https://raw.githubusercontent.com/DavidHDev/react-bits/main/src/assets/holo-card/pikachu.webp" alt="Pikachu" draggable="false">
+          <span class="holo-border" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
   </main>
 
 </section>
@@ -643,7 +676,7 @@ getRedirectResult(auth).catch(err=>{if(err)console.warn("Google redirect result:
 
 function showHome(){
 
-  app.classList.add("home");app.classList.remove("vocabulary-mode");
+  app.classList.add("home");app.classList.remove("vocabulary-mode","holocard-mode");
   document.getElementById("vocabularyView").hidden=true;frame.hidden=true;frame.replaceChildren();
 
 }
@@ -660,6 +693,18 @@ document
 
 const vocabView=document.getElementById("vocabularyView"), vocabRoot=document.getElementById("vocabWorkspace");
 let vocabLoaded=false,vocabLoadedUid=null,vocabObserver=null;
+function openHoloCard(){
+  if(!auth.currentUser){showHome();return;}
+  app.classList.remove("home","vocabulary-mode");app.classList.add("holocard-mode");
+  document.getElementById("vocabularyView").hidden=true;frame.hidden=true;frame.replaceChildren();
+}
+document.getElementById("openHoloCardNav")?.addEventListener("click",openHoloCard);
+const holoCard=document.getElementById("kiboHoloCard");
+if(holoCard){
+  const track=e=>{const r=holoCard.getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;holoCard.style.setProperty("--tilt-x",`${(0.5-y)*60}deg`);holoCard.style.setProperty("--tilt-y",`${(x-0.5)*60}deg`);holoCard.style.setProperty("--shine-x",`${x*100}%`);holoCard.style.setProperty("--shine-y",`${y*100}%`);};
+  holoCard.addEventListener("pointermove",track);
+  holoCard.addEventListener("pointerleave",()=>{holoCard.style.setProperty("--tilt-x","0deg");holoCard.style.setProperty("--tilt-y","0deg");holoCard.style.setProperty("--shine-x","50%");holoCard.style.setProperty("--shine-y","50%");});
+}
 async function openVocabulary(){
   if(!auth.currentUser){showHome();return;}
   app.classList.remove("home");app.classList.add("vocabulary-mode");frame.style.display="none";vocabView.hidden=false;
