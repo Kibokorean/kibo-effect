@@ -79,7 +79,7 @@ module.exports = async function handler(req,res){
    const rawHtml = Buffer.from(TESTS[id], "base64").toString("utf8");
    const html = rawHtml.replace(
   /(["'(])(?:\.\/)?header-logo\.png(["')])/g,
-  '$1/header-logo.png$2'
+  '$1/korean-logo.png$2'
 );
     res.status(200);
     res.setHeader("Set-Cookie",`${attemptCookieName}=${encodeURIComponent(attemptId)}; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax`);
